@@ -42,7 +42,7 @@ class Upload extends Component{
             return(
                 <div className="dmscreen">
                     <input className="uploadMap" type="file" onChange={this.handleChange}/>
-                    <img className="map" alt="map" src={this.state.imgUpload} />
+                    <img className="map" alt="map" src={localStorage.getItem('imgUpload')} />
                     
                 </div>
             )
