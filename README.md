@@ -6,7 +6,7 @@ To launch :
 
 on the dmmaster folder :
 
-  npm install
-  npm start
+    npm install
+    npm start
   
 Should run on http://localhost:3000/
