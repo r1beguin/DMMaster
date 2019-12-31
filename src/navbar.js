@@ -50,6 +50,14 @@ class Navbar extends React.Component {
         return(
             <DMScreen modeSelection={this.modeSelection} />
         )
+    }else{
+        return(
+            <div className="topnav">
+            <div onClick={()=>this.modeSelection("DM")}>DM Screen</div>
+            <div onClick={()=>this.modeSelection("BM")}>Battle Map</div>
+            <div onClick={()=>this.modeSelection("PS")}>Player Screen</div>
+        </div>
+        )
     }
   }
 }
