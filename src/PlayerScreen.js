@@ -1,10 +1,10 @@
 import React from 'react';
 
-import './DMScreen.css'
+import './PlayerScreen.css'
 
 import Upload from './Upload'
 
-class DMScreen extends React.Component{
+class PlayerScreen extends React.Component{
 
     constructor() {
         super();
@@ -20,7 +20,7 @@ class DMScreen extends React.Component{
             <div>
                 <div className="navDM">
                     <div className="back" onClick={() => this.handler("home")}>Home</div>
-                    <div className="activeItem">DM Screen</div>
+                    <div className="activeItem">Player Screen</div>
     
                     
                 </div>
@@ -33,4 +33,4 @@ class DMScreen extends React.Component{
 }
 
 
-export default DMScreen
+export default PlayerScreen

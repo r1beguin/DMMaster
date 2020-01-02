@@ -3,6 +3,8 @@ import React from 'react';
 import './Navbar.css';
 
 import DMScreen from './DMScreen'
+import Battlemap from './Battlemap'
+import PlayerScreen from './PlayerScreen'
 
 
  
@@ -50,7 +52,18 @@ class Navbar extends React.Component {
         return(
             <DMScreen modeSelection={this.modeSelection} />
         )
-    }else{
+    }else if (localStorage.getItem('mode')==="BM"){
+
+        return(
+            <Battlemap modeSelection={this.modeSelection} />
+        )
+    }else if (localStorage.getItem('mode')==="PS"){
+
+        return(
+            <PlayerScreen modeSelection={this.modeSelection} />
+        )
+    }
+        else{
         return(
             <div className="topnav">
             <div onClick={()=>this.modeSelection("DM")}>DM Screen</div>
