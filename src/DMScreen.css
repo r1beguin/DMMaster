@@ -22,4 +22,16 @@
 
 .turnbox{
     padding: 10px;
+
+}
+
+.dmBox{
+    margin:auto;
+    width:100%
+}
+
+.iniBox{
+    width:25%;
+    float: left;
+    padding: 10px;
 }

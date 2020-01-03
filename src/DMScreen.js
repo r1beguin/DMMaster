@@ -52,7 +52,7 @@ class DMScreen extends React.Component{
         if (this.state.CurrentInitiative===this.state.maxPlayer-1){
             stateCopy.players[0].active="yes"
             stateCopy.CurrentInitiative =0
-            console.log(this.state.CurrentInitiative)
+            
         }else{
             
             
@@ -79,21 +79,22 @@ class DMScreen extends React.Component{
     
                 </div>
                 
-                
-                <Upload />
+                <div className="dmBox">
+                    
+                    <div className="iniBox">
+                        
+                        {this.state.players.map(function(d, idx){
+                            return (<Draggable><a key={idx}><InitiativeTracker active={d.active} name={d.name} src={d.src} /></a></Draggable>)
+                        })}
+                        <div className="turnbox" >
+                            <button className="turn" onClick={this.endTurn} >End of Turn</button>
+                        </div>
+                    </div>
 
-                <div className="turnbox" >
-                    <button className="turn" onClick={this.endTurn} >End of Turn</button>
+                    <Upload />
+
                 </div>
-
-                {this.state.players.map(function(d, idx){
-                    return (<a key={idx}><InitiativeTracker active={d.active} name={d.name} src={d.src} /></a>)
-                 })}
-                <Draggable>
-                        <svg height="100" width="100">
-                            <circle cx="50" cy="50" r="15" stroke="black" stroke-width="3" fill="red" />
-                        </svg>
-                </Draggable>
+                
             </div> 
 
         )
