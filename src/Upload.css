@@ -1,16 +1,18 @@
 .uploadMap{
-    float:bottom;
+    float:top;
     padding:10px
 }
 
-.map{
-    float:top;
-    max-width: 100%;
-    height: auto;
-    width: auto;
+.map img{
+    
+    width: 30%;
+    max-height: auto;
+    padding: 5px;
+    
 }
 
 .dmscreen{
     float:top;
+    
 }
 

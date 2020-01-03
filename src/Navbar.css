@@ -1,8 +1,9 @@
 /* Add a black background color to the top navigation */
 .topnav {
-    position: relative;
-    transform: translateY(100%);
-    margin: auto;
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
     width: 10em;
     background-color: #333;
     overflow: hidden;

@@ -19,3 +19,7 @@
 .activeItem{
     background-color: gray;
 }
+
+.turnbox{
+    padding: 10px;
+}

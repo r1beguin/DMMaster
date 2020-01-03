@@ -3,6 +3,7 @@ import React from 'react';
 import './Battlemap.css'
 
 import Upload from './Upload'
+import Draggable from './Draggable'
 
 class Battlemap extends React.Component{
 
@@ -26,6 +27,11 @@ class Battlemap extends React.Component{
                 </div>
 
                 <Upload />
+                <Draggable>
+                        <svg height="100" width="100">
+                            <circle cx="50" cy="50" r="15" stroke="black" stroke-width="3" fill="red" />
+                        </svg>
+                </Draggable>
             </div> 
 
         )
