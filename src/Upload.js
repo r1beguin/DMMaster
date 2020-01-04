@@ -10,8 +10,10 @@ class Upload extends Component{
         var init = localStorage.getItem('imgUpload')
         this.state={
             imgUpload: init
+            
         }
         this.handleChange = this.handleChange.bind(this)
+        
     }
 
     
@@ -31,6 +33,8 @@ class Upload extends Component{
 
     render(){
 
+        
+
     
         if (localStorage.getItem('imgUpload') === null){
             return(
@@ -48,8 +52,10 @@ class Upload extends Component{
                 <div className="dmscreen">
                     <input className="uploadMap" type="file" onChange={this.handleChange}/>
                     <div className="map">
-                        <img  alt="map" src={localStorage.getItem('imgUpload')} />
+                        <img  alt="map" src={localStorage.getItem('imgUpload')} style={this.state.size}/>
                     </div>
+
+                    
                     
                 </div>
             )

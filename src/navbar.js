@@ -4,7 +4,7 @@ import './Navbar.css';
 
 import DMScreen from './DMScreen'
 import Battlemap from './Battlemap'
-import PlayerScreen from './PlayerScreen'
+import PlayerScreen from './PlayerScreen/PlayerScreen'
 
 
  

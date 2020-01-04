@@ -4,6 +4,8 @@ import './InitiativeTracker.css'
 
 class InitiativeTracker extends Component{
 
+    
+
     render(){
 
         const active ={
