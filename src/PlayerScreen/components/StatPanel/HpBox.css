@@ -1,0 +1,28 @@
+.modifyHp{
+    padding: 5px;
+    font-size: small;
+}
+
+.modifyHp input{
+    margin: 10px;
+    width:40%;
+    font-size: small;
+    text-align: center;
+    
+    border-radius: 5px;
+    
+}
+
+.modifyHp button{
+    border-radius: 5px;
+}
+
+.currentHp{
+    vertical-align: middle;
+    
+}
+
+.maxHp{
+    vertical-align: middle;
+    color: red;
+}
