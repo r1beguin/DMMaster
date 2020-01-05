@@ -1,6 +1,6 @@
 .modifyHp{
-    padding: 5px;
     font-size: small;
+    
 }
 
 .modifyHp input{
@@ -25,4 +25,9 @@
 .maxHp{
     vertical-align: middle;
     color: red;
+}
+
+hr{
+    width: 20%;
+   margin: auto;
 }

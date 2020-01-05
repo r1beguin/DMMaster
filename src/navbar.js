@@ -2,9 +2,9 @@ import React from 'react';
 
 import './Navbar.css';
 
-import DMScreen from './DMScreen'
-import Battlemap from './Battlemap'
-import PlayerScreen from './PlayerScreen/PlayerScreen'
+import DMScreen from './components/DMScreen/DMScreen'
+import Battlemap from './components/BattleMap/Battlemap'
+import PlayerScreen from './components/PlayerScreen/PlayerScreen'
 
 
  

@@ -2,9 +2,9 @@ import React from 'react';
 
 import './DMScreen.css'
 
-import Upload from './Upload'
-import Draggable from './Draggable'
-import InitiativeTracker from './InitiativeTracker'
+import Upload from './components/Upload'
+import Draggable from '../../utils/Draggable'
+import InitiativeTracker from './components/InitiativeTracker'
 
 class DMScreen extends React.Component{
 
