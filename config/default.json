@@ -1,5 +1,5 @@
 {
   "mongoURI": "mongodb+srv://backend_api:wcQgKyMJ8k39OHgm@dmmaster-od5kw.azure.mongodb.net/test?retryWrites=true&w=majority",
-  "mongoURI2": "mongodb://localhost:27017/dnd",
+  "mongoURI_local": "mongodb://localhost:27017/dnd",
   "jwtSecret": "secret"
 }
