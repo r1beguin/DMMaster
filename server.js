@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
 var server = require('http').Server(app);
+const connectDB = require('./utils/db');
+
+
+// Connect Database
+connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
