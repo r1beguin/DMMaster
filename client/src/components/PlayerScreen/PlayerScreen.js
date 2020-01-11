@@ -22,10 +22,10 @@ class PlayerScreen extends React.Component{
     render(){
         return(
             <div>
-                <div className="navDM">
+                {/* <div className="navDM">
                     <div className="back" onClick={() => this.handler("home")}>Home</div>
                     <div className="activeItem">Player Screen</div>                    
-                </div>
+                </div> */}
 
                 <StatPanel />
             </div> 

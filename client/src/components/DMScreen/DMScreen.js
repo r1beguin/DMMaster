@@ -73,11 +73,11 @@ class DMScreen extends React.Component{
         
         return(
             <div>
-                <div className="navDM">
+                {/* <div className="navDM">
                     <div className="back" onClick={() => this.handler("home")}>Home</div>
                     <div className="activeItem">DM Screen</div>
     
-                </div>
+                </div> */}
                 
                 <div className="dmBox">
                     
