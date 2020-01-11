@@ -18,12 +18,12 @@ class Battlemap extends React.Component{
     render(){
         return(
             <div>
-                <div className="navDM">
+                {/* <div className="navDM">
                     <div className="back" onClick={() => this.handler("home")}>Home</div>
                     <div className="activeItem">Battle Map</div>
     
                     
-                </div>
+                </div> */}
 
                
             </div> 
