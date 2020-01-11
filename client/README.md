@@ -7,6 +7,11 @@ To launch :
 on the dmmaster folder :
 
     npm install
-    npm start
+    cd client
+    npm install
+    cd ..
+    npm run dev
+
   
-Should run on http://localhost:3000/
+Should run front-end on http://localhost:3000/
+Should run back-end on http://localhost:5000/
