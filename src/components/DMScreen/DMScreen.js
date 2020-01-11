@@ -12,6 +12,9 @@ class DMScreen extends React.Component{
         super();
         this.handler = this.handler.bind(this);
         this.endTurn=this.endTurn.bind(this);
+        this.addEnemy=this.addEnemy.bind(this);
+        this.addAlly=this.addAlly.bind(this);
+        this.setImgWidth=this.setImgWidth.bind(this)
 
         this.state={
             players:[{
@@ -27,7 +30,9 @@ class DMScreen extends React.Component{
                     "src":'https://media-waterdeep.cursecdn.com/avatars/thumbnails/17/366/60/60/636377877759190874.jpeg'
                 }],
             CurrentInitiative: 0,
-            maxPlayer:2
+            maxPlayer:2,
+            imgWidth:50
+
       }
     }
 
@@ -67,8 +72,39 @@ class DMScreen extends React.Component{
         
       }
 
-      
- 
+      addEnemy(){
+          this.setState({
+              maxPlayer:this.state.maxPlayer +1
+          })
+          this.setState({
+              players : this.state.players.concat({
+                "num":this.state.maxPlayer,
+                "active":"no",
+                "name":"Enemy",
+                "src":'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Skull-Icon.svg/400px-Skull-Icon.svg.png'})
+          })
+      }
+
+      addAlly(){
+        this.setState({
+            maxPlayer:this.state.maxPlayer +1
+        })
+        this.setState({
+            players : this.state.players.concat({
+              "num":this.state.maxPlayer,
+              "active":"no",
+              "name":"Ally",
+              "src":'https://banner2.cleanpng.com/20180405/osq/kisspng-login-google-account-computer-icons-user-activity-5ac6bbe6ecba00.2369522615229736709696.jpg'})
+        })
+    }
+
+    setImgWidth(e){
+        this.setState({
+            imgWidth: e.target.value 
+        })
+        
+    }
+  
     render(){
         
         return(
@@ -82,12 +118,15 @@ class DMScreen extends React.Component{
                 <div className="dmBox">
                     
                     <div className="iniBox">
-                        
-                        {this.state.players.map(function(d, idx){
-                            return (<Draggable><a key={idx}><InitiativeTracker active={d.active} name={d.name} src={d.src} /></a></Draggable>)
+                       
+                        <input className="sizeSlider" type="range" min="0" max="100" step="1" value={this.state.imgWidth} onChange={this.setImgWidth} />
+                        {this.state.players.map((d) => {
+                            return (<Draggable><a><InitiativeTracker imgWidth={this.state.imgWidth} active={d.active} name={d.name} src={d.src} /></a></Draggable>)
                         })}
                         <div className="turnbox" >
                             <button className="turn" onClick={this.endTurn} >End of Turn</button>
+                            <button className="turn" onClick={this.addEnemy} >Add enemi</button>
+                            <button className="turn" onClick={this.addAlly} >Add ally</button>
                         </div>
                     </div>
 
