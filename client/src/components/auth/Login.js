@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 import PropTypes from "prop-types"; // shortcut: impt
-
+ 
 // setAlert destructured from props (passed by the connect)
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
