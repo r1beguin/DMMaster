@@ -2,7 +2,7 @@ import axios from "axios";
 import { setAlert } from "./alert";
 import { LOGIN_SUCCESS, LOGIN_FAIL, USER_LOADED, AUTH_ERROR } from "./types";
 import setAuthToken from '../utils/setAuthToken'
-
+  
 //load user 
 export const loadUser = () => async dispatch => {
   if (localStorage.token) {

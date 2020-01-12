@@ -2,8 +2,7 @@
 /**
  * This is a teplate file to remember how to use react and redux correctly
  */
-
-
+ 
 import React, { Fragment, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
