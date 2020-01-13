@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import { loadHp } from "../../../actions/hp";
 
@@ -6,18 +6,14 @@ import './HpManager.css'
 import { connect } from "react-redux";
 
 
-const HpManager = ({loadHp}) => {
+const HpManager = ({loadHp, hp}) => {
 
     useEffect(() => {
         loadHp()
         document.title = "DM Master"
     }, []);
 
-    const [formData] = useState({
-        hp: ""
-      });
-
-    const {hp} = formData;
+   
 
     return(
         <Fragment>
