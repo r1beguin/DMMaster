@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../db/models/User');
 
-  
+
 // return the user infos to a loged in user
 router.get('/', auth, async (req, res) => {
   try {

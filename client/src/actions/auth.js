@@ -20,7 +20,7 @@ export const loadUser = () => async dispatch => {
     })
   }
 }
-
+ 
 // Login user
 // we can use async on redux thanks to thunk apparently
 export const login = ({ name }) => async dispatch => {

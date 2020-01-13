@@ -13,7 +13,7 @@ app.get('/', (req, res) => res.send('API running'));
 // Define Routes
 app.use('/api/register', require('./api/register'));
 app.use('/api/login', require('./api/login'));
-app.use('/api/hp', require('/api/hp'));
+app.use('/api/hp', require('./api/hp'));
 
 const PORT = 5000;
 
