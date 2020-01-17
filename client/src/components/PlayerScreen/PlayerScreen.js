@@ -2,7 +2,7 @@ import React from 'react';
 
 import './PlayerScreen.css'
 import StatPanel from './components/StatPanel/StatPanel'
-import HpManager from './components/HpManager'
+
 
 class PlayerScreen extends React.Component{
 
@@ -29,7 +29,7 @@ class PlayerScreen extends React.Component{
                 </div> */}
 
                 <StatPanel />
-                <HpManager />
+                
             </div> 
 
         )

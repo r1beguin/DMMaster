@@ -6,7 +6,7 @@ import axios from "axios";
 export const loadHp = () => async dispatch => {
     
     try {
-      const res = await axios.get("/api/hp");
+      const res = await axios.get("/api/creature");
       dispatch({
         type: HP_LOADED,
         payload: res.data

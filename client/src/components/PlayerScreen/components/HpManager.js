@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 
 import { loadHp } from "../../../actions/hp";
 
-import './HpManager.css'
+
 import { connect } from "react-redux";
 
 
