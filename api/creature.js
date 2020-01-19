@@ -6,7 +6,11 @@ const User = require("../db/models/User");
 // return the user infos to a loged in user
 router.get("/", async (req, res) => {
   try {
-    const creature = await Creature.findOne();
+    const { name } = req.body;
+    const creature = await Creature.findOne({name}).populate({
+      path: 'user',
+      model: User,
+    });
     res.json(creature);
   } catch (err) {
     console.error(err.message);
@@ -21,12 +25,20 @@ async function upadeCreature(creature, hp, alive) {
   await creature.save();
 }
 
-async function addCreature(name, hp, role, user = null, monster = null) {
+async function addCreature(name, hp, role, avatar, user = null, monster = null) {
+  if (!avatar) {
+    if (role == "player"){
+      avatar = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/characters/default-avatar-builder.png"
+    } else {
+      avatar = "https://www.dndbeyond.com/Content/1-0-787-0/Skins/Waterdeep/images/icons/monsters/beast.jpg"
+    }
+  }
   creature = new Creature({
     name,
     role,
     hp,
-    alive: true
+    alive: true,
+    avatar,
   });
   if (user) creature.user = user._id;
   if (monster) creature.monster = monster._id;
@@ -38,7 +50,7 @@ async function addCreature(name, hp, role, user = null, monster = null) {
 // wait for a login form
 // if user in the database, returns a connection token
 router.post("/", async (req, res) => {
-  const { id, name, role, hp, alive = true } = req.body;
+  const { id, name, role, hp, alive = true, avatar } = req.body;
   var creature;
   console.log(name, hp, role);
 
@@ -66,7 +78,7 @@ router.post("/", async (req, res) => {
             // else create it and bind the creature and player together
             const user = await User.findOne({ name });
             if (user) {
-              creature = await addCreature(name, hp, role, user);
+              creature = await addCreature(name, hp, role, avatar, user);
               user.creature = creature._id;
               await user.save();
             } else {

@@ -21,6 +21,10 @@ const CreatureSchema = new mongoose.Schema({
     required: true,
     default: true,
   },
+  avatar: {
+    type: String,
+    required: false,
+  },
   user: { 
     type: Schema.Types.ObjectId,
     ref: 'User'

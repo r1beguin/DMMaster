@@ -1,4 +1,3 @@
-import React from 'react';
 
 import './DMScreen.css'
 
@@ -6,100 +5,46 @@ import Upload from './components/Upload'
 import Draggable from '../../utils/Draggable'
 import InitiativeTracker from './components/InitiativeTracker'
 
-class DMScreen extends React.Component{
-
-    constructor() {
-        super();
-        this.handler = this.handler.bind(this);
-        this.endTurn=this.endTurn.bind(this);
-
-        this.state={
-            players:[{
-                    "num":1,
-                    "active":"yes",
-                    "name":"Thokk", 
-                    "src":'https://media-waterdeep.cursecdn.com/avatars/thumbnails/8081/329/150/150/637122084373232882.jpeg'
-                },
-                {
-                    "num":2,
-                    "active":"no",
-                    "name":"Keran",
-                    "src":'https://media-waterdeep.cursecdn.com/avatars/thumbnails/17/366/60/60/636377877759190874.jpeg'
-                }],
-            CurrentInitiative: 0,
-            maxPlayer:2
-      }
-    }
-
-      handler(e){ 
-        this.props.modeSelection(e);
-      }
-
-      endTurn(){
+import React, { Fragment } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { nextTurn } from '../../actions/fight'
 
 
+const DMScreen = ({ nextTurn, turn, involved }) => {
 
-        // this.setState(State => ({
-        //     itemList: State.players.map(
-        //     obj => (obj.active === "yes" ? Object.assign(obj, { active: "no" }) : obj)
-        //   )
-        // }));
 
-        var stateCopy = Object.assign({}, this.state);
-        stateCopy.players = stateCopy.players.slice();
-        
-        stateCopy.players[this.state.CurrentInitiative].active="no"
-        if (this.state.CurrentInitiative===this.state.maxPlayer-1){
-            stateCopy.players[0].active="yes"
-            stateCopy.CurrentInitiative =0
+    return (
+        <Fragment>
             
-        }else{
-            
-            
-            stateCopy.CurrentInitiative += 1
-            stateCopy.players[stateCopy.CurrentInitiative].active="yes"
-            
-            
-        }
-
-        this.setState(stateCopy);
-        console.log(this.state.CurrentInitiative)
-        
-      }
-
-      
- 
-    render(){
-        
-        return(
-            <div>
-                {/* <div className="navDM">
-                    <div className="back" onClick={() => this.handler("home")}>Home</div>
-                    <div className="activeItem">DM Screen</div>
-    
-                </div> */}
-                
-                <div className="dmBox">
+            <div className="dmBox">
+                <div className="iniBox">
                     
-                    <div className="iniBox">
-                        
-                        {this.state.players.map(function(d, idx){
-                            return (<Draggable><a key={idx}><InitiativeTracker active={d.active} name={d.name} src={d.src} /></a></Draggable>)
-                        })}
-                        <div className="turnbox" >
-                            <button className="turn" onClick={this.endTurn} >End of Turn</button>
-                        </div>
+                    {involved.map(function(inv, idx){
+                        const creature = inv.creature;
+                        return (<Draggable><a key={idx}><InitiativeTracker active={idx === turn} name={creature.name} src={creature.avatar} /></a></Draggable>)
+                    })}
+                    <div className="turnbox" >
+                        <button className="turn" onClick={e =>  nextTurn()}>End of Turn</button>
                     </div>
-
-                    <Upload />
-
+                    
                 </div>
+                <Upload />
+            </div>
                 
-            </div> 
+        </Fragment>
+    );
+};
 
-        )
-    }
-}
+DMScreen.propTypes = {
+    nextTurn: PropTypes.func.isRequired, // ptfr
+    turn: PropTypes.value,
+    involved: PropTypes.array,
+};
 
+const mapStateToProps = state => ({
+    turn: state.fight.turn,
+    involved: state.fight.involved, 
+});
 
-export default DMScreen
+export default connect(mapStateToProps, { nextTurn })(DMScreen);
