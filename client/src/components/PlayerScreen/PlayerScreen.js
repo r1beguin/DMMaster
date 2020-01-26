@@ -8,10 +8,7 @@ class PlayerScreen extends React.Component{
 
     constructor() {
         super();
-        this.handler = this.handler.bind(this);
-        
-
-        
+        this.handler = this.handler.bind(this); 
       }
 
       handler(e){ 
