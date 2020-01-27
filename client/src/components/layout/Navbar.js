@@ -1,23 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {logoutUser} from '../../actions/auth'
 
 import './Navbar.css';
+import store from '../../store';
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
 // import PlayerScreen from './../PlayerScreen/PlayerScreen'
 
 // TODO: make it react to active screen
-const Navbar = () => (
-    <nav className="navbar bg-dark">
-        <div>
-            <Link to="/" className="home">DMMaster</Link>
-        </div>
-        <div>
-            <Link to="/login">login</Link>
-        </div>
-    </nav>
-)
+const Navbar = () => {
+    const onchange = () => {
+        store.dispatch(logoutUser());
+        console.log("logout");
+        
+    }
+    
+    return(
+        <nav className="navbar bg-dark">
+            <div>
+                <Link to="/" className="home">DMMaster</Link>
+            </div>
+            <div>
+                <Link to="/login">Login</Link>
+                <div onClick={onchange} className="logout">
+                
+                    Logout
+                
+                </div>
+            </div>
+            
+        </nav>
+    )
+    }
 
 
 export default Navbar

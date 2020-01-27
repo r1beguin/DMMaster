@@ -30,3 +30,11 @@
   background-color: #4CAF50;
   color: white;
 }
+
+.logout{
+  color: blue;
+}
+
+.logout:hover{
+  color:white
+}

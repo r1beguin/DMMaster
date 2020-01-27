@@ -14,6 +14,8 @@ app.get('/', (req, res) => res.send('API running'));
 app.use('/api/register', require('./api/register'));
 app.use('/api/login', require('./api/login'));
 app.use('/api/creature', require('./api/creature'));
+app.use('/api/fight', require('./api/fight'));
+
 
 const PORT = 5000;
 

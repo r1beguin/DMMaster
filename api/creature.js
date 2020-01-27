@@ -2,12 +2,14 @@ const router = require("express").Router();
 const config = require("config");
 const Creature = require("../db/models/Creature");
 const User = require("../db/models/User");
+const jwt = require('jsonwebtoken');
+const auth = require('../utils/auth');
 
 // return the user infos to a loged in user
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const { name } = req.body;
-    const creature = await Creature.findOne({name}).populate({
+    const user = await User.findById(req.user.id);
+    const creature = await Creature.findOne({user}).populate({
       path: 'user',
       model: User,
     });
@@ -18,7 +20,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-async function upadeCreature(creature, hp, alive) {
+async function updateCreature(creature, hp, alive) {
   creature.hp = hp;
   creature.alive = alive;
 
@@ -60,7 +62,7 @@ router.post("/", async (req, res) => {
       // update by ID
       creature = await Creature.findById(id);
       if (creature) {
-        await upadeCreature(creature, hp, alive);
+        await updateCreature(creature, hp, alive);
       } else {
         // bug
         throw "ID not found in creatures";
@@ -73,7 +75,7 @@ router.post("/", async (req, res) => {
           creature = await Creature.findOne({ name, role });
           if (creature) {
             // if it existe, update it (here for HP change)
-            await upadeCreature(creature, hp, alive);
+            await updateCreature(creature, hp, alive);
           } else {
             // else create it and bind the creature and player together
             const user = await User.findOne({ name });
