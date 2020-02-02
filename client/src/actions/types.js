@@ -14,3 +14,6 @@ export const LOAD_FIGHT = 'LOAD_FIGHT';
 export const NEXT_TURN = 'NEXT_TURN';
 
 export const HP_LOADED = 'HP_LOADED';
+
+export const MAP_SAVED = 'MAP_SAVED'
+export const MAP_LOADED = 'MAP_LOADED'
