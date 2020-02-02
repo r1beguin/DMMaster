@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import './HpBox.css'
+import HpManager from '../HpManager'
 
 //Hit points display managment 
 
@@ -62,7 +63,7 @@ class HpBox extends Component{
                     Hit points
                 </h4>
 
-                <div className="currentHp">{this.state.hp}</div>
+                <div className="currentHp"><HpManager /></div>
                 <hr />
                 <div className="maxHp">{this.state.maxHp}</div>
 

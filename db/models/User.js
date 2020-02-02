@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
-const UserSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+ 
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -10,7 +11,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: "player"
-  }
+  },
+  creature: { 
+    type: Schema.Types.ObjectId,
+    ref: 'Creature'
+   },
 }, 
 {
   versionKey: false

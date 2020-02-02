@@ -3,14 +3,12 @@ import React from 'react';
 import './PlayerScreen.css'
 import StatPanel from './components/StatPanel/StatPanel'
 
+
 class PlayerScreen extends React.Component{
 
     constructor() {
         super();
-        this.handler = this.handler.bind(this);
-        
-
-        
+        this.handler = this.handler.bind(this); 
       }
 
       handler(e){ 
@@ -28,6 +26,7 @@ class PlayerScreen extends React.Component{
                 </div> */}
 
                 <StatPanel />
+                
             </div> 
 
         )

@@ -2,7 +2,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   USER_LOADED,
-  AUTH_ERROR
+  AUTH_ERROR,
+  USER_LOGOUT
 } from "../actions/types";
 
 // alerts are made of {type, payload: {msg, id}}
@@ -35,6 +36,7 @@ export default function(state = initialState, action) {
         loading: false
       };
     case LOGIN_FAIL:
+    case USER_LOGOUT:
     case AUTH_ERROR:
       localStorage.removeItem("token");
       return {
