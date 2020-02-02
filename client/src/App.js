@@ -13,6 +13,7 @@ import Alert from "./components/layout/Alert";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./actions/auth";
 import { loadFight } from './actions/fight'
+import socketAPI from './socket-api';
 
 //redux
 import { Provider } from "react-redux";
@@ -22,14 +23,19 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
+socketAPI('http://localhost:5000', store);
+
 const App = () => {
 
   // same effect as 'componentDidMount' but for a function
   // the [] make it so that it does not run indefinitely 
   useEffect(() => {
+    document.title = "DM Master";
+
     store.dispatch(loadUser());
     store.dispatch(loadFight());
-    document.title = "DM Master";
+
+    
   }, []);
 
   return (

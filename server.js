@@ -1,7 +1,17 @@
+
 const express = require('express');
 const app = express();
 var server = require('http').Server(app);
 const connectDB = require('./db/db');
+const socketio = require('socket.io');
+
+// socket.io
+io = socketio(server);
+// now all request have access to io
+app.use(function(req, res, next) {
+  req.io = io;
+  next();
+});
 
 // Connect Database
 connectDB();
