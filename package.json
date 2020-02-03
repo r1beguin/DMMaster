@@ -7,7 +7,9 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "extract monster stats json": "node tools/parse_monster_stats_json.js",
+    "extract monster img html": "node tools/parse_monster_img_html.js"
   },
   "author": "",
   "license": "MIT",
