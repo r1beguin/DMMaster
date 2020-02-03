@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Creature = require("../db/models/Monster");
+const connectDB = require('../db/db');
 
 getAttribute = (content_array, header) => {
   for(attribute of content_array){
@@ -52,6 +53,7 @@ fillContent = (monster_name, monster_content) => {
     index++;
   }
 
+  // actions extraction
   var index = 5;
   while (index < monster_content.length && !monster_content[index++].includes("**Actions**")) {}
   actions = [];
@@ -61,38 +63,34 @@ fillContent = (monster_name, monster_content) => {
     // break when entering another category
     if (line.slice(0, 2) === "**" && line.slice(0, 3) !== "***") break; 
     actions.push(line);
-    // str_list = monster_content[index].split("***") 
-    // if (str_list.length === 1){
-    //   actions.push({
-    //     header: "",
-    //     body: str_list[0]
-    //   });
-    // } else {
-    //   actions.push({
-    //     header: str_list[1],
-    //     body: str_list[2]
-    //   });
-    // }
     index++;
   }
 
+  // reactions extraction
+  var index = 5;
+  while (index < monster_content.length && !monster_content[index++].includes("**Reactions**")) {}
+  reactions = [];
+  // get all the lines before Actions
+  while (index < monster_content.length){
+    line = monster_content[index];
+    // break when entering another category
+    if (line.slice(0, 2) === "**" && line.slice(0, 3) !== "***") break; 
+    reactions.push(line);
+    index++;
+  }
 
-
-  // TODO: 
-  // copy monster json
-  // revert file
-  // compare changes
-  // only fix big mistakes, keep iner **
-  // no need for header / body
-
-
-
-
-  console.log(actions);
-  
-
-  // actions extraction
-  var actions = {};
+  // reactions extraction
+  var index = 5;
+  while (index < monster_content.length && !monster_content[index++].includes("**Legendary Actions**")) {}
+  legendaryAction = [];
+  // get all the lines before Actions
+  while (index < monster_content.length){
+    line = monster_content[index];
+    // break when entering another category
+    if (line.slice(0, 2) === "**" && line.slice(0, 3) !== "***") break; 
+    legendaryAction.push(line);
+    index++;
+  }
 
   // todo: nodes last index
   monster = new Monster({
@@ -105,7 +103,9 @@ fillContent = (monster_name, monster_content) => {
     attributes,
     description: {
       traits,
-      actions
+      actions,
+      reactions,
+      legendaryAction
     }
   });
 
@@ -140,19 +140,28 @@ listMonsters = (rawdata) =>{
       
     }
   }
-
-  // console.log(Object.keys(monster_list));
   // console.log(monster_list);
-  // console.log(monster_list["Aboleth"].description.traits);
+  // console.log(monster_list["Aboleth"].description.legendaryAction);
   
-
+  return monster_list
 }
 
 
 extractMonsters = () =>{
   // console.log(fs.readdirSync('tools/json'));
   let rawdata = fs.readFileSync('tools/json/11 monsters.json');
-  listMonsters(rawdata);
+  monster_list = listMonsters(rawdata); 
+  console.log(Object.keys(monster_list).length);
+  
+  // saveMonsters(monster_list);
 }
+
+saveMonsters = async (monsters) => {
+  await connectDB();
+  for(monster of Object.values(monster_list)) {
+    await monster.save();
+  }
+}
+
 
 extractMonsters();

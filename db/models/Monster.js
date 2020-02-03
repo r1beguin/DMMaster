@@ -50,22 +50,6 @@ const MonsterSchema = new mongoose.Schema({
     },
   },
   attributes: {
-    saving: {
-      type: String,
-      required: true,
-    },
-    skills: {
-      type: String,
-      required: true,
-    },
-    resistances: {
-      type: String,
-      required: false,
-    },
-    immunities: {
-      type: String,
-      required: false,
-    },
     senses: {
       type: String,
       required: true,
@@ -78,6 +62,23 @@ const MonsterSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    saving: {
+      type: String,
+      required: false,
+    },
+    skills: {
+      type: String,
+      required: false,
+    },
+    resistances: {
+      type: String,
+      required: false,
+    },
+    immunities: {
+      type: String,
+      required: false,
+    },
+    
   },
   description: {
     traits: [{
@@ -85,37 +86,16 @@ const MonsterSchema = new mongoose.Schema({
       required: true,
     }],
     actions: [{
-      _id: false,
-      header: {
-        type: String,
-        required: true,
-      },
-      body: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     }],
     reactions: [{
-      _id: false,
-      header: {
         type: String,
         required: true,
-      },
-      body: {
-        type: String,
-        required: true,
-      },
     }],
     legendaryAction: [{
-      _id: false,
-      header: {
         type: String,
         required: true,
-      },
-      body: {
-        type: String,
-        required: true,
-      },
     }],
   }
 }, 
