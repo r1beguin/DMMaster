@@ -3,7 +3,7 @@ import { setAlert } from './alert'
 import { MAP_SAVED, MAP_LOADED } from "./types";
 
 
-export const login =  image  => async dispatch => {
+export const uploadImage =  image  => async dispatch => {
 
 
     let imageObj={
@@ -27,6 +27,17 @@ export const login =  image  => async dispatch => {
           errors.forEach(err => dispatch(setAlert(err.msg, "danger")));
         }
       }
+}
 
-
+export const loadImage = () => async dispatch => {
+  
+    try {
+      const res = await axios.get("/api/image");
+      dispatch({
+        type: MAP_LOADED,
+        payload: res.data
+      })
+    } catch (error) {
+      console.log("Error load image")
+    }
 }

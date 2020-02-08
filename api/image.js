@@ -17,4 +17,18 @@ router.post("/", async (req, res, next) => {
 
 });
 
+router.get("/", async (req, res) => {
+    try {
+     
+      const image = await Image.findOne().populate({
+        path: 'image',
+        model: Image,
+      });
+      res.json(image);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  });
+
 module.exports = router;

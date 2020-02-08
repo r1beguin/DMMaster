@@ -10,7 +10,6 @@ const HpManager = ({loadHp, hp}) => {
 
     useEffect(() => {
         loadHp()
-        document.title = "DM Master"
     }, []);
 
    

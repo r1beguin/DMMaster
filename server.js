@@ -10,6 +10,9 @@ connectDB();
 app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('API running'));
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({limit: '50mb'}));
+
 // Define Routes
 app.use('/api/register', require('./api/register'));
 app.use('/api/login', require('./api/login'));

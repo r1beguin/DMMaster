@@ -14,14 +14,15 @@ export default function(state = initialState, action) {
     switch (type) {
         case MAP_LOADED:
             return{
-                name:payload.name,
-                data:payload.data
+                name:payload.imageDame,
+                data:payload.imageData
             }
         case MAP_SAVED:
             return{
                 ...state,
                 ...payload
             }
+            
         default :
         return state;
     }
