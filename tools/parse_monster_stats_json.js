@@ -1,11 +1,11 @@
 const fs = require("fs");
 const Creature = require("../db/models/Monster");
-const connectDB = require("../db/db");
+const {connectDB, disconnectDB} = require("../db/db");
 const { parseStats, parseHP, parseChallenge, parseSaving } = require("./detailed_parsers")
 
-
+// find the attribute string from content array of a monster and the header string
 getAttribute = (content_array, header) => {
-  for (attribute of content_array) {
+  for (var attribute of content_array) {
     if (typeof attribute === "string" && attribute.includes(header)) {
       return attribute.split(header).join("");
     }
@@ -13,18 +13,27 @@ getAttribute = (content_array, header) => {
   return null;
 };
 
+// from the raw content of the monster, parse every bit and create a monster model
+parseMonster = (monster_name, monster_content) => {
 
-fillContent = (monster_name, monster_content) => {
-  // console.log(monster_name);
+  // header 
+  var name = monster_name;
+  var meta = monster_content[0].split("*").join(""); // removes '*' around
 
-  // stats extraction
+  // are those attributes ? parsing
+  // to put in the attributes_infos
+  var ac =          getAttribute(monster_content, "**Armor Class** ");
+  var hp = parseHP( getAttribute(monster_content, "**Hit Points** "));
+  var speed =       getAttribute(monster_content, "**Speed** ");
+
+  // stats parsing
   var stats = {};
-  for (let [key, value] of Object.entries(monster_content[4].table)) {
+  for (var [key, value] of Object.entries(monster_content[4].table)) {
     stats[key] = parseStats(value[0]);
   }
 
-  // attribures extraction
-  const attribute_infos = {
+  // attribures parsing
+  const attributes_infos = {
     senses:       { header: "**Senses** ",                required: true,   parser: null },
     languages:    { header: "**Languages** ",             required: true,   parser: null },
     challenge:    { header: "**Challenge** ",             required: true,   parser: parseChallenge },
@@ -34,8 +43,8 @@ fillContent = (monster_name, monster_content) => {
     immunities:   { header: "**Condition Immunities** ",  required: false,  parser: null }
   };
   var attributes = {};
-  for ([key, { header, required, parser }] of Object.entries(attribute_infos)) {
-    body = getAttribute(monster_content, header);
+  for (var [key, { header, required, parser }] of Object.entries(attributes_infos)) {
+    var body = getAttribute(monster_content, header);
     if (body !== null) {
       attributes[key] = body
       if (parser) {
@@ -46,11 +55,11 @@ fillContent = (monster_name, monster_content) => {
     }
   }
 
-  // traits extraction
+  // traits parsing
   // find first line after "Challenge"
   var index = 5;
   while (!monster_content[index++].includes("**Challenge**")) {}
-  traits = [];
+  var traits = [];
   // get all the lines before Actions
   while (
     index < monster_content.length &&
@@ -60,61 +69,64 @@ fillContent = (monster_name, monster_content) => {
     index++;
   }
 
-  // actions extraction
+  // actions parsing
   var index = 5;
+  // find first line after "Action"
   while (
     index < monster_content.length &&
     !monster_content[index++].includes("**Actions**")
   ) {}
-  actions = [];
+  var actions = [];
   // get all the lines before Actions
   while (index < monster_content.length) {
-    line = monster_content[index];
+    var line = monster_content[index];
     // break when entering another category
     if (line.slice(0, 2) === "**" && line.slice(0, 3) !== "***") break;
     actions.push(line);
     index++;
   }
 
-  // reactions extraction
+  // reactions parsing
   var index = 5;
+  // find first line after "Reactions"
   while (
     index < monster_content.length &&
     !monster_content[index++].includes("**Reactions**")
   ) {}
-  reactions = [];
+  var reactions = [];
   // get all the lines before Actions
   while (index < monster_content.length) {
-    line = monster_content[index];
+    var line = monster_content[index];
     // break when entering another category
     if (line.slice(0, 2) === "**" && line.slice(0, 3) !== "***") break;
     reactions.push(line);
     index++;
   }
 
-  // reactions extraction
+  // reactions parsing
   var index = 5;
+  // find first line after "Legendary Actions"
   while (
     index < monster_content.length &&
     !monster_content[index++].includes("**Legendary Actions**")
   ) {}
-  legendaryAction = [];
+  var legendaryAction = [];
   // get all the lines before Actions
   while (index < monster_content.length) {
-    line = monster_content[index];
+    var line = monster_content[index];
     // break when entering another category
     if (line.slice(0, 2) === "**" && line.slice(0, 3) !== "***") break;
     legendaryAction.push(line);
     index++;
   }
 
-  // todo: nodes last index
-  monster = new Monster({
-    name: monster_name,
-    meta: monster_content[0].split("*").join(""), // removes '*' around
-    ac: getAttribute(monster_content, "**Armor Class** "),
-    hp: parseHP(getAttribute(monster_content, "**Hit Points** ")),
-    speed: getAttribute(monster_content, "**Speed** "),
+  // TODO: notes last index
+  var monster = new Monster({
+    name,
+    meta,
+    ac,
+    hp,
+    speed,
     stats,
     attributes,
     description: {
@@ -124,80 +136,102 @@ fillContent = (monster_name, monster_content) => {
       legendaryAction
     }
   });
-
+  
   return monster;
 };
 
-const exceptions = ["Half-Dragon Template"];
-getContent = (group, prefix = "") => {
-  let monster_list = {};
-  for (let [monster_name, monster_content] of Object.entries(group)) {
+// for a given category parse all monsters inside
+// call recursively when cateogories inside category
+// prefix is used to keep track of the current category, not really used
+parseCategoryContent = (category_content, prefix = "") => {
+  const exceptions = ["Half-Dragon Template"];
+  var monsters = {};
+  for (var [monster_name, monster_content] of Object.entries(category_content)) {
     if (exceptions.includes(monster_name)) {
+      // unparseable data but still interesting to keep
       continue;
     }
     if ("content" in monster_content) {
-      monster_list[prefix + monster_name] = fillContent(
+      // add a monster to the dict
+      monsters[prefix + monster_name] = parseMonster(
         monster_name,
         monster_content.content
       );
     } else {
-      monster_list = {
-        ...monster_list,
-        ...getContent(monster_content, monster_name + ": ")
+      // recursive call when sub categories
+      monsters = {
+        ...monsters,
+        ...parseCategoryContent(monster_content, monster_name + ": ")
       };
     }
   }
-  return monster_list;
+  return monsters;
 };
 
-listMonsters = rawdata => {
-  let monster_list = {};
-  let monsters = JSON.parse(rawdata).Monsters;
-  for (let [category, category_content] of Object.entries(monsters)) {
+// from the monster json sting, create a dictionary of monster names and their mongo model
+// it goes through all monster in each categories and parse the content
+parseAllMonsters = monster_rawdata => {
+  var monsters = {};
+  var monster_dict = JSON.parse(monster_rawdata).Monsters;
+  for (var [category, category_content] of Object.entries(monster_dict)) {
+
+    // monsters are organized by "first letter categories".
+    // this appends the monsters of each categories
     if (category.split(" ")[0] === "Monsters") {
-      monster_list = { ...monster_list, ...getContent(category_content) };
+      monsters = { ...monsters, ...parseCategoryContent(category_content) };
     }
   }
-  // console.log(monster_list);
-  // console.log(monster_list["Aboleth"].description.legendaryAction);
 
-  return monster_list;
+  return monsters;
 };
 
-linkImage = (rawdata, monster_list) => {
-  let image_dict = JSON.parse(rawdata);
-  for (let [monster_name, monster] of Object.entries(monster_list)) {
-    name = monster.name;
-    // console.log(name);
-    image = image_dict[name];
+// link image dict with monsters to fill their image object
+linkImage = (image_rawdata, monsters) => {
+  var image_dict = JSON.parse(image_rawdata);
+  for (var [monster_name, monster] of Object.entries(monsters)) {
+    var name = monster.name;
+    var image = image_dict[name];
     if (image) {
       monster.image = image;
     } else {
-      console.error("not found: " + name);
+      console.error("not found: " + monster_name);
     }
     // TODO: find not found: Elf, Drow
     // not found: Succubus/Incubus
   }
 };
 
-extractMonsters = () => {
-  // console.log(fs.readdirSync('tools/json'));
-  let monsters_raw = fs.readFileSync("tools/json/11 monsters.json");
-  monster_list = listMonsters(monsters_raw);
 
-  let img_raw = fs.readFileSync("tools/json/monster_img.json");
-  linkImage(img_raw, monster_list);
-
-  // console.log(monster_list);
-
-  // saveMonsters(monster_list);
-};
-
-saveMonsters = async monsters => {
+// save all the monsters to the DB
+// monster with incomplete data (ex no image) will not be saved
+saveMonsters = async (monsters) => {
   await connectDB();
-  for (monster of Object.values(monster_list)) {
-    await monster.save();
+  for (var monster of Object.values(monsters)) {
+    try {
+      await monster.save();
+    } catch (error) {
+      console.log(error);
+    }
   }
+  // not working cuently for some reason
+  await disconnectDB;
 };
 
-extractMonsters();
+// from a monster json file, parse all monsters
+// from an image json file, get all images
+// link the two together
+// save the monsters to the DB
+extractMonstersFromFile = (monster_file, image_file) => {
+  var monsters_raw = fs.readFileSync(monster_file);
+  var img_raw = fs.readFileSync(image_file);
+
+  var monsters = parseAllMonsters(monsters_raw);
+  linkImage(img_raw, monsters);
+
+  // console.log(monsters);
+  saveMonsters(monsters);
+};
+
+// main starts here
+extractMonstersFromFile("tools/json/11 monsters.json", "tools/json/monster_img.json");
+// main ends here

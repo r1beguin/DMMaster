@@ -78,7 +78,7 @@ module.exports = {
     saving = {};
     for (stat of str_split) {
       stat_split = stat.split("+");
-      saving[stat_split[0].toUpperCase()] = parseInt(stat_split[1]);
+      saving[stat_split[0].toUpperCase().trim()] = parseInt(stat_split[1]);
     }
 
     return saving;

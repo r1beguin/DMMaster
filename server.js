@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 var server = require('http').Server(app);
-const connectDB = require('./db/db');
+const {connectDB} = require('./db/db');
 const socketio = require('socket.io');
 
 // socket.io
