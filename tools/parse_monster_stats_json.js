@@ -13,7 +13,7 @@ getAttribute = (content_array, header) => {
 }
 
 fillContent = (monster_name, monster_content) => {
-  console.log(monster_name);
+  // console.log(monster_name);
 
   // stats extraction
   var stats ={};
@@ -123,7 +123,7 @@ getContent = (group, prefix="") => {
       continue;
     }
     if ('content' in monster_content){
-      monster_list[prefix + monster_name] =  fillContent(prefix + monster_name, monster_content.content);
+      monster_list[prefix + monster_name] =  fillContent(monster_name, monster_content.content);
     } else {
       monster_list = {...monster_list, ...getContent(monster_content, monster_name + ': ')};
     }
@@ -146,12 +146,33 @@ listMonsters = (rawdata) =>{
   return monster_list
 }
 
+linkImage = (rawdata, monster_list, ) => {
+  let image_dict = JSON.parse(rawdata);
+  for (let [monster_name, monster] of Object.entries(monster_list)) {
+    name = monster.name;
+    // console.log(name);
+    image = image_dict[name];
+    if(image) {
+      monster.image = image;
+    } else {
+      console.error("not found: " + name);
+    }
+    // TODO: find not found: Elf, Drow
+    // not found: Succubus/Incubus
+    
+  }
+}
+
 
 extractMonsters = () =>{
   // console.log(fs.readdirSync('tools/json'));
-  let rawdata = fs.readFileSync('tools/json/11 monsters.json');
-  monster_list = listMonsters(rawdata); 
-  console.log(Object.keys(monster_list).length);
+  let monsters_raw = fs.readFileSync('tools/json/11 monsters.json');
+  monster_list = listMonsters(monsters_raw); 
+
+  let img_raw = fs.readFileSync('tools/json/monster_img.json');
+  linkImage(img_raw, monster_list);
+
+  // console.log(monster_list);
   
   // saveMonsters(monster_list);
 }

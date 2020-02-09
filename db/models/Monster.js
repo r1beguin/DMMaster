@@ -97,8 +97,18 @@ const MonsterSchema = new mongoose.Schema({
         type: String,
         required: true,
     }],
-  }
-}, 
+  },
+  image: {
+    miniature: {
+      type: String,
+      required: true,
+    },
+    full: {
+      type: String,
+      required: true,
+    },
+  },
+},
 {
   versionKey: false
 });

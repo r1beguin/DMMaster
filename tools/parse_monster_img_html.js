@@ -42,20 +42,20 @@ extractMonsters = () =>{
 
       console.log(name);
       
-      var image;
-      var thumbnail;
+      var full;
+      var miniature;
       if(img_div.innerHTML){
-        image = img_div.getAttribute("href");
-        thumbnail = img_div.childNodes[1].getAttribute("style").split("\'")[1];
+        full = img_div.getAttribute("href");
+        miniature = img_div.childNodes[1].getAttribute("style").split("\'")[1];
 
       } else {
         link = no_image_dict[img_div.className]
-        image = link;
-        thumbnail = link;
+        full = link;
+        miniature = link;
       }
       monster_imgs[name] = {
-        image, 
-        thumbnail,
+        full, 
+        miniature,
       }
     }
   }
