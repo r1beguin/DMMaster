@@ -1,36 +1,36 @@
-import React from 'react';
 
+import { loadImage } from '../../actions/image'
+import React, { Fragment, useEffect } from "react"
 import './Battlemap.css'
+import { connect } from "react-redux";
 
 
 
-class Battlemap extends React.Component{
+const Battlemap =({loadImage, image}) =>{
 
-    constructor() {
-        super();
-        this.handler = this.handler.bind(this);
-      }
-
-      handler(e){ 
-        this.props.modeSelection(e);
-      }
- 
-    render(){
-        return(
-            <div>
-                {/* <div className="navDM">
-                    <div className="back" onClick={() => this.handler("home")}>Home</div>
-                    <div className="activeItem">Battle Map</div>
+    useEffect(() => {
+        loadImage();
+      }, []);
     
-                    
-                </div> */}
-
-               
-            </div> 
+   
+    
+        return(
+            <Fragment>
+                <div>
+                    <img src={image} className="map" alt="map" />
+                </div> 
+            </Fragment>
 
         )
-    }
+    
 }
 
 
-export default Battlemap
+const mapStateToProps = state => ({
+    image: state.image.data
+  });
+
+  export default connect(
+    mapStateToProps, // connect store state to component props
+    { loadImage} // connect actions for the component to modify store state
+  )(Battlemap);

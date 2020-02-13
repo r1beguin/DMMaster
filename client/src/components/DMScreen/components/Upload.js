@@ -17,7 +17,7 @@ const Upload = ({loadImage, uploadImage, image}) => {
             <FileBase64 multiple={false} onDone={uploadImage.bind(this)} />
             <button onClick={e =>loadImage()}>load image</button>
             <img src={image} className="map" alt="map" />
-            {console.log("image: " +image)}
+            
         </Fragment>
     )
 }
