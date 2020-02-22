@@ -1,6 +1,6 @@
 import { 
   LOAD_FIGHT,
-  NEXT_TURN,
+  SET_TURN,
 } from "../actions/types";
 
 const initialState = {
@@ -26,18 +26,14 @@ export default function(state = initialState, action) {
           }
         })
       };
-    case NEXT_TURN:
-      var turn = state.turn + 1;
-      var round = state.round;
-      if (turn === state.involved.length){
-        turn = 0;
-        round++;
-      }
+
+    case SET_TURN:
       return {
         ...state,
-        turn,
-        round,
+        turn: payload.turn,
+        round: payload.round,
       };
+
     default:
       return state;
   }

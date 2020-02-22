@@ -11,7 +11,7 @@ export const USER_LOGOUT = 'USER_LOGOUT'
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const LOAD_FIGHT = 'LOAD_FIGHT';
-export const NEXT_TURN = 'NEXT_TURN';
+export const SET_TURN = 'SET_TURN';
 
 export const HP_LOADED = 'HP_LOADED';
 
