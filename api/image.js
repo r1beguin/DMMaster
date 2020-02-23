@@ -14,7 +14,7 @@ router.post("/", async (req, res, next) => {
             document:result
         })
     }).catch((err)=>next(err))
-
+    req.io.emit('message', newImage)
 });
 
 router.get("/", async (req, res) => {
@@ -25,6 +25,7 @@ router.get("/", async (req, res) => {
         model: Image,
       });
       res.json(image);
+      req.io.emit('message', image)
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
