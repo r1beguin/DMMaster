@@ -1,43 +1,58 @@
 import axios from "axios";
-import { setAlert } from './alert'
-import { MAP_SAVED, MAP_LOADED } from "./types";
+import { setAlert } from "./alert";
+import { MAP_SAVED, MAP_LOADED, MAP_LIST_LOADED } from "./types";
 
+export const uploadImage = image => async dispatch => {
+  let imageObj = {
+    imageName: "base-image-" + Date.now(),
+    imageData: image.base64.toString()
+  };
 
-export const uploadImage =  image  => async dispatch => {
+  try {
+    const res = await axios.post("/api/image", imageObj);
+    console.log(res);
 
+    dispatch({
+      type: MAP_SAVED,
+      payload: res.data
+    });
+  } catch (error) {
+    const errors = error.response.data.errors;
+    console.log(error);
 
-    let imageObj={
-        imageName:"base-image-"+ Date.now(),
-        imageData: image.base64.toString()
+    if (errors) {
+      errors.forEach(err => dispatch(setAlert(err.msg, "danger")));
     }
+  }
+};
 
-    try{
-        const res = await axios.post("/api/image", imageObj);
-        console.log(res);
+export const loadImage = image => async dispatch => {
+  console.log("image", image._id);
 
-        dispatch({
-            type: MAP_SAVED,
-            payload: res.data
-        })
-    }catch (error) {
-        const errors = error.response.data.errors;
-        console.log(error);
-        
-        if (errors) {
-          errors.forEach(err => dispatch(setAlert(err.msg, "danger")));
-        }
+  try {
+    const res = await axios.get("/api/image/getImage", {
+      params: {
+        id: image._id
       }
-}
+    });
+    console.log("res", res);
+    dispatch({
+      type: MAP_LOADED,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log("Error load image", error);
+  }
+};
 
-export const loadImage = () => async dispatch => {
-  
-    try {
-      const res = await axios.get("/api/image");
-      dispatch({
-        type: MAP_LOADED,
-        payload: res.data
-      })
-    } catch (error) {
-      console.log("Error load image")
-    }
-}
+export const loadImageList = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/image/imagesList");
+    dispatch({
+      type: MAP_LIST_LOADED,
+      payload: res.data
+    });
+  } catch (err) {
+    console.log("Error load image list");
+  }
+};

@@ -1,18 +1,19 @@
-.uploadMap{
-    float:top;
-    padding:10px
+.uploadMap {
+  float: top;
+  padding: 10px;
 }
 
-.map{
-    
-    width: 300px;
-    max-height: auto;
-    padding: 5px;
-    
+.map {
+  width: 300px;
+  max-height: auto;
+  padding: 5px;
 }
 
-.dmscreen{
-    float:top;
-    
+.dmscreen {
+  float: top;
 }
 
+.imageList {
+  width: 5vw;
+  margin: 1vw;
+}
