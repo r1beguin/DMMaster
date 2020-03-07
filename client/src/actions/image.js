@@ -27,15 +27,12 @@ export const uploadImage = image => async dispatch => {
 };
 
 export const loadImage = image => async dispatch => {
-  console.log("image", image._id);
-
   try {
     const res = await axios.get("/api/image/getImage", {
       params: {
         id: image._id
       }
     });
-    console.log("res", res);
     dispatch({
       type: MAP_LOADED,
       payload: res.data

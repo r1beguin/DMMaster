@@ -35,7 +35,7 @@ const Upload = ({ loadImage, uploadImage, image, loadImageList, images }) => {
   return (
     <Fragment>
       <FileBase64 multiple={false} onDone={uploadImage.bind(this)} />
-      <button onClick={e => loadImage()}>load image</button>
+      <button onClick={e => loadImage(image)}>load image</button>
       <img src={image} className="map" alt="map" />
       <div>{renderImageList(images)}</div>
     </Fragment>

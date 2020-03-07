@@ -21,7 +21,6 @@ router.post("/", async (req, res, next) => {
 
 router.get("/getImage", async (req, res) => {
   try {
-    console.log(req.query);
     const image = await Image.findById(req.query.id);
     res.json(image);
     //req.io.emit("message", image);
