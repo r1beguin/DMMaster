@@ -1,21 +1,18 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import { Box, DropButton, Image } from "grommet";
+import { Box, DropButton, Image, Text } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 
-import { loadImageList, loadImage } from "../../actions/image";
+import { loadImageList, loadImage, uploadImage } from "../../actions/image";
+import FileBase64 from "react-file-base64";
 
-const Map = ({ image, images, loadImage, loadImageList }) => {
+const Map = ({ image, images, loadImage, loadImageList, uploadImage }) => {
   useEffect(() => {
     loadImageList();
   }, []);
   return (
-    <Box
-      width="large"
-      height="large"
-      border={{ color: "brand", size: "large" }}
-    >
+    <Box fill border={{ color: "brand", size: "large" }}>
       <Box fill="horizontal" align="end">
         <Box width="xsmall" margin="xsmall">
           <DropButton
@@ -33,13 +30,25 @@ const Map = ({ image, images, loadImage, loadImageList }) => {
                     <Image src={img.imageData} fit="cover"></Image>
                   </Box>
                 ))}
+                <Box margin="xsmall" direction="row" alignContent="center">
+                  <Box alignContent="center">
+                    <FileBase64
+                      multiple={false}
+                      onDone={uploadImage.bind(this)}
+                    />
+                  </Box>
+                </Box>
               </Box>
             }
           />
         </Box>
       </Box>
-      <Box fill>
-        <Image src={image} fit="cover"></Image>
+      <Box fill pad="xsmall">
+        {image === "" ? (
+          <Text>Selectionner votre battlemap</Text>
+        ) : (
+          <Image src={image} fit="contain"></Image>
+        )}
       </Box>
     </Box>
   );
@@ -49,7 +58,8 @@ Map.propTypes = {
   image: PropTypes.object,
   loadImage: PropTypes.func,
   images: PropTypes.array,
-  loadImageList: PropTypes.func
+  loadImageList: PropTypes.func,
+  uploadImage: PropTypes.func
 };
 
 const mapStateToProps = state => ({
@@ -59,5 +69,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps, // connect store state to component props
-  { loadImage, loadImageList } // connect actions for the component to modify store state
+  { loadImage, loadImageList, uploadImage } // connect actions for the component to modify store state
 )(Map);

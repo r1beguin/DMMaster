@@ -3,11 +3,14 @@ import React, { Fragment } from "react";
 import "./Battlemap.css";
 import { connect } from "react-redux";
 import Map from "../Map/Map";
+import { Box } from "grommet";
 
 const Battlemap = ({ image }) => {
   return (
     <Fragment>
-      <Map />
+      <Box height="50vw" margin="xsmall">
+        <Map />
+      </Box>
     </Fragment>
   );
 };
