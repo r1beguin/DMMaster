@@ -18,3 +18,7 @@ export const HP_LOADED = "HP_LOADED";
 export const MAP_SAVED = "MAP_SAVED";
 export const MAP_LOADED = "MAP_LOADED";
 export const MAP_LIST_LOADED = "MAP_LIST_LOADED";
+
+export const GET_CREATURE = "GET_CREATURE";
+export const GET_CREATURE_SUCCESS = "GET_CREATURE_SUCCESS";
+export const GET_CREATURE_ERROR = "GET_CREATURE_ERROR";

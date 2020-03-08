@@ -6,10 +6,22 @@ import PropTypes from "prop-types"; // shortcut: impt
 
 import { loadImageList, loadImage, uploadImage } from "../../actions/image";
 import FileBase64 from "react-file-base64";
+import { getCreature } from "../../actions/hp";
 
-const Map = ({ image, images, loadImage, loadImageList, uploadImage }) => {
+const Map = ({
+  hp,
+  getCreature,
+  image,
+  images,
+  loadImage,
+  loadImageList,
+  uploadImage,
+  involved
+}) => {
   useEffect(() => {
     loadImageList();
+    getCreature("Thokk");
+    console.log("hp", hp);
   }, []);
   return (
     <Box fill border={{ color: "brand", size: "large" }}>
@@ -21,6 +33,7 @@ const Map = ({ image, images, loadImage, loadImageList, uploadImage }) => {
               <Box align="center">
                 {images.map(img => (
                   <Box
+                    key={img.imageName}
                     border={{ color: "accent-2" }}
                     width="xsmall"
                     height="xsmall"
@@ -34,7 +47,7 @@ const Map = ({ image, images, loadImage, loadImageList, uploadImage }) => {
                   <Box alignContent="center">
                     <FileBase64
                       multiple={false}
-                      onDone={uploadImage.bind(this)}
+                      onDone={(uploadImage.bind(this), loadImageList())}
                     />
                   </Box>
                 </Box>
@@ -43,12 +56,21 @@ const Map = ({ image, images, loadImage, loadImageList, uploadImage }) => {
           />
         </Box>
       </Box>
-      <Box fill pad="xsmall">
-        {image === "" ? (
-          <Text>Selectionner votre battlemap</Text>
-        ) : (
-          <Image src={image} fit="contain"></Image>
-        )}
+      <Box direction="row">
+        <Box round="full" width="xxsmall" height="xxsmall" margin="xsmall">
+          <Image
+            src={hp.creature.avatar}
+            fit="cover"
+            style={{ borderRadius: 100 }}
+          ></Image>
+        </Box>
+        <Box fill pad="xsmall" align="center">
+          {image === "" ? (
+            <Text>Selectionner votre battlemap</Text>
+          ) : (
+            <Image src={image} fit="contain"></Image>
+          )}
+        </Box>
       </Box>
     </Box>
   );
@@ -59,15 +81,20 @@ Map.propTypes = {
   loadImage: PropTypes.func,
   images: PropTypes.array,
   loadImageList: PropTypes.func,
-  uploadImage: PropTypes.func
+  uploadImage: PropTypes.func,
+  involved: PropTypes.array,
+  hp: PropTypes.object,
+  getCreature: PropTypes.func
 };
 
 const mapStateToProps = state => ({
   image: state.image.data,
-  images: state.image.imageList
+  images: state.image.imageList,
+  involved: state.fight.involved,
+  hp: state.hp
 });
 
 export default connect(
   mapStateToProps, // connect store state to component props
-  { loadImage, loadImageList, uploadImage } // connect actions for the component to modify store state
+  { loadImage, loadImageList, uploadImage, getCreature } // connect actions for the component to modify store state
 )(Map);
