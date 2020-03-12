@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { Box, DropButton, Image, Text } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
+import InitiativeTracker from "../../components/DMScreen/components/InitiativeTracker";
 
 import { loadImageList, loadImage, uploadImage } from "../../actions/image";
 import FileBase64 from "react-file-base64";
 import { getCreature } from "../../actions/hp";
+
+import Draggable from "react-draggable";
 
 const Map = ({
   hp,
@@ -16,13 +19,42 @@ const Map = ({
   loadImage,
   loadImageList,
   uploadImage,
-  involved
+  involved,
+  turn
 }) => {
   useEffect(() => {
     loadImageList();
     getCreature("Thokk");
     console.log("hp", hp);
   }, []);
+
+  const [formData, setFormData] = useState({
+    activeDrags: 0,
+    deltaPosition: {
+      x: 0,
+      y: 0
+    },
+    controlledPosition: {
+      x: hp.creature.posx,
+      y: hp.creature.posy
+    }
+  });
+
+  const onStart = () => {
+    setFormData({ ...formData, activeDrags: ++formData.activeDrags });
+  };
+
+  const onStop = () => {
+    setFormData({ ...formData, activeDrags: --formData.activeDrags });
+  };
+
+  const dragHandlers = { onStart: onStart, onStop: onStop };
+
+  const onControlledDrag = (e, position) => {
+    const { x, y } = position;
+    setFormData({ ...formData, controlledPosition: { x, y } });
+  };
+
   return (
     <Box fill border={{ color: "brand", size: "large" }}>
       <Box fill="horizontal" align="end">
@@ -58,13 +90,26 @@ const Map = ({
       </Box>
       <Box direction="row">
         <Box round="full" width="xxsmall" height="xxsmall" margin="xsmall">
-          <Image
-            src={hp.creature.avatar}
-            fit="cover"
-            style={{ borderRadius: 100 }}
-          ></Image>
+          {involved.map(function(inv, idx) {
+            const creature = inv.creature;
+            return (
+              <Draggable
+                {...dragHandlers}
+                position={formData.controlledPosition}
+                onDrag={onControlledDrag}
+              >
+                <div key={idx}>
+                  <InitiativeTracker
+                    active={idx === turn}
+                    name={creature.name}
+                    src={creature.avatar}
+                  />
+                </div>
+              </Draggable>
+            );
+          })}
         </Box>
-        <Box fill pad="xsmall" align="center">
+        <Box width="large" pad="xsmall" align="center">
           {image === "" ? (
             <Text>Selectionner votre battlemap</Text>
           ) : (
@@ -84,14 +129,16 @@ Map.propTypes = {
   uploadImage: PropTypes.func,
   involved: PropTypes.array,
   hp: PropTypes.object,
-  getCreature: PropTypes.func
+  getCreature: PropTypes.func,
+  turn: PropTypes.array
 };
 
 const mapStateToProps = state => ({
   image: state.image.data,
   images: state.image.imageList,
   involved: state.fight.involved,
-  hp: state.hp
+  hp: state.hp,
+  turn: state.fight.turn
 });
 
 export default connect(

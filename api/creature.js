@@ -20,9 +20,21 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/creature", auth, async (req, res) => {
+router.get("/creature", async (req, res) => {
   try {
     const creature = await Creature.findOne(req.query);
+    res.json(creature);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.post("/creature/position", async (req, res) => {
+  try {
+    const creature = await Creature.findOneAndUpdate(req.query, req.body, {
+      new: true
+    });
     res.json(creature);
   } catch (err) {
     console.error(err.message);
