@@ -1,7 +1,9 @@
 import {
   HP_LOADED,
   GET_CREATURE_SUCCESS,
-  GET_CREATURE_ERROR
+  GET_CREATURE_ERROR,
+  UPDATE_POSITION_SUCCESS,
+  UPDATE_POSITION_ERROR
 } from "../actions/types";
 import axios from "axios";
 
@@ -33,6 +35,25 @@ export const getCreature = name => async dispatch => {
     console.log("Error load creature", error);
     dispatch({
       type: GET_CREATURE_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const updatePosition = (name, pos) => async dispatch => {
+  try {
+    const res = await axios.post("/creature/position", {
+      params: {
+        name: name
+      }
+    });
+    dispatch({
+      type: UPDATE_POSITION_SUCCESS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_POSITION_ERROR,
       payload: error
     });
   }

@@ -2,7 +2,10 @@ import {
   HP_LOADED,
   GET_CREATURE_SUCCESS,
   GET_CREATURE_ERROR,
-  GET_CREATURE
+  GET_CREATURE,
+  UPDATE_POSITION,
+  UPDATE_POSITION_SUCCESS,
+  UPDATE_POSITION_ERROR
 } from "../actions/types";
 
 const initialState = {
@@ -44,6 +47,21 @@ export default function(state = initialState, action) {
         creature: action.payload
       };
     case GET_CREATURE_ERROR:
+      return {
+        ...state
+      };
+
+    case UPDATE_POSITION:
+      return {
+        ...state,
+        loading: true
+      };
+    case UPDATE_POSITION_SUCCESS:
+      return {
+        loading: false,
+        creature: action.payload
+      };
+    case UPDATE_POSITION_ERROR:
       return {
         ...state
       };
