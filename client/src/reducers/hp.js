@@ -41,7 +41,6 @@ export default function(state = initialState, action) {
         loading: true
       };
     case GET_CREATURE_SUCCESS:
-      console.log("action", action.payload);
       return {
         loading: false,
         creature: action.payload
@@ -57,6 +56,7 @@ export default function(state = initialState, action) {
         loading: true
       };
     case UPDATE_POSITION_SUCCESS:
+      console.log("reducer", action.payload);
       return {
         loading: false,
         creature: action.payload

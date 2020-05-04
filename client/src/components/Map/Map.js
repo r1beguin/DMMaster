@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import { Box, DropButton, Image, Text } from "grommet";
+import { Box, DropButton, Image, Text, Button } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 import InitiativeTracker from "../../components/DMScreen/components/InitiativeTracker";
 
 import { loadImageList, loadImage, uploadImage } from "../../actions/image";
 import FileBase64 from "react-file-base64";
-import { getCreature } from "../../actions/hp";
+import { getCreature, updatePosition } from "../../actions/hp";
 
 import Draggable from "react-draggable";
 
@@ -20,24 +20,24 @@ const Map = ({
   loadImageList,
   uploadImage,
   involved,
-  turn
+  turn,
+  updatePosition,
 }) => {
   useEffect(() => {
     loadImageList();
     getCreature("Thokk");
-    console.log("hp", hp);
   }, []);
 
   const [formData, setFormData] = useState({
     activeDrags: 0,
     deltaPosition: {
       x: 0,
-      y: 0
+      y: 0,
     },
     controlledPosition: {
       x: hp.creature.posx,
-      y: hp.creature.posy
-    }
+      y: hp.creature.posy,
+    },
   });
 
   const onStart = () => {
@@ -63,7 +63,7 @@ const Map = ({
             label="Maps"
             dropContent={
               <Box align="center">
-                {images.map(img => (
+                {images.map((img) => (
                   <Box
                     key={img.imageName}
                     border={{ color: "accent-2" }}
@@ -79,21 +79,30 @@ const Map = ({
                   <Box alignContent="center">
                     <FileBase64
                       multiple={false}
-                      onDone={(uploadImage.bind(this), loadImageList())}
+                      onDone={uploadImage.bind(this)}
                     />
                   </Box>
                 </Box>
               </Box>
             }
           />
+          <Button
+            onClick={() => {
+              updatePosition("Thokk", { posx: 300, posy: 300 });
+              getCreature("Thokk");
+              console.log(hp);
+            }}
+            label="test"
+          ></Button>
         </Box>
       </Box>
       <Box direction="row">
         <Box round="full" width="xxsmall" height="xxsmall" margin="xsmall">
-          {involved.map(function(inv, idx) {
+          {involved.map(function (inv, idx) {
             const creature = inv.creature;
             return (
               <Draggable
+                key={idx}
                 {...dragHandlers}
                 position={formData.controlledPosition}
                 onDrag={onControlledDrag}
@@ -122,7 +131,7 @@ const Map = ({
 };
 
 Map.propTypes = {
-  image: PropTypes.object,
+  image: PropTypes.string,
   loadImage: PropTypes.func,
   images: PropTypes.array,
   loadImageList: PropTypes.func,
@@ -130,18 +139,19 @@ Map.propTypes = {
   involved: PropTypes.array,
   hp: PropTypes.object,
   getCreature: PropTypes.func,
-  turn: PropTypes.array
+  turn: PropTypes.number,
+  updatePosition: PropTypes.func,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   image: state.image.data,
   images: state.image.imageList,
   involved: state.fight.involved,
   hp: state.hp,
-  turn: state.fight.turn
+  turn: state.fight.turn,
 });
 
 export default connect(
   mapStateToProps, // connect store state to component props
-  { loadImage, loadImageList, uploadImage, getCreature } // connect actions for the component to modify store state
+  { loadImage, loadImageList, uploadImage, getCreature, updatePosition } // connect actions for the component to modify store state
 )(Map);

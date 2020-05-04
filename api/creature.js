@@ -32,10 +32,12 @@ router.get("/creature", async (req, res) => {
 
 router.post("/creature/position", async (req, res) => {
   try {
+    console.log("req", req.body);
     const creature = await Creature.findOneAndUpdate(req.query, req.body, {
       new: true
     });
     res.json(creature);
+    console.log("res api", creature);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

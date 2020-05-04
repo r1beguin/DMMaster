@@ -26,7 +26,6 @@ export const getCreature = name => async dispatch => {
         name: name
       }
     });
-    console.log("res", res);
     dispatch({
       type: GET_CREATURE_SUCCESS,
       payload: res.data
@@ -42,11 +41,16 @@ export const getCreature = name => async dispatch => {
 
 export const updatePosition = (name, pos) => async dispatch => {
   try {
-    const res = await axios.post("/creature/position", {
+    const res = await axios.post("api/creature/creature/position", {
       params: {
         name: name
+      },
+      data: {
+        posx: pos.posx,
+        psoy: pos.posy
       }
     });
+    console.log("action", res);
     dispatch({
       type: UPDATE_POSITION_SUCCESS,
       payload: res.data
