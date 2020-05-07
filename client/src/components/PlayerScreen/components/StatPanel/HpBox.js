@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box } from "grommet";
+import { Box, Button, TextInput } from "grommet";
 import "./HpBox.css";
 import HpManager from "../HpManager";
 
@@ -55,19 +55,31 @@ class HpBox extends Component {
 
   render() {
     return (
-      <Box className="Box">
+      <Box round="xsmall" background="white" width="small" align="center">
         <h4>Hit points</h4>
 
-        <Box className="currentHp">
+        <Box>
           <HpManager />
         </Box>
         <hr />
-        <Box className="maxHp">{this.state.maxHp}</Box>
+        <Box>{this.state.maxHp}</Box>
 
-        <Box direction="row">
-          <button onClick={this.remHP}>-</button>
-          <input onChange={this.userInput} />
-          <button onClick={this.addHP}>+</button>
+        <Box
+          direction="row"
+          alignContent="center"
+          justify="evenly"
+          pad="small"
+          gap="small"
+        >
+          <Box alignContent="center">
+            <Button onClick={this.remHP}>-</Button>
+          </Box>
+          <Box height="xxsmall" width="xsmall" alignContent="center">
+            <TextInput onChange={this.userInput} />
+          </Box>
+          <Box alignContent="center">
+            <Button onClick={this.addHP}>+</Button>
+          </Box>
         </Box>
       </Box>
     );
