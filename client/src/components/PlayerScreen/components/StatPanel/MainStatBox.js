@@ -1,103 +1,127 @@
-import React from 'react'
-import { Component } from 'react'
+import React from "react";
+import { Box, Text } from "grommet";
 
-import './MainStatBox.css'
+import Skills from "./Skills";
 
-import Skills from './Skills'
+const MainStatBox = () => {
+  const [skill, setskill] = React.useState({
+    str: "+2",
+    dex: "+2",
+    con: "+2",
+    int: "+2",
+    wis: "+2",
+    cha: "+2",
+    skill: "",
+  });
 
-class MainStatBox extends Component{
-    constructor(){
-        super()
-        this.state={
-            str:"+2",
-            dex:"+2",
-            con:"+2",
-            int:"+2",
-            wis:"+2",
-            cha:"+2",
-            skill:""
-        }
+  const SkillDisplay = (e) => {
+    if (e === "str" && skill.skill !== "str") {
+      setskill({ ...skill, skill: "str" });
+    } else if (e === "dex" && skill.skill !== "dex") {
+      setskill({ ...skill, skill: "dex" });
+    } else if (e === "int" && skill.skill !== "int") {
+      setskill({ ...skill, skill: "int" });
+    } else if (e === "wis" && skill.skill !== "wis") {
+      setskill({ ...skill, skill: "wis" });
+    } else if (e === "cha" && skill.skill !== "cha") {
+      setskill({ ...skill, skill: "cha" });
+    } else {
+      setskill({ ...skill, skill: "0" });
     }
+  };
 
-    SkillDisplay(e){
-        if (e==="str" && this.state.skill!=="str"){
-            this.setState({skill:"str"})
-        }else if (e==="dex" && this.state.skill!=="dex"){
-            this.setState({skill:"dex"})
-        }else if (e==="int" && this.state.skill!=="int"){
-            this.setState({skill:"int"})
-        }else if (e==="wis" && this.state.skill!=="wis"){
-            this.setState({skill:"wis"})
-        }else if (e==="cha" && this.state.skill!=="cha"){
-            this.setState({skill:"cha"})
-        }else{
-            this.setState({skill:"0"})
-        }
+  return (
+    <Box>
+      <Box direction="row">
+        <Box
+          onClick={() => SkillDisplay("str")}
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Strength</Text>
 
-    }
+          <Text> {skill.str}</Text>
+        </Box>
 
-    render(){
-        return(
-            
-                <div className="MainStatBox">
-                    <div className="MainStat" onClick={()=>this.SkillDisplay("str")}>
-                        <p style={{fontWeight: 'bold'}}>
-                            Strength
-                        </p>
-                        <hr />
-                        {this.state.str}
-                    </div>
+        <Box
+          onClick={() => SkillDisplay("dex")}
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Dexterity</Text>
 
-                    <div className="MainStat" onClick={()=>this.SkillDisplay("dex")}>
-                        <p style={{fontWeight: 'bold'}}>
-                            Dexterity
-                        </p>
-                        <hr />
-                        {this.state.dex}
-                    </div>
+          <Text> {skill.dex}</Text>
+        </Box>
 
-                    <div className="MainStat">
-                        <p style={{fontWeight: 'bold'}}>
-                            Constitution
-                        </p>
-                        <hr />
-                        {this.state.con}
-                    </div>
+        <Box
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Constitution</Text>
 
-                    <div className="MainStat" onClick={()=>this.SkillDisplay("int")}>
-                        <p style={{fontWeight: 'bold'}}>
-                            Intelligence
-                        </p>
-                        <hr />
-                        {this.state.int}
-                    </div>
+          <Text> {skill.con}</Text>
+        </Box>
 
-                    <div className="MainStat" onClick={()=>this.SkillDisplay("wis")}>
-                        <p style={{fontWeight: 'bold'}}>
-                            Wisdom
-                        </p>
-                        <hr />
-                        {this.state.wis}
-                    </div>
+        <Box
+          onClick={() => SkillDisplay("int")}
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Intelligence</Text>
 
-                    <div className="MainStat" onClick={()=>this.SkillDisplay("cha")}>
-                        <p style={{fontWeight: 'bold'}}>
-                            Charisma
-                        </p>
-                        <hr />
-                        {this.state.cha}
-                    </div>
+          <Text>{skill.int}</Text>
+        </Box>
 
-                    <div>
-                        <Skills skill={this.state.skill} />
-                    </div>
+        <Box
+          onClick={() => SkillDisplay("wis")}
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Wisdom</Text>
 
-                </div>
+          <Text>{skill.wis}</Text>
+        </Box>
 
-                
-            
-        )
-    }
-}
+        <Box
+          onClick={() => SkillDisplay("cha")}
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Charisma</Text>
 
-export default MainStatBox
+          <Text>{skill.cha}</Text>
+        </Box>
+      </Box>
+
+      <Box>
+        <Skills skill={skill.skill} />
+      </Box>
+    </Box>
+  );
+};
+
+export default MainStatBox;
