@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+import FightBar from "./components/FightBar/FightBar";
 import Landing from "./components/layout/Landing";
 import DMScreen from "./components/DMScreen/DMScreen";
 import Battlemap from "./components/BattleMap/Battlemap";
@@ -43,6 +44,7 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
+          <FightBar />
           <Route exact path="/">
             <Landing />
           </Route>
