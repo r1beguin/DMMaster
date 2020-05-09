@@ -1,5 +1,3 @@
-import "./DMScreen.css";
-
 import Draggable from "react-draggable";
 import InitiativeTracker from "./components/InitiativeTracker";
 import Map from "../Map/Map";
@@ -15,12 +13,12 @@ const DMScreen = ({ loadFight, nextTurn, turn, involved }) => {
     activeDrags: 0,
     deltaPosition: {
       x: 0,
-      y: 0
+      y: 0,
     },
     controlledPosition: {
       x: -400,
-      y: 200
-    }
+      y: 200,
+    },
   });
 
   const onStart = () => {
@@ -37,7 +35,7 @@ const DMScreen = ({ loadFight, nextTurn, turn, involved }) => {
       <div className="dmBox">
         <Box direction="row">
           <div className="iniBox">
-            {involved.map(function(inv, idx) {
+            {involved.map(function (inv, idx) {
               const creature = inv.creature;
               return (
                 <Draggable {...dragHandlers}>
@@ -52,7 +50,7 @@ const DMScreen = ({ loadFight, nextTurn, turn, involved }) => {
               );
             })}
             <div className="turnbox">
-              <button className="turn" onClick={e => nextTurn()}>
+              <button className="turn" onClick={(e) => nextTurn()}>
                 End of Turn
               </button>
             </div>
@@ -69,12 +67,12 @@ DMScreen.propTypes = {
   loadFight: PropTypes.func.isRequired,
   nextTurn: PropTypes.func.isRequired, // ptfr
   turn: PropTypes.number,
-  involved: PropTypes.array
+  involved: PropTypes.array,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   turn: state.fight.turn,
-  involved: state.fight.involved
+  involved: state.fight.involved,
 });
 
 export default connect(mapStateToProps, { loadFight, nextTurn })(DMScreen);
