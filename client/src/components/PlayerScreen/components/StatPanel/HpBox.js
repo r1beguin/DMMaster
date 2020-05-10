@@ -1,88 +1,29 @@
-import React, { Component } from 'react'
+import React from "react";
+import { Box, Text } from "grommet";
+import HpManager from "./HpManager";
 
-import './HpBox.css'
-import HpManager from '../HpManager'
+//Hit points display managment
 
-//Hit points display managment 
+const HpBox = () => {
+  const [maxHp] = React.useState(55);
 
-class HpBox extends Component{
-    constructor(){
-        super()
+  return (
+    <Box
+      background="white"
+      width="small"
+      margin="small"
+      round="small"
+      border="full"
+      align="center"
+    >
+      <Text>Hit points</Text>
 
-        this.state = {
-            
-            hp:30,
-            maxHp:50,
-           
-            userInput:0
-        }
+      <Box>
+        <HpManager />
+      </Box>
+      <Box>{maxHp}</Box>
+    </Box>
+  );
+};
 
-        this.userInput =this.userInput.bind(this)
-        this.addHP =this.addHP.bind(this)
-        this.remHP =this.remHP.bind(this)
-    }
-
-    addHP(){
-        var newHp=this.state.hp+parseInt(this.state.userInput,10)
-        if(newHp>this.state.maxHp){
-            this.setState({
-                hp:this.state.maxHp
-            })
-        }else{
-            this.setState({
-                hp:newHp
-            })
-        }
-    }
-
-    remHP(){
-        var newHp=this.state.hp-parseInt(this.state.userInput,10)
-        if(newHp<0){
-            this.setState({
-                hp:0
-            })
-        }else{
-            this.setState({
-                hp:newHp
-            })
-        }
-    }
-
-    userInput(e){
-        this.setState({
-            userInput:e.target.value
-        })
-    }
-
-    render(){
-        return(
-
-            <div className="Box">
-
-                <h4>
-                    Hit points
-                </h4>
-
-                <div className="currentHp"><HpManager /></div>
-                <hr />
-                <div className="maxHp">{this.state.maxHp}</div>
-
-
-
-                <div className="modifyHp">
-                    <button onClick={this.remHP}>-</button>
-                    <input onChange={this.userInput}/>
-                    <button onClick={this.addHP}>+</button>   
-                </div>
-
-            </div>
-
-
-        )
-    }
-
-
-
-}
-
-export default HpBox
+export default HpBox;

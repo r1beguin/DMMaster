@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import { Box, DropButton, Image, Text, Button } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
-import InitiativeTracker from "../../components/DMScreen/components/InitiativeTracker";
 
 import { loadImageList, loadImage, uploadImage } from "../../actions/image";
 import FileBase64 from "react-file-base64";
 import { getCreature, updatePosition } from "../../actions/hp";
-
-import Draggable from "react-draggable";
 
 const Map = ({
   hp,
@@ -27,33 +24,6 @@ const Map = ({
     loadImageList();
     getCreature("Thokk");
   }, []);
-
-  const [formData, setFormData] = useState({
-    activeDrags: 0,
-    deltaPosition: {
-      x: 0,
-      y: 0,
-    },
-    controlledPosition: {
-      x: hp.creature.posx,
-      y: hp.creature.posy,
-    },
-  });
-
-  const onStart = () => {
-    setFormData({ ...formData, activeDrags: ++formData.activeDrags });
-  };
-
-  const onStop = () => {
-    setFormData({ ...formData, activeDrags: --formData.activeDrags });
-  };
-
-  const dragHandlers = { onStart: onStart, onStop: onStop };
-
-  const onControlledDrag = (e, position) => {
-    const { x, y } = position;
-    setFormData({ ...formData, controlledPosition: { x, y } });
-  };
 
   return (
     <Box fill border={{ color: "brand", size: "large" }}>
@@ -97,27 +67,6 @@ const Map = ({
         </Box>
       </Box>
       <Box direction="row">
-        <Box round="full" width="xxsmall" height="xxsmall" margin="xsmall">
-          {involved.map(function (inv, idx) {
-            const creature = inv.creature;
-            return (
-              <Draggable
-                key={idx}
-                {...dragHandlers}
-                position={formData.controlledPosition}
-                onDrag={onControlledDrag}
-              >
-                <div key={idx}>
-                  <InitiativeTracker
-                    active={idx === turn}
-                    name={creature.name}
-                    src={creature.avatar}
-                  />
-                </div>
-              </Draggable>
-            );
-          })}
-        </Box>
         <Box width="large" pad="xsmall" align="center">
           {image === "" ? (
             <Text>Selectionner votre battlemap</Text>

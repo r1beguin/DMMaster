@@ -1,22 +1,25 @@
-import React, { Component } from 'react'
+import React from "react";
+import { Box, Image } from "grommet";
 
-import './InitiativeTracker.css'
+const InitiativeTracker = ({ name, active, src }) => {
+  const activeCurrent = {
+    border: "solid red",
+  };
 
-class InitiativeTracker extends Component{
-    render(){
-        const active ={
-            border: "solid red", 
-        }
-        
-        return(
-            <div className="box">
-                <img alt="portrait" src={this.props.src} style={this.props.active ? active : null} />
-                <div className="characterName">
-                    {this.props.name}
-                </div>
-            </div>
-        )
-    }
-}
+  return (
+    <Box>
+      <Box
+        width="xxsmall"
+        height="xxsmall"
+        round="full"
+        overflow="hidden"
+        style={active ? activeCurrent : null}
+      >
+        <Image fit="cover" alt="portrait" src={src} />
+      </Box>
+      <Box>{name}</Box>
+    </Box>
+  );
+};
 
-export default InitiativeTracker
+export default InitiativeTracker;

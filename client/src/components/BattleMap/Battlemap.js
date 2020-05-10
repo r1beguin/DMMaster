@@ -1,6 +1,5 @@
 import { loadImage } from "../../actions/image";
 import React, { Fragment } from "react";
-import "./Battlemap.css";
 import { connect } from "react-redux";
 import Map from "../Map/Map";
 import { Box } from "grommet";
@@ -15,8 +14,8 @@ const Battlemap = ({ image }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  image: state.image.data
+const mapStateToProps = (state) => ({
+  image: state.image.data,
 });
 
 export default connect(

@@ -1,9 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {logoutUser} from '../../actions/auth'
+import React from "react";
+import { Link } from "react-router-dom";
+import { logoutUser } from "../../actions/auth";
 
-import './Navbar.css';
-import store from '../../store';
+import { Nav, Box } from "grommet";
+
+import "./Navbar.css";
+import store from "../../store";
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
@@ -11,59 +13,58 @@ import store from '../../store';
 
 // TODO: make it react to active screen
 const Navbar = () => {
-    const onchange = () => {
-        store.dispatch(logoutUser());
-        console.log("logout");
-        
-    }
-    
-    return(
-        <nav className="navbar bg-dark">
-            <div>
-                <Link to="/" className="home">DMMaster</Link>
-            </div>
-            <div>
-                <Link to="/login">Login</Link>
-                <div onClick={onchange} className="logout">
-                
-                    Logout
-                
-                </div>
-            </div>
-            
-        </nav>
-    )
-    }
+  const onchange = () => {
+    store.dispatch(logoutUser());
+    console.log("logout");
+  };
 
+  return (
+    <Nav
+      direction="row"
+      background="dark-1"
+      gap="small"
+      justify="between"
+      pad="small"
+      alignContent="center"
+      margin={{ bottom: "small" }}
+    >
+      <Box alignContent="center">
+        <Link to="/" className="home">
+          DMMaster
+        </Link>
+      </Box>
+      <Box>
+        <Link to="/login">Login</Link>
+        <Box onClick={onchange}>Logout</Box>
+      </Box>
+    </Nav>
+  );
+};
 
-export default Navbar
- 
+export default Navbar;
+
 // class Navbar extends React.Component {
 
 //     constructor(){
 //         super()
 
 //         var init = localStorage.getItem('mode')
-        
-        
+
 //         this.state = {
 //             mode:init
 //         }
-    
+
 //        this.modeSelection= this.modeSelection.bind(this)
-       
 
 //     }
 
-    
-    
 //     setSelectedOption( option ) {
 //         localStorage.setItem( 'mode', option );
 //         this.setState( { mode: option } );
 //     }
 
 //     modeSelection(modeSelected){
-        
+
 //         this.setSelectedOption(modeSelected)
 //         console.log("mode : " + this.state.mode)
 //     }
@@ -104,5 +105,3 @@ export default Navbar
 //     }
 //   }
 // }
- 
-
