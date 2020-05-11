@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Grommet, grommet } from "grommet";
+import { Grommet } from "grommet";
 
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
@@ -39,7 +39,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Grommet theme={grommet}>
+        <Grommet plain>
           <Navbar />
           <Route exact path="/">
             <Landing />
