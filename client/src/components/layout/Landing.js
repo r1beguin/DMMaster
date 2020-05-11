@@ -29,7 +29,7 @@ const Landing = () => {
           <Box height="xxsmall" width="xxsmall" overflow="hidden">
             <Image src={master} color="blue" fit="cover" />
           </Box>
-          <Anchor href="/DMScreen">DMScreen</Anchor>
+          <Anchor href="/DMScreen">DM Screen</Anchor>
         </Box>
         <Box
           align="center"
@@ -63,7 +63,7 @@ const Landing = () => {
           <Box height="xxsmall" width="xxsmall" overflow="hidden">
             <Image src={character} fit="cover" />
           </Box>
-          <Anchor href="/PlayerScreen">PlayerScreen</Anchor>
+          <Anchor href="/PlayerScreen">Player Screen</Anchor>
         </Box>
       </Box>
     </Box>
