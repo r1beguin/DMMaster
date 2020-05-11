@@ -9,15 +9,19 @@ import { Box } from "grommet";
 
 const Landing = () => {
   return (
-    <section className="landing">
-      <Box align="center">
-        <Link to="/DMScreen">DMScreen</Link>
-
-        <Link to="/Battlemap">Battlemap</Link>
-
-        <Link to="/PlayerScreen">PlayerScreen</Link>
+    <Box align="center" fill={true} justify="center">
+      <Box>
+        <Box>
+          <Link to="/DMScreen">DMScreen</Link>
+        </Box>
+        <Box>
+          <Link to="/Battlemap">Battlemap</Link>
+        </Box>
+        <Box>
+          <Link to="/PlayerScreen">PlayerScreen</Link>
+        </Box>
       </Box>
-    </section>
+    </Box>
   );
 };
 

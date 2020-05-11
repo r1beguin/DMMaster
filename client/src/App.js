@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Grommet } from "grommet";
+import { Grommet, grommet } from "grommet";
 
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
@@ -39,28 +39,27 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Grommet plain>
+        <Grommet theme={grommet}>
           <Navbar />
           <Route exact path="/">
             <Landing />
           </Route>
-          <section className="container">
-            <Alert />
-            <Switch>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/DMScreen">
-                <DMScreen />
-              </Route>
-              <Route exact path="/Battlemap">
-                <Battlemap />
-              </Route>
-              <Route exact path="/PlayerScreen">
-                <PlayerScreen />
-              </Route>
-            </Switch>
-          </section>
+
+          <Alert />
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/DMScreen">
+              <DMScreen />
+            </Route>
+            <Route exact path="/Battlemap">
+              <Battlemap />
+            </Route>
+            <Route exact path="/PlayerScreen">
+              <PlayerScreen />
+            </Route>
+          </Switch>
         </Grommet>
       </Router>
     </Provider>
