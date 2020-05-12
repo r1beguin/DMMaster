@@ -42,7 +42,7 @@ const MainStatBox = () => {
           border="full"
           align="center"
         >
-          <Text>Strength</Text>
+          <Text size="medium">Strength</Text>
 
           <Text> {skill.str}</Text>
         </Box>
@@ -56,7 +56,7 @@ const MainStatBox = () => {
           border="full"
           align="center"
         >
-          <Text>Dexterity</Text>
+          <Text size="medium">Dexterity</Text>
 
           <Text> {skill.dex}</Text>
         </Box>
@@ -69,7 +69,7 @@ const MainStatBox = () => {
           border="full"
           align="center"
         >
-          <Text>Constitution</Text>
+          <Text size="medium">Constitution</Text>
 
           <Text> {skill.con}</Text>
         </Box>
@@ -83,7 +83,7 @@ const MainStatBox = () => {
           border="full"
           align="center"
         >
-          <Text>Intelligence</Text>
+          <Text size="medium">Intelligence</Text>
 
           <Text>{skill.int}</Text>
         </Box>
@@ -97,7 +97,7 @@ const MainStatBox = () => {
           border="full"
           align="center"
         >
-          <Text>Wisdom</Text>
+          <Text size="medium">Wisdom</Text>
 
           <Text>{skill.wis}</Text>
         </Box>
@@ -111,7 +111,7 @@ const MainStatBox = () => {
           border="full"
           align="center"
         >
-          <Text>Charisma</Text>
+          <Text size="medium">Charisma</Text>
 
           <Text>{skill.cha}</Text>
         </Box>

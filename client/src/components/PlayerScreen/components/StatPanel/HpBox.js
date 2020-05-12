@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Text } from "grommet";
+import { Box, Text, TextInput } from "grommet";
+import { Add, Subtract } from "grommet-icons";
 import HpManager from "./HpManager";
 
 //Hit points display managment
@@ -22,6 +23,18 @@ const HpBox = () => {
         <HpManager />
       </Box>
       <Box>{maxHp}</Box>
+
+      <Box direction="row" margin="small" gap="small" alignContent="center">
+        <Box alignSelf="center">
+          <Add />
+        </Box>
+        <Box alignSelf="center" width="xxsmall">
+          <TextInput />
+        </Box>
+        <Box alignSelf="center">
+          <Subtract />
+        </Box>
+      </Box>
     </Box>
   );
 };

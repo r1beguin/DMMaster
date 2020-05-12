@@ -10,7 +10,21 @@ import MainStatBox from "./MainStatBox";
 const StatPanel = () => {
   return (
     <Box margin="small">
-      <HpBox />
+      <Box direction="row" alignContent="center">
+        <HpBox />
+        <Box
+          background="white"
+          width="xxsmall"
+          height="xxsmall"
+          round="small"
+          border="solid"
+          align="center"
+          margin={{ vertical: "small" }}
+        >
+          <Text>AC</Text>
+          <Text>15</Text>
+        </Box>
+      </Box>
 
       <Box direction="row">
         <Box
@@ -18,19 +32,7 @@ const StatPanel = () => {
           width="small"
           margin="small"
           round="small"
-          border="full"
-          align="center"
-        >
-          <Text>AC</Text>
-          <Text>15</Text>
-        </Box>
-
-        <Box
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
+          border="solid"
           align="center"
         >
           <Text>Initiative</Text>
