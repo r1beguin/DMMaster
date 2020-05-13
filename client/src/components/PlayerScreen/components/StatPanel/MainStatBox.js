@@ -1,125 +1,62 @@
 import React from "react";
-import { Box, Text } from "grommet";
-
-import Skills from "./Skills";
+import { Box, Text, Button, Drop } from "grommet";
 
 const MainStatBox = () => {
-  const [skill, setskill] = React.useState({
-    str: "+2",
-    dex: "+2",
-    con: "+2",
-    int: "+2",
-    wis: "+2",
-    cha: "+2",
-    skill: "",
-  });
+  const [skills] = React.useState([
+    { name: "Strength", base: "+2", subs: [{ name: "Athletics", base: "+2" }] },
+    {
+      name: "Dexterity",
+      base: "+2",
+      subs: [
+        { name: "Acrobatics", base: "+2" },
+        { name: "Sleight of Hand", base: "+2" },
+        { name: "Stealth", base: "+2" },
+      ],
+    },
+  ]);
 
-  const SkillDisplay = (e) => {
-    if (e === "str" && skill.skill !== "str") {
-      setskill({ ...skill, skill: "str" });
-    } else if (e === "dex" && skill.skill !== "dex") {
-      setskill({ ...skill, skill: "dex" });
-    } else if (e === "int" && skill.skill !== "int") {
-      setskill({ ...skill, skill: "int" });
-    } else if (e === "wis" && skill.skill !== "wis") {
-      setskill({ ...skill, skill: "wis" });
-    } else if (e === "cha" && skill.skill !== "cha") {
-      setskill({ ...skill, skill: "cha" });
-    } else {
-      setskill({ ...skill, skill: "0" });
-    }
-  };
+  const ref = React.useRef();
+  const [show, setShow] = React.useState(false);
 
   return (
-    <Box>
-      <Box direction="row">
-        <Box
-          onClick={() => SkillDisplay("str")}
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
-          align="center"
-        >
-          <Text size="medium">Strength</Text>
+    <Box direction="row" gap="small" margin="small">
+      {skills.map((skill) => (
+        <Box>
+          <Button
+            label={
+              <Box>
+                <Text>{skill.name}</Text>
+                <Text>{skill.base}</Text>
+              </Box>
+            }
+            color="white"
+            ref={ref}
+            onMouseOver={() => setShow(true)}
+            onMouseOut={() => setShow(false)}
+            onFocus={() => {}}
+            onBlur={() => {}}
+          />
 
-          <Text> {skill.str}</Text>
+          {ref.current && show && (
+            <Drop align={{ top: "bottom" }} target={ref.current} plain>
+              <Box
+                margin="small"
+                pad="small"
+                background="dark-3"
+                round="small"
+                align="center"
+              >
+                {skill.subs.map((sub) => (
+                  <Box align="center">
+                    <Text>{sub.name}</Text>
+                    <Text>{sub.base}</Text>
+                  </Box>
+                ))}
+              </Box>
+            </Drop>
+          )}
         </Box>
-
-        <Box
-          onClick={() => SkillDisplay("dex")}
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
-          align="center"
-        >
-          <Text size="medium">Dexterity</Text>
-
-          <Text> {skill.dex}</Text>
-        </Box>
-
-        <Box
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
-          align="center"
-        >
-          <Text size="medium">Constitution</Text>
-
-          <Text> {skill.con}</Text>
-        </Box>
-
-        <Box
-          onClick={() => SkillDisplay("int")}
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
-          align="center"
-        >
-          <Text size="medium">Intelligence</Text>
-
-          <Text>{skill.int}</Text>
-        </Box>
-
-        <Box
-          onClick={() => SkillDisplay("wis")}
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
-          align="center"
-        >
-          <Text size="medium">Wisdom</Text>
-
-          <Text>{skill.wis}</Text>
-        </Box>
-
-        <Box
-          onClick={() => SkillDisplay("cha")}
-          background="white"
-          width="small"
-          margin="small"
-          round="small"
-          border="full"
-          align="center"
-        >
-          <Text size="medium">Charisma</Text>
-
-          <Text>{skill.cha}</Text>
-        </Box>
-      </Box>
-
-      <Box>
-        <Skills skill={skill.skill} />
-      </Box>
+      ))}
     </Box>
   );
 };
