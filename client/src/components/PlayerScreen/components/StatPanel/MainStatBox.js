@@ -84,7 +84,7 @@ const MainStatBox = () => {
       ],
     },
     {
-      name: "Wharisma",
+      name: "Charisma",
       base: "+2",
       subs: [
         { name: "Deception", base: "+2" },
