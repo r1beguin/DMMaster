@@ -12,18 +12,17 @@ const SavingThrows = () => {
   ]);
 
   return (
-    <Box pad="small" border="all" round="small">
+    <Box pad="small" border="all" round="small" width="large">
       <Text>Saving Throws</Text>
-      <Box
-        margin="small"
-        direction="row"
-        gap="small"
-        pad="small"
-        align="center"
-        fill
-      >
+      <Box direction="row" wrap pad="small" align="center">
         {savings.map((save) => (
-          <Box background="white" round="small" pad="small" border="all">
+          <Box
+            background="white"
+            round="small"
+            pad="small"
+            border="all"
+            margin="small"
+          >
             <Text size="small">{save.name}</Text>
             <Text size="small">{save.value}</Text>
           </Box>

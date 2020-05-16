@@ -6,12 +6,12 @@ const StatBox = ({ skill }) => {
   const [show, setShow] = React.useState(false);
 
   return (
-    <Box>
+    <Box margin="small">
       <Button
         label={
-          <Box>
-            <Text>{skill.name}</Text>
-            <Text>{skill.base}</Text>
+          <Box align="center">
+            <Text size="small">{skill.name}</Text>
+            <Text size="small">{skill.base}</Text>
           </Box>
         }
         color="white"
@@ -33,8 +33,8 @@ const StatBox = ({ skill }) => {
           >
             {skill.subs.map((sub) => (
               <Box align="center">
-                <Text>{sub.name}</Text>
-                <Text>{sub.base}</Text>
+                <Text size="small">{sub.name}</Text>
+                <Text size="small">{sub.base}</Text>
               </Box>
             ))}
           </Box>
@@ -96,10 +96,19 @@ const MainStatBox = () => {
   ]);
 
   return (
-    <Box direction="row" gap="small" margin="small">
-      {skills.map((skill) => (
-        <StatBox skill={skill} />
-      ))}
+    <Box
+      margin={{ vertical: "small" }}
+      border="all"
+      round="small"
+      pad="small"
+      width="large"
+    >
+      <Text>Skills</Text>
+      <Box direction="row">
+        {skills.map((skill) => (
+          <StatBox skill={skill} />
+        ))}
+      </Box>
     </Box>
   );
 };
