@@ -12,10 +12,13 @@ const HpBox = () => {
     <Box
       background="white"
       width="small"
+      height="small"
       margin="small"
       round="small"
       border="full"
       align="center"
+      justify="center"
+      alignSelf="center"
     >
       <Text>Hit points</Text>
 

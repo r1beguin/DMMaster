@@ -10,10 +10,11 @@ import SavingThrows from "./SavingThrows";
 
 const StatPanel = () => {
   return (
-    <Box margin="small">
+    <Box margin="small" direction="row">
       <Box direction="row" alignContent="center">
         <HpBox />
-        <Box margin="small">
+
+        <Box margin="small" justify="evenly">
           <Box
             background="white"
             width="xsmall"
@@ -55,8 +56,10 @@ const StatPanel = () => {
 
       <Box direction="row"></Box>
 
-      <MainStatBox />
-      <SavingThrows />
+      <Box>
+        <MainStatBox />
+        <SavingThrows />
+      </Box>
     </Box>
   );
 };

@@ -97,11 +97,11 @@ const MainStatBox = () => {
 
   return (
     <Box
-      margin={{ vertical: "small" }}
+      pad="small"
       border="all"
       round="small"
-      pad="small"
       width="large"
+      margin={{ vertical: "small" }}
     >
       <Text>Skills</Text>
       <Box direction="row">
