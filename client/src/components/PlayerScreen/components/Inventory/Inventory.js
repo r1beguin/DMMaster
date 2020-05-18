@@ -45,6 +45,7 @@ const Inventory = () => {
         label="Inventory"
         onClick={() => setShowInventory(true)}
         color="black"
+        round="small"
       />
       {showInventory && (
         <Layer
