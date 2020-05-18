@@ -5,6 +5,7 @@ import HpBox from "./HpBox";
 
 import MainStatBox from "./MainStatBox";
 import SavingThrows from "./SavingThrows";
+import Inventory from "../Inventory/Inventory";
 
 //Describes base player stats and modifiers
 
@@ -12,7 +13,10 @@ const StatPanel = () => {
   return (
     <Box margin="small" direction="row">
       <Box direction="row" alignContent="center">
-        <HpBox />
+        <Box>
+          <HpBox />
+          <Inventory />
+        </Box>
 
         <Box margin="small" justify="evenly">
           <Box
