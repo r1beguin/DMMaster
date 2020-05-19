@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, CheckBox } from "grommet";
+import { Box, Text, CheckBox, Tab, Tabs } from "grommet";
 
 const ActionPanel = () => {
   const [attacks, setAttacks] = React.useState([
@@ -44,65 +44,87 @@ const ActionPanel = () => {
   ]);
 
   return (
-    <Box border="all" margin="small" round="small" align="center">
-      <Box margin="small" align="center">
-        <Text size="small">Action</Text>
-        <Box direction="row" justify="evenly">
-          <Box margin="small" align="center">
-            <Text size="small">Attack</Text>
-            {attacks.map((attack) => (
-              <Box fill margin="small">
-                <Text size="small" weight="bold">
-                  {attack.name}
-                </Text>
-                <Box margin="small">
-                  {attack.content.map((item) => (
-                    <Box margin="small" width="medium">
-                      <Text size="small">{item.name}</Text>
-                      <Text size="small">{item.notes}</Text>
-                    </Box>
-                  ))}
-                </Box>
+    <Box
+      border="all"
+      margin="small"
+      round="small"
+      align="center"
+      width="medium"
+    >
+      <Box justify="evenly">
+        <Box margin="small">
+          <Text size="small">Action</Text>
+        </Box>
+        <Tabs>
+          <Tab
+            label={
+              <Box border round="small" pad="small" margin="small">
+                <Text size="small">Attack</Text>
               </Box>
-            ))}
-          </Box>
-          <Box margin="small" align="center">
-            <Text size="small">Spells</Text>
-            <Box>
-              <Box direction="row" fill justify="between" gap="small">
-                <Box direction="row" gap="small">
-                  <Text size="small">1st levels</Text>
-                  <Box direction="row">
-                    <CheckBox></CheckBox>
-                    <CheckBox></CheckBox>
-                    <CheckBox></CheckBox>
+            }
+          >
+            <Box margin="small" align="center">
+              {attacks.map((attack) => (
+                <Box fill margin="small">
+                  <Text size="small" weight="bold">
+                    {attack.name}
+                  </Text>
+                  <Box margin="small">
+                    {attack.content.map((item) => (
+                      <Box margin="small" width="medium">
+                        <Text size="small">{item.name}</Text>
+                        <Text size="small">{item.notes}</Text>
+                      </Box>
+                    ))}
                   </Box>
-                </Box>
-                <Box direction="row" gap="small">
-                  <Text size="small">2st levels</Text>
-                  <Box direction="row">
-                    <CheckBox></CheckBox>
-                    <CheckBox></CheckBox>
-                  </Box>
-                </Box>
-                <Box direction="row" gap="small">
-                  <Text size="small">3st levels</Text>
-                  <Box direction="row">
-                    <CheckBox></CheckBox>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box>
-              {spells.map((item) => (
-                <Box margin="small" width="medium">
-                  <Text size="small">{item.name}</Text>
-                  <Text size="small">{item.notes}</Text>
                 </Box>
               ))}
             </Box>
-          </Box>
-        </Box>
+          </Tab>
+          <Tab
+            label={
+              <Box border round="small" pad="small" margin="small">
+                <Text size="small">Spells</Text>
+              </Box>
+            }
+          >
+            <Box margin="small" align="center">
+              <Box>
+                <Box direction="row" fill justify="between" gap="small">
+                  <Box direction="row" gap="small">
+                    <Text size="small">1st levels</Text>
+                    <Box direction="row">
+                      <CheckBox></CheckBox>
+                      <CheckBox></CheckBox>
+                      <CheckBox></CheckBox>
+                    </Box>
+                  </Box>
+                  <Box direction="row" gap="small">
+                    <Text size="small">2st levels</Text>
+                    <Box direction="row">
+                      <CheckBox></CheckBox>
+                      <CheckBox></CheckBox>
+                    </Box>
+                  </Box>
+                  <Box direction="row" gap="small">
+                    <Text size="small">3st levels</Text>
+                    <Box direction="row">
+                      <CheckBox></CheckBox>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+              <Box>
+                {spells.map((item) => (
+                  <Box margin="small" width="medium">
+                    <Text size="small">{item.name}</Text>
+                    <Text size="small">{item.notes}</Text>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          </Tab>
+        </Tabs>
       </Box>
     </Box>
   );
