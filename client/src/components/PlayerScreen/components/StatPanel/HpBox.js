@@ -15,7 +15,7 @@ const HpBox = () => {
       height="small"
       margin="small"
       round="small"
-      border="full"
+      border="all"
       align="center"
       justify="center"
       alignSelf="center"

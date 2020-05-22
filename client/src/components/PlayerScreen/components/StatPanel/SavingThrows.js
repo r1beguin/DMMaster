@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text } from "grommet";
 
 const SavingThrows = () => {
-  const [savings, setSavings] = React.useState([
+  const [savings] = React.useState([
     { name: "Strength", value: "+4" },
     { name: "Dexteriry", value: "+0" },
     { name: "Intelligence", value: "+2" },
@@ -17,6 +17,7 @@ const SavingThrows = () => {
       <Box direction="row">
         {savings.map((save) => (
           <Box
+            key={save.name}
             background="white"
             round="small"
             pad="small"

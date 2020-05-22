@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text, CheckBox, Tab, Tabs } from "grommet";
 
 const ActionPanel = () => {
-  const [attacks, setAttacks] = React.useState([
+  const [attacks] = React.useState([
     {
       name: "Weapons and unarmed",
       content: [
@@ -28,7 +28,7 @@ const ActionPanel = () => {
     },
   ]);
 
-  const [spells, setSpells] = React.useState([
+  const [spells] = React.useState([
     {
       name: "Fireball",
       notes: "wizard go boom",
@@ -65,13 +65,13 @@ const ActionPanel = () => {
           >
             <Box margin="small" align="center">
               {attacks.map((attack) => (
-                <Box fill margin="small">
+                <Box fill margin="small" key={attack.name}>
                   <Text size="small" weight="bold">
                     {attack.name}
                   </Text>
                   <Box margin="small">
                     {attack.content.map((item) => (
-                      <Box margin="small" width="medium">
+                      <Box margin="small" width="medium" key={item.name}>
                         <Text size="small">{item.name}</Text>
                         <Text size="small">{item.notes}</Text>
                       </Box>
@@ -116,7 +116,7 @@ const ActionPanel = () => {
               </Box>
               <Box>
                 {spells.map((item) => (
-                  <Box margin="small" width="medium">
+                  <Box margin="small" width="medium" key={item.name}>
                     <Text size="small">{item.name}</Text>
                     <Text size="small">{item.notes}</Text>
                   </Box>

@@ -32,7 +32,7 @@ const StatBox = ({ skill }) => {
             align="center"
           >
             {skill.subs.map((sub) => (
-              <Box align="center">
+              <Box align="center" key={sub.name}>
                 <Text size="small">{sub.name}</Text>
                 <Text size="small">{sub.base}</Text>
               </Box>
@@ -106,7 +106,7 @@ const MainStatBox = () => {
       <Text>Skills</Text>
       <Box direction="row">
         {skills.map((skill) => (
-          <StatBox skill={skill} />
+          <StatBox key={skill.name} skill={skill} />
         ))}
       </Box>
     </Box>

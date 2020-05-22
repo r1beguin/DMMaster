@@ -24,7 +24,7 @@ const StatPanel = () => {
             width="xsmall"
             height="xxsmall"
             round="small"
-            border="solid"
+            border="all"
             align="center"
             margin="xxsmall"
           >
@@ -36,7 +36,7 @@ const StatPanel = () => {
             width="xsmall"
             height="xxsmall"
             round="small"
-            border="solid"
+            border="all"
             align="center"
             margin="xxsmall"
           >
@@ -48,7 +48,7 @@ const StatPanel = () => {
             width="xsmall"
             height="xxsmall"
             round="small"
-            border="solid"
+            border="all"
             align="center"
             margin="xxsmall"
           >

@@ -5,7 +5,7 @@ import { Box, Text, Layer, Button } from "grommet";
 const Inventory = () => {
   const [showInventory, setShowInventory] = React.useState(false);
 
-  const [stuff, setStuff] = React.useState([
+  const [stuff] = React.useState([
     {
       name: "Equipement",
       content: [
