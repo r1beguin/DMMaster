@@ -44,23 +44,22 @@ const App = () => {
           <Route exact path="/">
             <Landing />
           </Route>
-          <section className="container">
-            <Alert />
-            <Switch>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/DMScreen">
-                <DMScreen />
-              </Route>
-              <Route exact path="/Battlemap">
-                <Battlemap />
-              </Route>
-              <Route exact path="/PlayerScreen">
-                <PlayerScreen />
-              </Route>
-            </Switch>
-          </section>
+
+          <Alert />
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/DMScreen">
+              <DMScreen />
+            </Route>
+            <Route exact path="/Battlemap">
+              <Battlemap />
+            </Route>
+            <Route exact path="/PlayerScreen">
+              <PlayerScreen />
+            </Route>
+          </Switch>
         </Grommet>
       </Router>
     </Provider>

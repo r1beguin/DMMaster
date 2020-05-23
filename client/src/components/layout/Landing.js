@@ -1,7 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-import { Box } from "grommet";
+import master from "../../images/master.svg";
+import battlemap from "../../images/battlemap.svg";
+import character from "../../images/character.svg";
+
+import { Box, Anchor, Image } from "grommet";
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
@@ -9,15 +12,61 @@ import { Box } from "grommet";
 
 const Landing = () => {
   return (
-    <section className="landing">
-      <Box align="center">
-        <Link to="/DMScreen">DMScreen</Link>
-
-        <Link to="/Battlemap">Battlemap</Link>
-
-        <Link to="/PlayerScreen">PlayerScreen</Link>
+    <Box align="center" height={{ min: "80vh" }} justify="center">
+      <Box align="center" justify="center" gap="small" width="small">
+        <Box
+          align="center"
+          justify="center"
+          border="solid"
+          round="small"
+          pad="small"
+          onClick={() => {
+            location.href = "/DMScreen";
+          }}
+          fill
+          hoverIndicator
+        >
+          <Box height="xxsmall" width="xxsmall" overflow="hidden">
+            <Image src={master} color="blue" fit="cover" />
+          </Box>
+          <Anchor href="/DMScreen">DM Screen</Anchor>
+        </Box>
+        <Box
+          align="center"
+          justify="center"
+          border="solid"
+          round="small"
+          pad="small"
+          onClick={() => {
+            location.href = "/Battlemap";
+          }}
+          fill
+          hoverIndicator
+        >
+          <Box height="xxsmall" width="xxsmall" overflow="hidden">
+            <Image src={battlemap} fit="cover" />
+          </Box>
+          <Anchor href="/Battlemap">Battlemap</Anchor>
+        </Box>
+        <Box
+          align="center"
+          justify="center"
+          border="solid"
+          round="small"
+          pad="small"
+          onClick={() => {
+            location.href = "/PlayerScreen";
+          }}
+          fill
+          hoverIndicator
+        >
+          <Box height="xxsmall" width="xxsmall" overflow="hidden">
+            <Image src={character} fit="cover" />
+          </Box>
+          <Anchor href="/PlayerScreen">Player Screen</Anchor>
+        </Box>
       </Box>
-    </section>
+    </Box>
   );
 };
 
