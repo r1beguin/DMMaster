@@ -19,6 +19,7 @@ const Map = ({
   involved,
   turn,
   updatePosition,
+  user,
 }) => {
   useEffect(() => {
     loadImageList();
@@ -28,48 +29,50 @@ const Map = ({
   return (
     <Box fill border={{ color: "brand", size: "large" }}>
       <Box fill="horizontal" align="end">
-        <Box width="xsmall" margin="xsmall">
-          <DropButton
-            label="Maps"
-            dropContent={
-              <Box align="center">
-                {images.map((img) => (
-                  <Box
-                    key={img.imageName}
-                    border={{ color: "accent-2" }}
-                    width="xsmall"
-                    height="xsmall"
-                    margin="xsmall"
-                    onClick={() => loadImage(img)}
-                  >
-                    <Image src={img.imageData} fit="cover"></Image>
-                  </Box>
-                ))}
-                <Box margin="xsmall" direction="row" alignContent="center">
-                  <Box alignContent="center">
-                    <FileBase64
-                      multiple={false}
-                      onDone={uploadImage.bind(this)}
-                    />
+        {user === "DM" && (
+          <Box width="xsmall" margin="xsmall">
+            <DropButton
+              label="Maps"
+              dropContent={
+                <Box align="center">
+                  {images.map((img) => (
+                    <Box
+                      key={img.imageName}
+                      border={{ color: "accent-2" }}
+                      width="xsmall"
+                      height="xsmall"
+                      margin="xsmall"
+                      onClick={() => loadImage(img)}
+                    >
+                      <Image src={img.imageData} fit="cover"></Image>
+                    </Box>
+                  ))}
+                  <Box margin="xsmall" direction="row" alignContent="center">
+                    <Box alignContent="center">
+                      <FileBase64
+                        multiple={false}
+                        onDone={uploadImage.bind(this)}
+                      />
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            }
-          />
-          <Button
-            onClick={() => {
-              updatePosition("Thokk", { posx: 300, posy: 300 });
-              getCreature("Thokk");
-              console.log(hp);
-            }}
-            label="test"
-          ></Button>
-        </Box>
+              }
+            />
+            <Button
+              onClick={() => {
+                updatePosition("Thokk", { posx: 300, posy: 300 });
+                getCreature("Thokk");
+                console.log(hp);
+              }}
+              label="test"
+            ></Button>
+          </Box>
+        )}
       </Box>
       <Box direction="row">
         <Box width="large" pad="xsmall" align="center">
           {image === "" ? (
-            <Text>Selectionner votre battlemap</Text>
+            <Text>Aucune battlemap chargée</Text>
           ) : (
             <Image src={image} fit="contain"></Image>
           )}
@@ -90,6 +93,7 @@ Map.propTypes = {
   getCreature: PropTypes.func,
   turn: PropTypes.number,
   updatePosition: PropTypes.func,
+  user: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

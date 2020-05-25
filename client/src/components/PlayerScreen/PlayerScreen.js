@@ -8,7 +8,7 @@ const PlayerScreen = () => {
     <Box>
       <Box direction="row">
         <Notes />
-        <Map />
+        <Map user="player" />
       </Box>
     </Box>
   );

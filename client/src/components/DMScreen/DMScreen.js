@@ -15,7 +15,7 @@ const DMScreen = () => {
           <Notes />
           <Music />
         </Box>
-        <Map />
+        <Map user="DM" />
       </Box>
     </Box>
   );

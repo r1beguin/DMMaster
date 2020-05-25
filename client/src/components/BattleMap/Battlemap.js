@@ -8,7 +8,7 @@ const Battlemap = ({ image }) => {
   return (
     <Fragment>
       <Box height="50vw" margin="xsmall">
-        <Map />
+        <Map user="battlemap" />
       </Box>
     </Fragment>
   );
