@@ -4,6 +4,7 @@ import { Grommet } from "grommet";
 
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+import FightBar from "./components/FightBar/FightBar";
 import Landing from "./components/layout/Landing";
 import DMScreen from "./components/DMScreen/DMScreen";
 import Battlemap from "./components/BattleMap/Battlemap";
@@ -41,6 +42,7 @@ const App = () => {
       <Router>
         <Grommet plain>
           <Navbar />
+          <FightBar />
           <Route exact path="/">
             <Landing />
           </Route>
