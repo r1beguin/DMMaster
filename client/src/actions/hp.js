@@ -39,17 +39,17 @@ export const getCreature = name => async dispatch => {
   }
 };
 
-export const updatePosition = (name, pos) => async dispatch => {
+export const updatePosition = (id, pos) => async dispatch => {
+  // TODO: not in hp.js
+  // TODO: generic update creature function
   try {
-    const res = await axios.post("api/creature/creature/position", {
-      params: {
-        name: name
-      },
-      data: {
-        posx: pos.posx,
-        psoy: pos.posy
-      }
+    const config = {headers: {"Content-Type": "application/json"}};
+    const body = JSON.stringify({
+      id: name,
+      posx: pos.posx,
+      posy: pos.posy
     });
+    const res = await axios.post("api/creature/creature/position", body, config);
     console.log("action", res);
     dispatch({
       type: UPDATE_POSITION_SUCCESS,

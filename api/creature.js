@@ -21,6 +21,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/creature", async (req, res) => {
+  // this route is creature/creature ?
   try {
     const creature = await Creature.findOne(req.query);
     res.json(creature);
@@ -30,12 +31,34 @@ router.get("/creature", async (req, res) => {
   }
 });
 
-router.post("/creature/position", async (req, res) => {
+router.post("/position", async (req, res) => {
   try {
     console.log("req", req.body);
-    const creature = await Creature.findOneAndUpdate(req.query, req.body, {
-      new: true
-    });
+    const query = { "_id": req.body.id };
+    const update = {
+      posx: req.body.posx,
+      posy: req.body.posy
+    };
+    const options = {new: true };
+
+    const creature = await Creature.findOneAndUpdate(query, update, options);
+    res.json(creature);
+    console.log("res api", creature);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// TODO: use mapper to prepare request
+router.post("/update", async (req, res) => {
+  try {
+    console.log("req", req.body);
+    const query = { "_id": req.body.id };
+    const update = req.body.update;
+    const options = {new: true };
+
+    const creature = await Creature.findOneAndUpdate(query, update, options);
     res.json(creature);
     console.log("res api", creature);
   } catch (err) {
