@@ -1,11 +1,15 @@
 import React from "react";
 import { Box } from "grommet";
-import StatPanel from "./components/StatPanel/StatPanel";
+import Map from "../Map/Map";
+import Notes from "../DMScreen/components/Notes";
 
 const PlayerScreen = () => {
   return (
     <Box>
-      <StatPanel />
+      <Box direction="row">
+        <Notes />
+        <Map />
+      </Box>
     </Box>
   );
 };
