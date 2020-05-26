@@ -27,12 +27,13 @@ const Map = ({
   }, []);
 
   return (
-    <Box fill border={{ color: "brand", size: "large" }}>
+    <Box fill border={{ color: "grey", size: "small" }} round="small">
       <Box fill="horizontal" align="end">
         {user === "DM" && (
-          <Box width="xsmall" margin="xsmall">
+          <Box width="xsmall" margin="xsmall" gap="small">
             <DropButton
               label="Maps"
+              color="grey"
               dropContent={
                 <Box align="center">
                   {images.map((img) => (
@@ -59,6 +60,7 @@ const Map = ({
               }
             />
             <Button
+              color="grey"
               onClick={() => {
                 updatePosition("Thokk", { posx: 300, posy: 300 });
                 getCreature("Thokk");
