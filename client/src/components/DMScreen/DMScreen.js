@@ -10,8 +10,8 @@ import Music from "./components/Music";
 const DMScreen = () => {
   return (
     <Box margin="small">
-      <Box direction="row">
-        <Box>
+      <Box direction="row" gap="small">
+        <Box gap="small">
           <Notes />
           <Music />
         </Box>

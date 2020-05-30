@@ -1,6 +1,8 @@
 import React from "react";
 
-import { Box, Text, TextInput } from "grommet";
+import { Box, Text, TextArea, Button } from "grommet";
+
+import { Add } from "grommet-icons";
 
 const Notes = () => {
   const [notes, setNotes] = React.useState([
@@ -16,15 +18,19 @@ const Notes = () => {
     },
   ]);
   const [activeNote, setActiveNote] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log(notes);
+  }, [notes]);
   return (
-    <Box margin="small" border="all" round="small" align="center" pad="small">
+    <Box border={{ color: "grey", size: "small" }} round="small" align="center">
       <Text>Notes</Text>
       <Box margin="small" direction="row" gap="small">
         <Box gap="small">
           {notes.map((note) => (
             <Box
+              width="small"
               border="all"
-              color="grey"
               round="xsmall"
               pad="small"
               onClick={() => setActiveNote(note.index)}
@@ -33,17 +39,36 @@ const Notes = () => {
             </Box>
           ))}
         </Box>
-        <Box>
-          <TextInput
+        <Box height="medium">
+          <TextArea
             value={notes[activeNote].content}
+            size="small"
             onChange={(e) => {
               let newArr = [...notes]; // copying the old datas array
               newArr[activeNote].content = e.target.value; // replace e.target.value with whatever you want to change it to
 
               setNotes(newArr); // ??
             }}
-          ></TextInput>
+          ></TextArea>
         </Box>
+      </Box>
+      <Box alignSelf="end" margin="small">
+        <Button
+          icon={<Add />}
+          label="Add a note"
+          color="grey"
+          onClick={() => {
+            let newIndex = notes.length;
+            setNotes([
+              ...notes,
+              {
+                name: "newNote",
+                index: newIndex,
+                content: "",
+              },
+            ]);
+          }}
+        ></Button>
       </Box>
     </Box>
   );
