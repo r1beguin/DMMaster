@@ -4,7 +4,12 @@ import { connect } from "react-redux";
 import { Box, DropButton, Image, Text, Button } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 
-import { loadImageList, loadActiveImage, setActiveImage, uploadImage } from "../../actions/image";
+import {
+  loadImageList,
+  loadActiveImage,
+  setActiveImage,
+  uploadImage,
+} from "../../actions/image";
 import FileBase64 from "react-file-base64";
 import { getCreature, updatePosition } from "../../actions/hp";
 
@@ -14,7 +19,7 @@ const Map = ({
   image,
   images,
   loadImageList,
-  loadActiveImage, 
+  loadActiveImage,
   setActiveImage,
   uploadImage,
   involved,
@@ -29,7 +34,12 @@ const Map = ({
   }, []);
 
   return (
-    <Box fill border={{ color: "grey", size: "small" }} round="small">
+    <Box
+      fill
+      border={{ color: "grey", size: "small" }}
+      round="small"
+      align="center"
+    >
       <Box fill="horizontal" align="end">
         {user === "DM" && (
           <Box width="xsmall" margin="xsmall" gap="small">
@@ -112,5 +122,12 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, // connect store state to component props
-  { loadImageList, loadActiveImage, setActiveImage, uploadImage, getCreature, updatePosition } // connect actions for the component to modify store state
+  {
+    loadImageList,
+    loadActiveImage,
+    setActiveImage,
+    uploadImage,
+    getCreature,
+    updatePosition,
+  } // connect actions for the component to modify store state
 )(Map);
