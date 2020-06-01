@@ -4,6 +4,7 @@ const app = express();
 var server = require('http').Server(app);
 const {connectDB} = require('./db/db');
 const socketio = require('socket.io');
+const bodyParser = require('body-parser')
 
 // socket.io
 io = socketio(server);
@@ -17,11 +18,13 @@ app.use(function(req, res, next) {
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
+// app.use(express.json({ extended: true }));
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
+
 app.get('/', (req, res) => res.send('API running'));
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({limit: '50mb'}));
+
 
 // Define Routes
 app.use('/api/register', require('./api/register'));
