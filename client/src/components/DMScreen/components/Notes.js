@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Text, TextArea, Button } from "grommet";
 
-import { Add } from "grommet-icons";
+import { Add, Edit, Checkmark } from "grommet-icons";
 
 const Notes = () => {
   const [notes, setNotes] = React.useState([
@@ -10,18 +10,17 @@ const Notes = () => {
       name: "perso",
       index: 0,
       content: "This is a note.",
+      edit: false,
     },
     {
       name: "story",
       index: 1,
       content: "This is also a note.",
+      edit: false,
     },
   ]);
   const [activeNote, setActiveNote] = React.useState(0);
 
-  React.useEffect(() => {
-    console.log(notes);
-  }, [notes]);
   return (
     <Box border={{ color: "grey", size: "small" }} round="small" align="center">
       <Text>Notes</Text>
@@ -34,8 +33,52 @@ const Notes = () => {
               round="xsmall"
               pad="small"
               onClick={() => setActiveNote(note.index)}
+              background={note.index === activeNote && "brand"}
             >
-              <Text size="xsmall">{note.name}</Text>
+              {note.edit ? (
+                <Box justify="between" direction="row">
+                  <TextArea
+                    size="xsmall"
+                    alignSelf="center"
+                    onChange={(e) => {
+                      setActiveNote(note.index);
+
+                      let newArr = [...notes]; // copying the old datas array
+                      newArr[note.index].name = e.target.value; // replace e.target.value with whatever you want to change it to
+
+                      setNotes(newArr); // ??
+                    }}
+                  />
+                  <Button
+                    alignSelf="center"
+                    icon={<Checkmark size="small" />}
+                    onClick={() => {
+                      let newArr = [...notes]; // copying the old datas array
+                      newArr[note.index].edit = false; // replace e.target.value with whatever you want to change it to
+
+                      setNotes(newArr); // ??
+                    }}
+                  />
+                </Box>
+              ) : (
+                <Box justify="between" direction="row">
+                  <Text size="xsmall" alignSelf="center">
+                    {note.name}
+                  </Text>
+                  <Button
+                    alignSelf="center"
+                    icon={<Edit size="small" />}
+                    onClick={() => {
+                      console.log(note.index);
+                      setActiveNote(note.index);
+                      let newArr = [...notes]; // copying the old datas array
+                      newArr[note.index].edit = true; // replace e.target.value with whatever you want to change it to
+
+                      setNotes(newArr); // ??
+                    }}
+                  />
+                </Box>
+              )}
             </Box>
           ))}
         </Box>
@@ -65,6 +108,7 @@ const Notes = () => {
                 name: "newNote",
                 index: newIndex,
                 content: "",
+                edit: false,
               },
             ]);
           }}
