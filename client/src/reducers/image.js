@@ -10,10 +10,10 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case MAP_LOADED:
+      // payload contains {name, data}
       return {
         ...state,
-        name: payload.imageName,
-        data: payload.imageData
+        ...payload
       };
     case MAP_SAVED:
       return {

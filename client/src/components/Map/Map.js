@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Box, DropButton, Image, Text, Button } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 
-import { loadImageList, loadImage, uploadImage } from "../../actions/image";
+import { loadImageList, loadActiveImage, setActiveImage, uploadImage } from "../../actions/image";
 import FileBase64 from "react-file-base64";
 import { getCreature, updatePosition } from "../../actions/hp";
 
@@ -13,8 +13,9 @@ const Map = ({
   getCreature,
   image,
   images,
-  loadImage,
   loadImageList,
+  loadActiveImage, 
+  setActiveImage,
   uploadImage,
   involved,
   turn,
@@ -22,6 +23,7 @@ const Map = ({
   user,
 }) => {
   useEffect(() => {
+    loadActiveImage();
     loadImageList();
     getCreature("Thokk");
   }, []);
@@ -38,14 +40,14 @@ const Map = ({
                 <Box align="center">
                   {images.map((img) => (
                     <Box
-                      key={img.imageName}
+                      key={img.name}
                       border={{ color: "accent-2" }}
                       width="xsmall"
                       height="xsmall"
                       margin="xsmall"
-                      onClick={() => loadImage(img)}
+                      onClick={() => setActiveImage(img)}
                     >
-                      <Image src={img.imageData} fit="cover"></Image>
+                      <Image src={img.data} fit="cover"></Image>
                     </Box>
                   ))}
                   <Box margin="xsmall" direction="row" alignContent="center">
@@ -86,9 +88,11 @@ const Map = ({
 
 Map.propTypes = {
   image: PropTypes.string,
-  loadImage: PropTypes.func,
+  // loadImage: PropTypes.func,
   images: PropTypes.array,
   loadImageList: PropTypes.func,
+  loadActiveImage: PropTypes.func,
+  setActiveImage: PropTypes.func,
   uploadImage: PropTypes.func,
   involved: PropTypes.array,
   hp: PropTypes.object,
@@ -108,5 +112,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, // connect store state to component props
-  { loadImage, loadImageList, uploadImage, getCreature, updatePosition } // connect actions for the component to modify store state
+  { loadImageList, loadActiveImage, setActiveImage, uploadImage, getCreature, updatePosition } // connect actions for the component to modify store state
 )(Map);
