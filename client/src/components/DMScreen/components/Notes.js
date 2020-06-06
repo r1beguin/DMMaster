@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Text, TextArea, Button } from "grommet";
 
-import { Add, Edit, Checkmark, Previous, Next } from "grommet-icons";
+import { Add, Edit, Checkmark, Previous, Next, Save } from "grommet-icons";
 
 const Notes = () => {
   const [notes, setNotes] = React.useState([
@@ -120,7 +120,8 @@ const Notes = () => {
         )}
       </Box>
       {!collapsed && (
-        <Box alignSelf="end" margin="small">
+        <Box alignSelf="end" margin="small" direction="row" gap="small">
+          <Button icon={<Save />} />
           <Button
             icon={<Add />}
             label="Add a note"
