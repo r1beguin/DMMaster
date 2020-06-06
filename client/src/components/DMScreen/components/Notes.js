@@ -1,26 +1,21 @@
 import React from "react";
-
+import PropTypes from "prop-types"; // shortcut: impt
+import { connect } from "react-redux";
 import { Box, Text, TextArea, Button } from "grommet";
 
 import { Add, Edit, Checkmark, Previous, Next, Save } from "grommet-icons";
 
-const Notes = () => {
-  const [notes, setNotes] = React.useState([
-    {
-      name: "perso",
-      index: 0,
-      content: "This is a note.",
-      edit: false,
-    },
-    {
-      name: "story",
-      index: 1,
-      content: "This is also a note.",
-      edit: false,
-    },
-  ]);
+import { getNotes } from "../../../actions/notes";
+
+const Notes = ({ notes }) => {
+  React.useEffect(() => {
+    getNotes({ name: "Thokk" });
+  }, []);
+
   const [activeNote, setActiveNote] = React.useState(0);
   const [collapsed, setCollapsed] = React.useState(false);
+
+  const setNotes = (e) => {};
 
   return (
     <Box border={{ color: "grey", size: "small" }} round="small" align="center">
@@ -145,4 +140,15 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+Map.propTypes = {
+  notes: PropTypes.object,
+};
+
+const mapStateToProps = (state) => ({
+  notes: state.notes.data,
+});
+
+export default connect(
+  mapStateToProps, // connect store state to component pro  ps
+  {} // connect actions for the component to modify store state
+)(Notes);

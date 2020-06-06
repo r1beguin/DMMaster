@@ -1,14 +1,13 @@
-
-const express = require('express');
+const express = require("express");
 const app = express();
-var server = require('http').Server(app);
-const {connectDB} = require('./db/db');
-const socketio = require('socket.io');
+var server = require("http").Server(app);
+const { connectDB } = require("./db/db");
+const socketio = require("socket.io");
 
 // socket.io
 io = socketio(server);
 // now all request have access to io
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   req.io = io;
   next();
 });
@@ -18,18 +17,18 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
-app.get('/', (req, res) => res.send('API running'));
+app.get("/", (req, res) => res.send("API running"));
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({limit: '50mb'}));
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ limit: "50mb" }));
 
 // Define Routes
-app.use('/api/register', require('./api/register'));
-app.use('/api/login', require('./api/login'));
-app.use('/api/creature', require('./api/creature'));
-app.use('/api/fight', require('./api/fight'));
-app.use('/api/image', require('./api/image'))
-
+app.use("/api/register", require("./api/register"));
+app.use("/api/login", require("./api/login"));
+app.use("/api/creature", require("./api/creature"));
+app.use("/api/fight", require("./api/fight"));
+app.use("/api/image", require("./api/image"));
+app.use("/api/notes", require("./api/notes"));
 
 const PORT = 5000;
 
