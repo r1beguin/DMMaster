@@ -17,7 +17,7 @@ export default function (state = initialState, action) {
     case GET_NOTES:
       return {
         ...state,
-        data: payload.daya,
+        data: payload.data,
       };
     case SET_NOTES:
       return {

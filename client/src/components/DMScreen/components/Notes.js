@@ -3,11 +3,11 @@ import PropTypes from "prop-types"; // shortcut: impt
 import { connect } from "react-redux";
 import { Box, Text, TextArea, Button } from "grommet";
 
-import { Add, Edit, Checkmark, Previous, Next, Save } from "grommet-icons";
+import { Add, Edit, Checkmark, Previous, Next } from "grommet-icons";
 
-import { getNotes } from "../../../actions/notes";
+import { getNotes, setNotes } from "../../../actions/notes";
 
-const Notes = ({ notes }) => {
+const Notes = ({ notes, getNotes, setNotes }) => {
   React.useEffect(() => {
     getNotes({ name: "Thokk" });
   }, []);
@@ -15,7 +15,9 @@ const Notes = ({ notes }) => {
   const [activeNote, setActiveNote] = React.useState(0);
   const [collapsed, setCollapsed] = React.useState(false);
 
-  const setNotes = (e) => {};
+  const onSetNotes = (data) => {
+    setNotes({ name: "Thokk", data: data });
+  };
 
   return (
     <Box border={{ color: "grey", size: "small" }} round="small" align="center">
@@ -49,6 +51,7 @@ const Notes = ({ notes }) => {
                 round="xsmall"
                 pad="small"
                 onClick={() => setActiveNote(note.index)}
+                key={note.index}
                 background={note.index === activeNote && "brand"}
               >
                 {note.edit ? (
@@ -62,7 +65,7 @@ const Notes = ({ notes }) => {
                         let newArr = [...notes]; // copying the old datas array
                         newArr[note.index].name = e.target.value; // replace e.target.value with whatever you want to change it to
 
-                        setNotes(newArr); // ??
+                        onSetNotes(newArr); // ??
                       }}
                     />
                     <Button
@@ -72,7 +75,7 @@ const Notes = ({ notes }) => {
                         let newArr = [...notes]; // copying the old datas array
                         newArr[note.index].edit = false; // replace e.target.value with whatever you want to change it to
 
-                        setNotes(newArr); // ??
+                        onSetNotes(newArr); // ??
                       }}
                     />
                   </Box>
@@ -85,12 +88,11 @@ const Notes = ({ notes }) => {
                       alignSelf="center"
                       icon={<Edit size="small" />}
                       onClick={() => {
-                        console.log(note.index);
                         setActiveNote(note.index);
                         let newArr = [...notes]; // copying the old datas array
                         newArr[note.index].edit = true; // replace e.target.value with whatever you want to change it to
 
-                        setNotes(newArr); // ??
+                        onSetNotes(newArr); // ??
                       }}
                     />
                   </Box>
@@ -108,7 +110,7 @@ const Notes = ({ notes }) => {
                 let newArr = [...notes]; // copying the old datas array
                 newArr[activeNote].content = e.target.value; // replace e.target.value with whatever you want to change it to
 
-                setNotes(newArr); // ??
+                onSetNotes(newArr); // ??
               }}
             ></TextArea>
           </Box>
@@ -116,14 +118,13 @@ const Notes = ({ notes }) => {
       </Box>
       {!collapsed && (
         <Box alignSelf="end" margin="small" direction="row" gap="small">
-          <Button icon={<Save />} />
           <Button
             icon={<Add />}
             label="Add a note"
             color="grey"
             onClick={() => {
               let newIndex = notes.length;
-              setNotes([
+              onSetNotes([
                 ...notes,
                 {
                   name: "newNote",
@@ -140,8 +141,10 @@ const Notes = ({ notes }) => {
   );
 };
 
-Map.propTypes = {
-  notes: PropTypes.object,
+Notes.propTypes = {
+  notes: PropTypes.array,
+  getNotes: PropTypes.func,
+  setNotes: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -150,5 +153,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, // connect store state to component pro  ps
-  {} // connect actions for the component to modify store state
+  { getNotes, setNotes } // connect actions for the component to modify store state
 )(Notes);

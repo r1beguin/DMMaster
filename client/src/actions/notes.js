@@ -16,3 +16,21 @@ export const getNotes = ({ name }) => async (dispatch) => {
     console.log("Error get notes");
   }
 };
+
+export const setNotes = ({ name, data }) => async (dispatch) => {
+  try {
+    const res = await axios.post("/api/notes", {
+      params: {
+        name: name,
+        data: data,
+      },
+    });
+    dispatch({
+      type: SET_NOTES,
+      payload: res.data,
+    });
+    dispatch(getNotes({ name }));
+  } catch (error) {
+    console.log("Error set notes");
+  }
+};

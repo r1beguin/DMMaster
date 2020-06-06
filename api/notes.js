@@ -1,10 +1,9 @@
 const router = require("express").Router();
 const User = require("../db/models/User");
 const Notes = require("../db/models/Notes");
-const auth = require("../utils/auth");
 
 router.post("/", async (req, res) => {
-  const { name, data } = req.body;
+  const { name, data } = req.body.params;
   var user;
 
   try {
@@ -29,9 +28,9 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const { name } = req.body;
+  const { name } = req.query;
   try {
-    const user = await User.findOne({ name: name });
+    const user = await User.findOne({ name });
     const notes = await Notes.findOne({ user: user._id }).populate({
       path: "notes",
       model: Notes,
