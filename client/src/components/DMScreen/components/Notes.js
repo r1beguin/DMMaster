@@ -97,6 +97,11 @@ const Notes = ({ notes, getNotes, setNotes, user, setBuffer }) => {
                         onClick={() => {
                           let newArr = [...notes];
                           newArr.splice(note.index, 1);
+                          newArr.map((item) => {
+                            if (item.index > note.index) {
+                              item.index = item.index - 1;
+                            }
+                          });
                           onSetNotes(newArr);
                         }}
                       />
