@@ -14,8 +14,9 @@ import {
 } from "grommet-icons";
 
 import { getNotes, setNotes, setBuffer } from "../../../actions/notes";
+import { setAlert } from "../../../actions/alert";
 
-const Notes = ({ notes, getNotes, setNotes, user, setBuffer }) => {
+const Notes = ({ notes, getNotes, setNotes, user, setBuffer, setAlert }) => {
   const [newNotes, setNewNotes] = React.useState([]);
   const [activeNote, setActiveNote] = React.useState(0);
   const [collapsed, setCollapsed] = React.useState(false);
@@ -23,11 +24,6 @@ const Notes = ({ notes, getNotes, setNotes, user, setBuffer }) => {
   React.useEffect(() => {
     getNotes({ name: "Thokk" });
   }, []);
-
-  React.useState(() => {
-    setNewNotes(notes);
-    console.log(newNotes, notes, activeNote);
-  }, [notes]);
 
   const onSetNotes = (data) => {
     setNotes({ name: user.name, data: data });
@@ -146,7 +142,13 @@ const Notes = ({ notes, getNotes, setNotes, user, setBuffer }) => {
       </Box>
       {!collapsed && (
         <Box alignSelf="end" margin="small" direction="row" gap="small">
-          <Button icon={<Save />} onClick={() => onSetNotes(notes)} />
+          <Button
+            icon={<Save />}
+            onClick={() => {
+              onSetNotes(notes);
+              setAlert("Save", "success");
+            }}
+          />
           <Button
             icon={<Add />}
             label="Add a note"
@@ -175,6 +177,7 @@ Notes.propTypes = {
   getNotes: PropTypes.func,
   setNotes: PropTypes.func,
   setBuffer: PropTypes.func,
+  setAlert: PropTypes.func,
   auth: PropTypes.object,
 };
 
@@ -185,5 +188,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, // connect store state to component pro  ps
-  { getNotes, setNotes, setBuffer } // connect actions for the component to modify store state
+  { getNotes, setNotes, setBuffer, setAlert } // connect actions for the component to modify store state
 )(Notes);
