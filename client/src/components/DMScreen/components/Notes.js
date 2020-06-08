@@ -3,20 +3,34 @@ import PropTypes from "prop-types"; // shortcut: impt
 import { connect } from "react-redux";
 import { Box, Text, TextArea, Button } from "grommet";
 
-import { Add, Edit, Checkmark, Previous, Next } from "grommet-icons";
+import {
+  Add,
+  Edit,
+  Checkmark,
+  Previous,
+  Next,
+  Trash,
+  Save,
+} from "grommet-icons";
 
 import { getNotes, setNotes } from "../../../actions/notes";
 
-const Notes = ({ notes, getNotes, setNotes }) => {
+const Notes = ({ notes, getNotes, setNotes, user }) => {
+  const [newNotes, setNewNotes] = React.useState([]);
+  const [activeNote, setActiveNote] = React.useState(0);
+  const [collapsed, setCollapsed] = React.useState(false);
+
   React.useEffect(() => {
     getNotes({ name: "Thokk" });
   }, []);
 
-  const [activeNote, setActiveNote] = React.useState(0);
-  const [collapsed, setCollapsed] = React.useState(false);
+  React.useState(() => {
+    setNewNotes(notes);
+    console.log(newNotes, notes, activeNote);
+  }, [notes]);
 
   const onSetNotes = (data) => {
-    setNotes({ name: "Thokk", data: data });
+    setNotes({ name: user.name, data: data });
   };
 
   return (
@@ -68,16 +82,25 @@ const Notes = ({ notes, getNotes, setNotes }) => {
                         onSetNotes(newArr); // ??
                       }}
                     />
-                    <Button
-                      alignSelf="center"
-                      icon={<Checkmark size="small" />}
-                      onClick={() => {
-                        let newArr = [...notes]; // copying the old datas array
-                        newArr[note.index].edit = false; // replace e.target.value with whatever you want to change it to
+                    <Box align="center">
+                      <Button
+                        icon={<Checkmark size="small" />}
+                        onClick={() => {
+                          let newArr = [...notes]; // copying the old datas array
+                          newArr[note.index].edit = false; // replace e.target.value with whatever you want to change it to
 
-                        onSetNotes(newArr); // ??
-                      }}
-                    />
+                          onSetNotes(newArr); // ??
+                        }}
+                      />
+                      <Button
+                        icon={<Trash size="small" />}
+                        onClick={() => {
+                          let newArr = [...notes];
+                          newArr.splice(note.index, 1);
+                          onSetNotes(newArr);
+                        }}
+                      />
+                    </Box>
                   </Box>
                 ) : (
                   <Box justify="between" direction="row">
@@ -118,6 +141,7 @@ const Notes = ({ notes, getNotes, setNotes }) => {
       </Box>
       {!collapsed && (
         <Box alignSelf="end" margin="small" direction="row" gap="small">
+          <Button icon={<Save />} />
           <Button
             icon={<Add />}
             label="Add a note"
@@ -145,10 +169,12 @@ Notes.propTypes = {
   notes: PropTypes.array,
   getNotes: PropTypes.func,
   setNotes: PropTypes.func,
+  auth: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   notes: state.notes.data,
+  user: state.auth.user,
 });
 
 export default connect(

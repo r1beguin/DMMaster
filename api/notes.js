@@ -12,7 +12,14 @@ router.post("/", async (req, res) => {
     if (!notes) {
       newNotes = new Notes({
         user: user._id,
-        data: [],
+        data: [
+          {
+            name: "",
+            index: 0,
+            edit: false,
+            content: "",
+          },
+        ],
       });
       await newNotes.save();
     } else {
