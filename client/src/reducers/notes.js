@@ -1,4 +1,4 @@
-import { GET_NOTES, SET_NOTES } from "../actions/types";
+import { GET_NOTES, SET_NOTES, SET_BUFFER } from "../actions/types";
 
 const initialState = {
   data: [
@@ -20,6 +20,11 @@ export default function (state = initialState, action) {
         data: payload.data,
       };
     case SET_NOTES:
+      return {
+        ...state,
+        ...payload,
+      };
+    case SET_BUFFER:
       return {
         ...state,
         ...payload,

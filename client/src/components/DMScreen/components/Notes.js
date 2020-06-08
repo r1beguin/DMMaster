@@ -13,9 +13,9 @@ import {
   Save,
 } from "grommet-icons";
 
-import { getNotes, setNotes } from "../../../actions/notes";
+import { getNotes, setNotes, setBuffer } from "../../../actions/notes";
 
-const Notes = ({ notes, getNotes, setNotes, user }) => {
+const Notes = ({ notes, getNotes, setNotes, user, setBuffer }) => {
   const [newNotes, setNewNotes] = React.useState([]);
   const [activeNote, setActiveNote] = React.useState(0);
   const [collapsed, setCollapsed] = React.useState(false);
@@ -133,7 +133,7 @@ const Notes = ({ notes, getNotes, setNotes, user }) => {
                 let newArr = [...notes]; // copying the old datas array
                 newArr[activeNote].content = e.target.value; // replace e.target.value with whatever you want to change it to
 
-                onSetNotes(newArr); // ??
+                setBuffer(newArr); // ??
               }}
             ></TextArea>
           </Box>
@@ -141,7 +141,7 @@ const Notes = ({ notes, getNotes, setNotes, user }) => {
       </Box>
       {!collapsed && (
         <Box alignSelf="end" margin="small" direction="row" gap="small">
-          <Button icon={<Save />} />
+          <Button icon={<Save />} onClick={() => onSetNotes(notes)} />
           <Button
             icon={<Add />}
             label="Add a note"
@@ -169,6 +169,7 @@ Notes.propTypes = {
   notes: PropTypes.array,
   getNotes: PropTypes.func,
   setNotes: PropTypes.func,
+  setBuffer: PropTypes.func,
   auth: PropTypes.object,
 };
 
@@ -179,5 +180,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, // connect store state to component pro  ps
-  { getNotes, setNotes } // connect actions for the component to modify store state
+  { getNotes, setNotes, setBuffer } // connect actions for the component to modify store state
 )(Notes);

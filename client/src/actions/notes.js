@@ -1,4 +1,4 @@
-import { GET_NOTES, SET_NOTES } from "../actions/types";
+import { GET_NOTES, SET_NOTES, SET_BUFFER } from "../actions/types";
 import axios from "axios";
 
 export const getNotes = ({ name }) => async (dispatch) => {
@@ -33,4 +33,11 @@ export const setNotes = ({ name, data }) => async (dispatch) => {
   } catch (error) {
     console.log("Error set notes");
   }
+};
+
+export const setBuffer = ({ data }) => async (dispatch) => {
+  dispatch({
+    type: SET_BUFFER,
+    payload: data,
+  });
 };

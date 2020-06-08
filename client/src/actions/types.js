@@ -29,3 +29,4 @@ export const UPDATE_POSITION_ERROR = "GUPDATE_POSITION_ERROR";
 
 export const GET_NOTES = "GET_NOTES";
 export const SET_NOTES = "SET_NOTES";
+export const SET_BUFFER = "SET_BUFFER";
