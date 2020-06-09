@@ -17,7 +17,6 @@ import { getNotes, setNotes, setBuffer } from "../../../actions/notes";
 import { setAlert } from "../../../actions/alert";
 
 const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
-  const [newNotes, setNewNotes] = React.useState([]); // to remove ?
   const [activeNote, setActiveNote] = React.useState(0);
   const [collapsed, setCollapsed] = React.useState(false);
 
@@ -54,92 +53,101 @@ const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
       <Box margin="small" direction="row" gap="small">
         {!collapsed && (
           <Box gap="small">
-            {notes.map((note) => (
-              <Box
-                width="small"
-                border="all"
-                round="xsmall"
-                pad="small"
-                onClick={() => setActiveNote(note.index)}
-                key={note.index}
-                background={note.index === activeNote && "brand"}
-              >
-                {note.edit ? (
-                  <Box justify="between" direction="row">
-                    <TextArea
-                      size="xsmall"
-                      alignSelf="center"
-                      onChange={(e) => {
-                        setActiveNote(note.index);
+            {notes &&
+              notes.map((note) => (
+                <Box
+                  width="small"
+                  border="all"
+                  round="xsmall"
+                  pad="small"
+                  onClick={() => setActiveNote(note.index)}
+                  key={note.index}
+                  background={note.index === activeNote && "brand"}
+                >
+                  {note.edit ? (
+                    <Box justify="between" direction="row">
+                      <TextArea
+                        size="xsmall"
+                        alignSelf="center"
+                        onChange={(e) => {
+                          setActiveNote(note.index);
 
-                        let newArr = [...notes]; // copying the old datas array
-                        newArr[note.index].name = e.target.value; // replace e.target.value with whatever you want to change it to
-
-                        onSetNotes(newArr); // ??
-                      }}
-                    />
-                    <Box align="center">
-                      <Button
-                        icon={<Checkmark size="small" />}
-                        onClick={() => {
                           let newArr = [...notes]; // copying the old datas array
-                          newArr[note.index].edit = false; // replace e.target.value with whatever you want to change it to
+                          newArr[note.index].name = e.target.value; // replace e.target.value with whatever you want to change it to
 
                           onSetNotes(newArr); // ??
                         }}
                       />
-                      <Button
-                        icon={<Trash size="small" />}
-                        onClick={() => {
-                          setActiveNote(0);
-                          let newArr = [...notes];
-                          newArr.splice(note.index, 1);
-                          newArr.map((item) => {
-                            if (item.index > note.index) {
-                              item.index = item.index - 1;
+                      <Box align="center">
+                        <Button
+                          icon={<Checkmark size="small" />}
+                          onClick={() => {
+                            let newArr = [...notes]; // copying the old datas array
+                            newArr[note.index].edit = false; // replace e.target.value with whatever you want to change it to
+
+                            onSetNotes(newArr); // ??
+                          }}
+                        />
+                        <Button
+                          icon={<Trash size="small" />}
+                          onClick={() => {
+                            setActiveNote(0);
+                            let newArr = [...notes];
+                            newArr.splice(note.index, 1);
+                            for (const item in newArr) {
+                              if (item.index > note.index) {
+                                item.index -= 1;
+                              }
                             }
-                          });
-                          onSetNotes(newArr);
+                            onSetNotes(newArr);
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  ) : (
+                    <Box justify="between" direction="row">
+                      <Text size="xsmall" alignSelf="center">
+                        {note.name}
+                      </Text>
+                      <Button
+                        alignSelf="center"
+                        icon={<Edit size="small" />}
+                        onClick={() => {
+                          setActiveNote(note.index);
+                          let newArr = [...notes]; // copying the old datas array
+                          newArr[note.index].edit = true; // replace e.target.value with whatever you want to change it to
+
+                          onSetNotes(newArr); // ??
                         }}
                       />
                     </Box>
-                  </Box>
-                ) : (
-                  <Box justify="between" direction="row">
-                    <Text size="xsmall" alignSelf="center">
-                      {note.name}
-                    </Text>
-                    <Button
-                      alignSelf="center"
-                      icon={<Edit size="small" />}
-                      onClick={() => {
-                        setActiveNote(note.index);
-                        let newArr = [...notes]; // copying the old datas array
-                        newArr[note.index].edit = true; // replace e.target.value with whatever you want to change it to
-
-                        onSetNotes(newArr); // ??
-                      }}
-                    />
-                  </Box>
-                )}
-              </Box>
-            ))}
+                  )}
+                </Box>
+              ))}
           </Box>
         )}
         {!collapsed && (
           <Box height="medium">
-            <TextArea
-              value={
-                notes[activeNote] !== undefined && notes[activeNote].content
-              }
-              size="small"
-              onChange={(e) => {
-                let newArr = [...notes]; // copying the old datas array
-                newArr[activeNote].content = e.target.value; // replace e.target.value with whatever you want to change it to
+            {notes.length ? (
+              <TextArea
+                value={
+                  notes[activeNote] !== undefined
+                    ? notes[activeNote].content
+                    : ""
+                }
+                size="small"
+                onChange={(e) => {
+                  let newArr = [...notes];
+                  if (notes[activeNote] !== undefined) {
+                    newArr[activeNote].content = e.target.value;
+                  }
 
-                setBuffer(newArr); // ??
-              }}
-            ></TextArea>
+                  setBuffer(newArr);
+                }}
+              ></TextArea>
+            ) : (
+              <Text>No notes</Text>
+            )}
           </Box>
         )}
       </Box>
@@ -157,7 +165,12 @@ const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
             label="Add a note"
             color="grey"
             onClick={() => {
-              let newIndex = notes.length;
+              let newIndex;
+              if (notes.length) {
+                newIndex = notes.length;
+              } else {
+                newIndex = 0;
+              }
               onSetNotes([
                 ...notes,
                 {
