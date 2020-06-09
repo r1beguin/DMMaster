@@ -62,7 +62,7 @@ const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
                   pad="small"
                   onClick={() => setActiveNote(note.index)}
                   key={note.index}
-                  background={note.index === activeNote && "brand"}
+                  background={note.index === activeNote ? "brand" : "white"}
                 >
                   {note.edit ? (
                     <Box justify="between" direction="row">
