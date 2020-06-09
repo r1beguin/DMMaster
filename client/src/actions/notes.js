@@ -1,13 +1,9 @@
 import { GET_NOTES, SET_NOTES, SET_BUFFER } from "../actions/types";
 import axios from "axios";
 
-export const getNotes = ({ name }) => async (dispatch) => {
+export const getNotes = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/notes", {
-      params: {
-        name: name,
-      },
-    });
+    const res = await axios.get("/api/notes", {});
     dispatch({
       type: GET_NOTES,
       payload: res.data,
@@ -17,11 +13,10 @@ export const getNotes = ({ name }) => async (dispatch) => {
   }
 };
 
-export const setNotes = ({ name, data }) => async (dispatch) => {
+export const setNotes = (data) => async (dispatch) => {
   try {
     const res = await axios.post("/api/notes", {
       params: {
-        name: name,
         data: data,
       },
     });
@@ -29,7 +24,7 @@ export const setNotes = ({ name, data }) => async (dispatch) => {
       type: SET_NOTES,
       payload: res.data,
     });
-    dispatch(getNotes({ name }));
+    dispatch(getNotes());
   } catch (error) {
     console.log("Error set notes");
   }

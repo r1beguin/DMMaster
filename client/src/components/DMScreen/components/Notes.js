@@ -16,17 +16,17 @@ import {
 import { getNotes, setNotes, setBuffer } from "../../../actions/notes";
 import { setAlert } from "../../../actions/alert";
 
-const Notes = ({ notes, getNotes, setNotes, user, setBuffer, setAlert }) => {
-  const [newNotes, setNewNotes] = React.useState([]);
+const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
+  const [newNotes, setNewNotes] = React.useState([]); // to remove ?
   const [activeNote, setActiveNote] = React.useState(0);
   const [collapsed, setCollapsed] = React.useState(false);
 
   React.useEffect(() => {
-    getNotes({ name: "Thokk" });
+    getNotes();
   }, []);
 
   const onSetNotes = (data) => {
-    setNotes({ name: user.name, data: data });
+    setNotes(data);
   };
 
   return (
@@ -186,7 +186,6 @@ Notes.propTypes = {
 
 const mapStateToProps = (state) => ({
   notes: state.notes.data,
-  user: state.auth.user,
 });
 
 export default connect(

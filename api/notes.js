@@ -1,17 +1,17 @@
 const router = require("express").Router();
 const User = require("../db/models/User");
 const Notes = require("../db/models/Notes");
+const auth = require('../utils/auth');
 
-router.post("/", async (req, res) => {
-  const { name, data } = req.body.params;
-  var user;
+router.post("/", auth, async (req, res) => {
+  const user_id = req.user.id;
+  const { data } = req.body.params;
 
   try {
-    user = await User.findOne({ name: name });
-    const notes = await Notes.findOne({ user: user._id });
+    const notes = await Notes.findOne({ user: user_id });
     if (!notes) {
       newNotes = new Notes({
-        user: user._id,
+        user: user_id,
         data: [
           {
             name: "",
@@ -34,11 +34,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  const { name } = req.query;
+router.get("/", auth, async (req, res) => {
+  // console.log(req);
+  
+  const user_id = req.user.id;
   try {
-    const user = await User.findOne({ name });
-    const notes = await Notes.findOne({ user: user._id }).populate({
+    const notes = await Notes.findOne({ user: user_id }).populate({
       path: "notes",
       model: Notes,
     });
