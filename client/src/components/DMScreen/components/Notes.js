@@ -91,6 +91,7 @@ const Notes = ({ notes, getNotes, setNotes, user, setBuffer, setAlert }) => {
                       <Button
                         icon={<Trash size="small" />}
                         onClick={() => {
+                          setActiveNote(0);
                           let newArr = [...notes];
                           newArr.splice(note.index, 1);
                           newArr.map((item) => {
@@ -128,7 +129,9 @@ const Notes = ({ notes, getNotes, setNotes, user, setBuffer, setAlert }) => {
         {!collapsed && (
           <Box height="medium">
             <TextArea
-              value={notes[activeNote].content}
+              value={
+                notes[activeNote] !== undefined && notes[activeNote].content
+              }
               size="small"
               onChange={(e) => {
                 let newArr = [...notes]; // copying the old datas array
