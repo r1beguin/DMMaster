@@ -6,7 +6,7 @@ import Notes from "../DMScreen/components/Notes";
 const PlayerScreen = () => {
   return (
     <Box>
-      <Box direction="row">
+      <Box direction="row" gap="small" margin={{ horizontal: "small" }}>
         <Notes />
         <Box width="xlarge" height="large">
           <Map user="player" />

@@ -84,7 +84,7 @@ router.post("/active", async (req, res) => {
 // Store uploaded image on DB
 // TODO: thumbnail
 router.post("/upload", async (req, res, next) => {
-  var img = Buffer.from(req.body.imageData.substr(22), 'base64');
+  var img = Buffer.from(req.body.data.substr(22), 'base64');
   var dimensions = sizeOf(img);
   console.log(dimensions.width, dimensions.height);
   const newImage = new Image({

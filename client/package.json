@@ -7,7 +7,7 @@
     "dropzone": "^5.5.1",
     "grommet": "^2.11.1",
     "grommet-icons": "^4.4.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "polished": "^3.4.4",
     "react": "^16.12.0",
