@@ -83,7 +83,19 @@ const Map = ({
           </Box>
         )}
       </Box>
-      <Box direction="row">
+      <Box direction="row" justify="evenly">
+        <Box gap="small" margin="small">
+          {involved.map((inv) => (
+            <Box
+              width="xxsmall"
+              height="xxsmall"
+              round="full"
+              overflow="hidden"
+            >
+              <Image src={inv.creature.avatar} fit="cover" />
+            </Box>
+          ))}
+        </Box>
         <Box width="large" pad="xsmall" align="center">
           {image === "" ? (
             <Text>Aucune battlemap chargée</Text>
