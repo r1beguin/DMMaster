@@ -8,7 +8,9 @@ const PlayerScreen = () => {
     <Box>
       <Box direction="row" gap="small" margin={{ horizontal: "small" }}>
         <Notes />
-        <Map user="player" />
+        <Box width="xlarge" height="large">
+          <Map user="player" />
+        </Box>
       </Box>
     </Box>
   );
