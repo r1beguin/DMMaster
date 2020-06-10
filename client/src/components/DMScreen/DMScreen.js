@@ -1,53 +1,28 @@
-import './DMScreen.css'
-
-import Upload from './components/Upload'
-import Draggable from '../../utils/Draggable'
-import InitiativeTracker from './components/InitiativeTracker'
-
-import React, { Fragment, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { nextTurn, loadFight } from '../../actions/fight'
 
+import { Box } from "grommet";
 
-const DMScreen = ({ loadFight, nextTurn, turn, involved }) => {
+import Map from "../Map/Map";
+import Notes from "./components/Notes";
+import Music from "./components/Music";
 
-    useEffect(() => {
-        loadFight();
-    },[]);
-
-    return (
-        <Fragment>
-            
-            <div className="dmBox">
-                <div className="iniBox">
-                    
-                    {involved.map(function(inv, idx){
-                        const creature = inv.creature;
-                        return (<Draggable><a key={idx}><InitiativeTracker active={idx === turn} name={creature.name} src={creature.avatar} /></a></Draggable>)
-                    })}
-                    <div className="turnbox" >
-                        <button className="turn" onClick={e =>  nextTurn()}>End of Turn</button>
-                    </div>
-                    
-                </div>
-                <Upload />
-            </div>
-                
-        </Fragment>
-    );
+const DMScreen = () => {
+  return (
+    <Box margin="small">
+      <Box direction="row" gap="small">
+        <Box gap="small">
+          <Notes />
+          <Music />
+        </Box>
+        <Map user="DM" />
+      </Box>
+    </Box>
+  );
 };
 
-DMScreen.propTypes = {
-    loadFight: PropTypes.func.isRequired,
-    nextTurn: PropTypes.func.isRequired, // ptfr
-    turn: PropTypes.number,
-    involved: PropTypes.array,
-};
+DMScreen.propTypes = {};
 
-const mapStateToProps = state => ({
-    turn: state.fight.turn,
-    involved: state.fight.involved, 
-});
+const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { loadFight, nextTurn })(DMScreen);
+export default connect(mapStateToProps)(DMScreen);

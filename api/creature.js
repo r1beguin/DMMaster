@@ -2,18 +2,65 @@ const router = require("express").Router();
 const config = require("config");
 const Creature = require("../db/models/Creature");
 const User = require("../db/models/User");
-const jwt = require('jsonwebtoken');
-const auth = require('../utils/auth');
+const jwt = require("jsonwebtoken");
+const auth = require("../utils/auth");
 
 // return the user infos to a loged in user
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const creature = await Creature.findOne({user}).populate({
-      path: 'user',
-      model: User,
+    const creature = await Creature.findOne({ user }).populate({
+      path: "user",
+      model: User
     });
     res.json(creature);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/creature", async (req, res) => {
+  // this route is creature/creature ?
+  try {
+    const creature = await Creature.findOne(req.query);
+    res.json(creature);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.post("/position", async (req, res) => {
+  try {
+    console.log("req", req.body);
+    const query = { "_id": req.body.id };
+    const update = {
+      posx: req.body.posx,
+      posy: req.body.posy
+    };
+    const options = {new: true };
+
+    const creature = await Creature.findOneAndUpdate(query, update, options);
+    res.json(creature);
+    console.log("res api", creature);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// TODO: use mapper to prepare request
+router.post("/update", async (req, res) => {
+  try {
+    console.log("req", req.body);
+    const query = { "_id": req.body.id };
+    const update = req.body.update;
+    const options = {new: true };
+
+    const creature = await Creature.findOneAndUpdate(query, update, options);
+    res.json(creature);
+    console.log("res api", creature);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -27,12 +74,21 @@ async function updateCreature(creature, hp, alive) {
   await creature.save();
 }
 
-async function addCreature(name, hp, role, avatar, user = null, monster = null) {
+async function addCreature(
+  name,
+  hp,
+  role,
+  avatar,
+  user = null,
+  monster = null
+) {
   if (!avatar) {
-    if (role == "player"){
-      avatar = "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/characters/default-avatar-builder.png"
+    if (role == "player") {
+      avatar =
+        "https://www.dndbeyond.com/Content/Skins/Waterdeep/images/characters/default-avatar-builder.png";
     } else {
-      avatar = "https://www.dndbeyond.com/Content/1-0-787-0/Skins/Waterdeep/images/icons/monsters/beast.jpg"
+      avatar =
+        "https://www.dndbeyond.com/Content/1-0-787-0/Skins/Waterdeep/images/icons/monsters/beast.jpg";
     }
   }
   creature = new Creature({
@@ -40,7 +96,7 @@ async function addCreature(name, hp, role, avatar, user = null, monster = null) 
     role,
     hp,
     alive: true,
-    avatar,
+    avatar
   });
   if (user) creature.user = user._id;
   if (monster) creature.monster = monster._id;
@@ -98,7 +154,6 @@ router.post("/", async (req, res) => {
       }
     }
     res.json({ creature });
-
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");

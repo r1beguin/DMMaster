@@ -1,125 +1,122 @@
-import React, { Component } from 'react'
+import React from "react";
 
-import './Skills.css'
+import { Box, Text } from "grommet";
 
-class Skills extends Component{
+const Skills = ({ skill }) => {
+  if (skill === "0") {
+    return <Box></Box>;
+  } else if (skill === "str") {
+    return (
+      <Box
+        background="white"
+        width="small"
+        margin="small"
+        round="small"
+        border="full"
+        align="center"
+      >
+        <Text>Athletics</Text>
+        <Text>+2</Text>
+      </Box>
+    );
+  } else if (skill === "dex") {
+    return (
+      <Box
+        background="white"
+        width="small"
+        margin="small"
+        round="small"
+        border="full"
+        align="center"
+      >
+        <Text>Acrobatics</Text>
+        <Text>+2</Text>
 
-    render(){
+        <Text>Sleight of Hand</Text>
+        <Text>+2</Text>
 
-        if (this.props.skill==="0"){
-            return(
-                <div>
-                    
-                </div>
-            )
-        }else if (this.props.skill==="str"){
-            return(
-                <div className="Skill">
-                    <p style={{fontWeight: 'bold'}}>
-                        Athletics
-                    </p>                 
-                    +2
-                </div>
-            )
+        <Text>Stealth</Text>
+        <Text>+2</Text>
+      </Box>
+    );
+  } else if (skill === "int") {
+    return (
+      <Box
+        background="white"
+        width="small"
+        margin="small"
+        round="small"
+        border="full"
+        align="center"
+      >
+        <Text>Arcana</Text>
+        <Text>+2</Text>
 
-        }else if (this.props.skill==="dex"){
-            return(
-                <div className="Skill">
-                    <p style={{fontWeight: 'bold'}}>
-                        Acrobatics
-                    </p>      
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Sleight of Hand
-                    </p> 
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Stealth
-                    </p>                    
-                    +2
-                </div>
-            )
+        <Text>History</Text>
+        <Text>+2</Text>
 
-        }else if (this.props.skill==="int"){
-            return(
-                <div className="Skill">
-                    <p style={{fontWeight: 'bold'}}>
-                        Arcana
-                    </p>                   
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        History
-                    </p>                   
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Investigation
-                    </p>                   
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Nature
-                    </p>                   
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Religion
-                    </p>                   
-                    +2
-                </div>
-            )
+        <Text>Investigation</Text>
+        <Text>+2</Text>
 
-        }else if (this.props.skill==="wis"){
-            return(
-                <div className="Skill">
-                    <p style={{fontWeight: 'bold'}}>
-                        Animal handling
-                    </p>                  
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Insight
-                    </p>                  
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Medicine
-                    </p>                   
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Perception
-                    </p>                  
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Survival
-                    </p>                  
-                    +2
-                </div>
-            )
+        <Text>Nature</Text>
+        <Text>+2</Text>
 
-        }else if (this.props.skill==="cha"){
-            return(
-                <div className="Skill">
-                    <p style={{fontWeight: 'bold'}}>
-                        Deception
-                    </p>                  
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Intimidation
-                    </p>                  
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Performance
-                    </p>                   
-                    +2
-                    <p style={{fontWeight: 'bold'}}>
-                        Persuasion
-                    </p>                  
-                    +2
-                </div>
-            )
+        <Text>Religion</Text>
+        <Text>+2</Text>
+      </Box>
+    );
+  } else if (skill === "wis") {
+    return (
+      <Box
+        background="white"
+        width="small"
+        margin="small"
+        round="small"
+        border="full"
+        align="center"
+      >
+        <Text>Animal handling</Text>
+        <Text>+2</Text>
 
-        }else{
-            return(
-                <div></div>
-            )
-        }
-    }
-}
+        <Text>Insight</Text>
+        <Text>+2</Text>
 
-export default Skills
+        <Text>Medicine</Text>
+        <Text>+2</Text>
+
+        <Text>Perception</Text>
+        <Text>+2</Text>
+
+        <Text>Survival</Text>
+        <Text>+2</Text>
+      </Box>
+    );
+  } else if (skill === "cha") {
+    return (
+      <Box
+        background="white"
+        width="small"
+        margin="small"
+        round="small"
+        border="full"
+        align="center"
+      >
+        <Text>Deception</Text>
+        <Text>+2</Text>
+
+        <Text>Intimidation</Text>
+        <Text>+2</Text>
+
+        <Text>Performance</Text>
+        <Text>+2</Text>
+
+        <Text>Persuasion</Text>
+        <Text>+2</Text>
+      </Box>
+    );
+  } else {
+    return <Box></Box>;
+  }
+};
+
+export default Skills;

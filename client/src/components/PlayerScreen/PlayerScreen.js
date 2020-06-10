@@ -1,37 +1,17 @@
-import React from 'react';
+import React from "react";
+import { Box } from "grommet";
+import Map from "../Map/Map";
+import Notes from "../DMScreen/components/Notes";
 
-import './PlayerScreen.css'
-import StatPanel from './components/StatPanel/StatPanel'
+const PlayerScreen = () => {
+  return (
+    <Box>
+      <Box direction="row" gap="small" margin={{ horizontal: "small" }}>
+        <Notes />
+        <Map user="player" />
+      </Box>
+    </Box>
+  );
+};
 
-
-class PlayerScreen extends React.Component{
-
-    constructor() {
-        super();
-        this.handler = this.handler.bind(this); 
-      }
-
-      handler(e){ 
-        this.props.modeSelection(e);
-      }
-
-      
- 
-    render(){
-        return(
-            <div>
-                {/* <div className="navDM">
-                    <div className="back" onClick={() => this.handler("home")}>Home</div>
-                    <div className="activeItem">Player Screen</div>                    
-                </div> */}
-
-                <StatPanel />
-                
-            </div> 
-
-        )
-    }
-}
-
-
-export default PlayerScreen
+export default PlayerScreen;

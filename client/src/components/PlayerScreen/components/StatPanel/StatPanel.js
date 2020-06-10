@@ -1,46 +1,46 @@
-import React, { Component } from 'react'
+import React from "react";
+import { Box, Text } from "grommet";
 
-import './StatPanel.css'
+import HpBox from "./HpBox";
 
-import HpBox from './HpBox'
+import MainStatBox from "./MainStatBox";
 
-import MainStatBox from './MainStatBox'
+//Describes base player stats and modifiers
 
-//Describes base player stats and modifiers 
+const StatPanel = () => {
+  return (
+    <Box margin="small">
+      <HpBox />
 
-class StatPanel extends Component{
-  
-    render(){
-        return(
-            <div className="StatPanel">
+      <Box direction="row">
+        <Box
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>AC</Text>
+          <Text>15</Text>
+        </Box>
 
-                <HpBox />
+        <Box
+          background="white"
+          width="small"
+          margin="small"
+          round="small"
+          border="full"
+          align="center"
+        >
+          <Text>Initiative</Text>
+          <Text>+2</Text>
+        </Box>
+      </Box>
 
-                <div className="ACIniBox">
-                    <div className="ACBox">
-                        <h4>
-                            AC
-                        </h4>
-                        <hr />
-                        15
-                    </div>
+      <MainStatBox />
+    </Box>
+  );
+};
 
-                    <div className="IniBox">
-                        <h4>
-                            Initiative
-                        </h4>
-                        <hr />
-                        +2
-                    </div>
-                </div>
-                
-
-                <MainStatBox />
-
-            </div>
-        )
-    }
-}
-
-
-export default StatPanel
+export default StatPanel;

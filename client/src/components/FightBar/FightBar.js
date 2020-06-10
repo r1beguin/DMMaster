@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import { Box } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
-import InitiativeTracker from "../DMScreen/components/InitiativeTracker"
-
+import InitiativeTracker from "../DMScreen/components/InitiativeTracker";
 
 const FightBar = ({ involved, turn }) => {
   useEffect(() => {
@@ -12,26 +11,32 @@ const FightBar = ({ involved, turn }) => {
   }, []);
   return (
     <Box
-      width="xxlarge"
       height="xsmall"
       border={{ color: "grey", size: "small" }}
+      round="small"
       direction="row"
+      margin="small"
+      pad="small"
     >
-      {involved.map(function(inv, idx){
-          const creature = inv.creature;
-          // TODO: fix "key" warning
-          return (
+      {involved.map(function (inv, idx) {
+        const creature = inv.creature;
+        // TODO: fix "key" warning
+        return (
           <Box direction="row">
             <Box>
               <a key={idx}>
-              <InitiativeTracker active={idx === turn} name={creature.name} src={creature.avatar} />
-            </a>
+                <InitiativeTracker
+                  active={idx === turn}
+                  name={creature.name}
+                  src={creature.avatar}
+                />
+              </a>
             </Box>
             <Box>
               <p>→</p>
             </Box>
           </Box>
-          )
+        );
       })}
     </Box>
   );
@@ -39,12 +44,12 @@ const FightBar = ({ involved, turn }) => {
 
 Map.propTypes = {
   involved: PropTypes.array,
-  turn: PropTypes.number
+  turn: PropTypes.number,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   involved: state.fight.involved,
-  turn: state.fight.turn
+  turn: state.fight.turn,
 });
 
 export default connect(
