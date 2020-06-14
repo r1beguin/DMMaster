@@ -11,7 +11,7 @@ router.get("/", auth, async (req, res) => {
     const user = await User.findById(req.user.id);
     const creature = await Creature.findOne({ user }).populate({
       path: "user",
-      model: User
+      model: User,
     });
     res.json(creature);
   } catch (err) {
@@ -34,12 +34,12 @@ router.get("/creature", async (req, res) => {
 router.post("/position", async (req, res) => {
   try {
     console.log("req", req.body);
-    const query = { "_id": req.body.id };
+    const query = { _id: req.body.id };
     const update = {
       posx: req.body.posx,
-      posy: req.body.posy
+      posy: req.body.posy,
     };
-    const options = {new: true };
+    const options = { new: true };
 
     const creature = await Creature.findOneAndUpdate(query, update, options);
     res.json(creature);
@@ -54,9 +54,9 @@ router.post("/position", async (req, res) => {
 router.post("/update", async (req, res) => {
   try {
     console.log("req", req.body);
-    const query = { "_id": req.body.id };
+    const query = { name: req.body.name };
     const update = req.body.update;
-    const options = {new: true };
+    const options = { new: true };
 
     const creature = await Creature.findOneAndUpdate(query, update, options);
     res.json(creature);
@@ -96,7 +96,7 @@ async function addCreature(
     role,
     hp,
     alive: true,
-    avatar
+    avatar,
   });
   if (user) creature.user = user._id;
   if (monster) creature.monster = monster._id;

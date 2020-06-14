@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
+import Draggable from "react-draggable";
+
 import { Box, DropButton, Image, Text, Button } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 
@@ -32,6 +34,18 @@ const Map = ({
     loadImageList();
     getCreature("Thokk");
   }, []);
+
+  const handleStop = (e, position, name) => {
+    const { x, y } = position;
+    console.log(name, x, y);
+    updatePosition({
+      name: name,
+      posx:
+        involved.find((inv) => inv.creature.name === name).creature.posx + x,
+      posy:
+        involved.find((inv) => inv.creature.name === name).creature.posy + y,
+    });
+  };
 
   return (
     <Box
@@ -71,29 +85,27 @@ const Map = ({
                 </Box>
               }
             />
-            <Button
-              color="grey"
-              onClick={() => {
-                updatePosition("Thokk", { posx: 300, posy: 300 });
-                getCreature("Thokk");
-                console.log(hp);
-              }}
-              label="test"
-            ></Button>
           </Box>
         )}
       </Box>
       <Box direction="row" justify="evenly">
         <Box gap="small" margin="small">
           {involved.map((inv) => (
-            <Box
-              width="xxsmall"
-              height="xxsmall"
-              round="full"
-              overflow="hidden"
+            <Draggable
+              onStop={(e, position) =>
+                handleStop(e, position, inv.creature.name)
+              }
+              position={{ x: inv.creature.posx, y: inv.creature.posy }}
             >
-              <Image src={inv.creature.avatar} fit="cover" />
-            </Box>
+              <Box
+                width="xxsmall"
+                height="xxsmall"
+                round="full"
+                overflow="hidden"
+              >
+                <Image src={inv.creature.avatar} fit="cover" />
+              </Box>
+            </Draggable>
           ))}
         </Box>
         <Box width="large" pad="xsmall" align="center">
