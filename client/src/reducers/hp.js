@@ -5,7 +5,7 @@ import {
   GET_CREATURE,
   UPDATE_POSITION,
   UPDATE_POSITION_SUCCESS,
-  UPDATE_POSITION_ERROR
+  UPDATE_POSITION_ERROR,
 } from "../actions/types";
 
 const initialState = {
@@ -20,11 +20,11 @@ const initialState = {
     user: "",
     monster: "",
     posx: 0,
-    posy: 0
-  }
+    posy: 0,
+  },
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case HP_LOADED:
@@ -32,38 +32,38 @@ export default function(state = initialState, action) {
         ...state,
         hp: payload.hp,
         loading: false,
-        creature: payload
+        creature: payload,
       };
 
     case GET_CREATURE:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_CREATURE_SUCCESS:
       return {
         loading: false,
-        creature: action.payload
+        creature: action.payload,
       };
     case GET_CREATURE_ERROR:
       return {
-        ...state
+        ...state,
       };
 
     case UPDATE_POSITION:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case UPDATE_POSITION_SUCCESS:
-      console.log("reducer", action.payload);
       return {
+        ...state,
         loading: false,
-        creature: action.payload
+        creature: action.payload,
       };
     case UPDATE_POSITION_ERROR:
       return {
-        ...state
+        ...state,
       };
     default:
       return state;

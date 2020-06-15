@@ -37,13 +37,10 @@ const Map = ({
 
   const handleStop = (e, position, name) => {
     const { x, y } = position;
-    console.log(name, x, y);
     updatePosition({
       name: name,
-      posx:
-        involved.find((inv) => inv.creature.name === name).creature.posx + x,
-      posy:
-        involved.find((inv) => inv.creature.name === name).creature.posy + y,
+      posx: x,
+      posy: y,
     });
   };
 

@@ -33,8 +33,7 @@ router.get("/creature", async (req, res) => {
 
 router.post("/position", async (req, res) => {
   try {
-    console.log("req", req.body);
-    const query = { _id: req.body.id };
+    const query = { name: req.body.name };
     const update = {
       posx: req.body.posx,
       posy: req.body.posy,
@@ -43,7 +42,6 @@ router.post("/position", async (req, res) => {
 
     const creature = await Creature.findOneAndUpdate(query, update, options);
     res.json(creature);
-    console.log("res api", creature);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -54,7 +52,7 @@ router.post("/position", async (req, res) => {
 router.post("/update", async (req, res) => {
   try {
     console.log("req", req.body);
-    const query = { name: req.body.name };
+    const query = { name: req.body.id };
     const update = req.body.update;
     const options = { new: true };
 
@@ -62,7 +60,7 @@ router.post("/update", async (req, res) => {
     res.json(creature);
     console.log("res api", creature);
   } catch (err) {
-    console.error(err.message);
+    console.error("error: ", err.message);
     res.status(500).send("Server Error");
   }
 });

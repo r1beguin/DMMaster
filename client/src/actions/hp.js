@@ -50,6 +50,7 @@ export const updatePosition = ({ name, posx, posy }) => async (dispatch) => {
       posy: posy,
     });
     const res = await axios.post("api/creature/position", body, config);
+    console.log(res.data);
     dispatch({
       type: UPDATE_POSITION_SUCCESS,
       payload: res.data,
