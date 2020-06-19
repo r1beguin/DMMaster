@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Draggable from "react-draggable";
 
-import { Box, DropButton, Image, Text, Button } from "grommet";
+import { Box, DropButton, Image, Text } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 
 import {
@@ -13,7 +13,7 @@ import {
   uploadImage,
 } from "../../actions/image";
 import FileBase64 from "react-file-base64";
-import { getCreature, updatePosition } from "../../actions/hp";
+import { getCreature, updatePosition } from "../../actions/fight";
 
 const Map = ({
   hp,
@@ -32,13 +32,13 @@ const Map = ({
   useEffect(() => {
     loadActiveImage();
     loadImageList();
-    getCreature("Thokk");
+    getCreature("Thokk"); // why usefull here ?
   }, []);
 
-  const handleStop = (e, position, name) => {
+  const handleStop = (e, position, id) => {
     const { x, y } = position;
     updatePosition({
-      name: name,
+      id: id,
       posx: x,
       posy: y,
     });
@@ -90,8 +90,9 @@ const Map = ({
           {involved.map((inv) => (
             <Draggable
               onStop={(e, position) =>
-                handleStop(e, position, inv.creature.name)
+                handleStop(e, position, inv.creature._id)
               }
+              // TODO: possible sync issue for attributes of attrivutes ?
               position={{ x: inv.creature.posx, y: inv.creature.posy }}
             >
               <Box

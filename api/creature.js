@@ -20,45 +20,24 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/creature", async (req, res) => {
-  // this route is creature/creature ?
-  try {
-    const creature = await Creature.findOne(req.query);
-    res.json(creature);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-router.post("/position", async (req, res) => {
-  try {
-    const query = { name: req.body.name };
-    const update = {
-      posx: req.body.posx,
-      posy: req.body.posy,
-    };
-    const options = { new: true };
-
-    const creature = await Creature.findOneAndUpdate(query, update, options);
-    res.json(creature);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// TODO: use mapper to prepare request
+// TODO: use mapper to prepare request ?
 router.post("/update", async (req, res) => {
   try {
     console.log("req", req.body);
-    const query = { name: req.body.id };
+    const id = req.body.id;
     const update = req.body.update;
     const options = { new: true };
+    const is_async = req.body.async;
 
-    const creature = await Creature.findOneAndUpdate(query, update, options);
+    const creature = await Creature.findByIdAndUpdate(id, update, options);
+
+    if (is_async) {
+      req.io.emit('CHANGE_CREATURE_IO', {})
+    }
+
     res.json(creature);
     console.log("res api", creature);
+
   } catch (err) {
     console.error("error: ", err.message);
     res.status(500).send("Server Error");

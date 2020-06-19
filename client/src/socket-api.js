@@ -1,6 +1,7 @@
 import socketIOClient from "socket.io-client";
 import { setTurn } from './actions/fight'
 import { loadActiveImage } from './actions/image'
+import { loadFight } from './actions/fight'
 
 
 // here is all the receivers for socketio
@@ -21,6 +22,11 @@ module.exports = function(url, store) {
   io.on('CHANGE_MAP_IO', data => {
     // console.log('socket received:', data);
     store.dispatch(loadActiveImage());
+  });
+
+  io.on('CHANGE_CREATURE_IO', data => {
+    // console.log('socket received:', data);
+    store.dispatch(loadFight());
   });
 
   // io.on('NEW_FIGHT_IO', data => {

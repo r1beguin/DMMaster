@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 
-import { loadHp } from "../../../../actions/hp";
+import { loadHp } from "../../../../actions/fight";
 
 import { connect } from "react-redux";
 
