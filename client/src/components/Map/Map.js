@@ -44,6 +44,16 @@ const Map = ({
     });
   };
 
+  const draggableTokens = involved.map(i=> {
+    return {
+      position: {
+        x: i.creature.posx,
+        y: i.creature.posy
+      },
+      involved: i
+    }
+  })
+
   return (
     <Box
       fill
@@ -87,13 +97,15 @@ const Map = ({
       </Box>
       <Box direction="row" justify="evenly">
         <Box gap="small" margin="small">
-          {involved.map((inv) => (
+          {draggableTokens.map((token) => (
             <Draggable
-              onStop={(e, position) =>
-                handleStop(e, position, inv.creature._id)
-              }
+              onStop={(e, position) => {
+                token.position.x = position.x
+                token.position.y = position.y
+                handleStop(e, position, token.involved.creature._id)
+              }}
               // TODO: possible sync issue for attributes of attrivutes ?
-              defaultPosition={{ x: inv.creature.posx, y: inv.creature.posy }}
+              position={token.position}
             >
               <Box
                 width="xxsmall"
@@ -101,7 +113,7 @@ const Map = ({
                 round="full"
                 overflow="hidden"
               >
-                <Image src={inv.creature.avatar} fit="cover" onDragStart={e=>e.preventDefault()}/>
+                <Image src={token.involved.creature.avatar} fit="cover" onDragStart={e=>e.preventDefault()}/>
               </Box>
             </Draggable>
           ))}
@@ -110,7 +122,7 @@ const Map = ({
           {image === "" ? (
             <Text>Aucune battlemap chargée</Text>
           ) : (
-            <Image src={image} fit="contain"/>
+            <Image src={image} fit="contain"></Image>
           )}
         </Box>
       </Box>
