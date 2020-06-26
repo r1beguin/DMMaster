@@ -18,6 +18,15 @@
   font-size: large;
 }
 
+a, a:hover {
+  color:inherit;
+  text-decoration: inherit;
+}
+
+a:focus {
+  outline: none;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

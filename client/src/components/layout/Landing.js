@@ -4,7 +4,8 @@ import master from "../../images/master.svg";
 import battlemap from "../../images/battlemap.svg";
 import character from "../../images/character.svg";
 
-import { Box, Anchor, Image } from "grommet";
+import {Box, Image} from "grommet";
+import {Link} from "react-router-dom";
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
@@ -14,57 +15,56 @@ const Landing = () => {
   return (
     <Box align="center" height={{ min: "80vh" }} justify="center">
       <Box align="center" justify="center" gap="small" width="small">
-        <Box
-          align="center"
-          justify="center"
-          border="solid"
-          round="small"
-          pad="small"
-          onClick={() => {
-            location.href = "/DMScreen";
-          }}
-          fill
-          hoverIndicator
-        >
-          <Box height="xxsmall" width="xxsmall" overflow="hidden">
-            <Image src={master} color="blue" fit="cover" />
+
+        <Link to="/DMScreen">
+          <Box
+            align="center"
+            justify="center"
+            border="solid"
+            round="small"
+            pad="small"
+            fill
+            hoverIndicator
+          >
+            <Box height="xxsmall" width="xxsmall" overflow="hidden">
+              <Image src={master} color="blue" fit="cover" />
+            </Box>
+            DM Screen
           </Box>
-          <Anchor href="/DMScreen">DM Screen</Anchor>
-        </Box>
-        <Box
-          align="center"
-          justify="center"
-          border="solid"
-          round="small"
-          pad="small"
-          onClick={() => {
-            location.href = "/Battlemap";
-          }}
-          fill
-          hoverIndicator
-        >
-          <Box height="xxsmall" width="xxsmall" overflow="hidden">
-            <Image src={battlemap} fit="cover" />
+        </Link>
+
+        <Link to="/Battlemap">
+          <Box
+            align="center"
+            justify="center"
+            border="solid"
+            round="small"
+            pad="small"
+            fill
+            hoverIndicator
+          >
+            <Box height="xxsmall" width="xxsmall" overflow="hidden">
+              <Image src={battlemap} fit="cover" />
+            </Box>
+            Battlemap
           </Box>
-          <Anchor href="/Battlemap">Battlemap</Anchor>
-        </Box>
-        <Box
-          align="center"
-          justify="center"
-          border="solid"
-          round="small"
-          pad="small"
-          onClick={() => {
-            location.href = "/PlayerScreen";
-          }}
-          fill
-          hoverIndicator
-        >
-          <Box height="xxsmall" width="xxsmall" overflow="hidden">
-            <Image src={character} fit="cover" />
+        </Link>
+        <Link to="/PlayerScreen">
+          <Box
+            align="center"
+            justify="center"
+            border="solid"
+            round="small"
+            pad="small"
+            fill
+            hoverIndicator
+          >
+            <Box height="xxsmall" width="xxsmall" overflow="hidden">
+              <Image src={character} fit="cover" />
+            </Box>
+            Player Screen
           </Box>
-          <Anchor href="/PlayerScreen">Player Screen</Anchor>
-        </Box>
+        </Link>
       </Box>
     </Box>
   );

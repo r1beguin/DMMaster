@@ -68,7 +68,7 @@ const Map = ({
                       margin="xsmall"
                       onClick={() => setActiveImage(img)}
                     >
-                      <Image src={img.data} fit="cover"></Image>
+                      <Image src={img.data} fit="cover"/>
                     </Box>
                   ))}
                   <Box margin="xsmall" direction="row" alignContent="center">
@@ -93,7 +93,7 @@ const Map = ({
                 handleStop(e, position, inv.creature._id)
               }
               // TODO: possible sync issue for attributes of attrivutes ?
-              position={{ x: inv.creature.posx, y: inv.creature.posy }}
+              defaultPosition={{ x: inv.creature.posx, y: inv.creature.posy }}
             >
               <Box
                 width="xxsmall"
@@ -101,7 +101,7 @@ const Map = ({
                 round="full"
                 overflow="hidden"
               >
-                <Image src={inv.creature.avatar} fit="cover" />
+                <Image src={inv.creature.avatar} fit="cover" onDragStart={e=>e.preventDefault()}/>
               </Box>
             </Draggable>
           ))}
@@ -110,7 +110,7 @@ const Map = ({
           {image === "" ? (
             <Text>Aucune battlemap chargée</Text>
           ) : (
-            <Image src={image} fit="contain"></Image>
+            <Image src={image} fit="contain"/>
           )}
         </Box>
       </Box>
