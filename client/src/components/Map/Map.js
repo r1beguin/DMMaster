@@ -14,6 +14,7 @@ import {
 } from "../../actions/image";
 import FileBase64 from "react-file-base64";
 import { getCreature, updatePosition } from "../../actions/fight";
+import CreatureToken from "../common/CreatureToken";
 
 const Map = ({
   hp,
@@ -107,14 +108,9 @@ const Map = ({
               // TODO: possible sync issue for attributes of attrivutes ?
               position={token.position}
             >
-              <Box
-                width="xxsmall"
-                height="xxsmall"
-                round="full"
-                overflow="hidden"
-              >
-                <Image src={token.involved.creature.avatar} fit="cover" onDragStart={e=>e.preventDefault()}/>
-              </Box>
+              <div>{/*This div is needed for Draggable*/}
+                <CreatureToken image={token.involved.creature.avatar} />
+              </div>
             </Draggable>
           ))}
         </Box>
@@ -122,7 +118,7 @@ const Map = ({
           {image === "" ? (
             <Text>Aucune battlemap chargée</Text>
           ) : (
-            <Image src={image} fit="contain"></Image>
+            <Image src={image} fit="contain"/>
           )}
         </Box>
       </Box>

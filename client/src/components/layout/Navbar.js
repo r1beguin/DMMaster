@@ -2,46 +2,53 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/auth";
 
-import { Nav, Box } from "grommet";
+import {Box, Header, Image, Text} from "grommet";
 
-import "./Navbar.css";
 import store from "../../store";
+import connect from "react-redux/lib/connect/connect";
+import CreatureToken from "../common/CreatureToken";
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
 // import PlayerScreen from './../PlayerScreen/PlayerScreen'
 
 // TODO: make it react to active screen
-const Navbar = () => {
-  const onchange = () => {
+const Navbar = ({isAuthenticated, user}) => {
+  const logout = () => {
     store.dispatch(logoutUser());
     console.log("logout");
   };
 
   return (
-    <Nav
-      direction="row"
-      background="dark-1"
-      gap="small"
-      justify="between"
-      pad="small"
-      alignContent="center"
-      margin={{ bottom: "small" }}
-    >
-      <Box alignContent="center">
+      <Header background="brand" elevation="medium" pad={{vertical: "small", horizontal: "medium"}}>
         <Link to="/" className="home">
-          DMMaster
+          <Box alignContent="center">
+              <Text size="xlarge" weight="bold">DMMaster</Text>
+          </Box>
         </Link>
+          <Box height="xxsmall" justify="center">
+              {!isAuthenticated && <Link to="/login"><Text weight="bold">Login</Text></Link>}
+          {isAuthenticated && <Box onClick={logout}>
+              {user && <Box direction="row" gap="small" align="center">
+                  <CreatureToken image="https://media-waterdeep.cursecdn.com/avatars/thumbnails/7519/581/219/150/637073581239053858.png" />
+                  <Box>
+                      <Text weight="bold">{user.name}</Text>
+                  </Box>
+              </Box>}
+              {!user && "Logout"}
+          </Box>
+          }
       </Box>
-      <Box>
-        <Link to="/login">Login</Link>
-        <Box onClick={onchange}>Logout</Box>
-      </Box>
-    </Nav>
+      </Header>
   );
 };
 
-export default Navbar;
+export default connect(
+    state => ({
+      isAuthenticated: state.auth.isAuthenticated,
+      user: state.auth.user
+    })
+)(Navbar);
 
 // class Navbar extends React.Component {
 

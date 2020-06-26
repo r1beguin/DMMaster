@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Grommet } from "grommet";
+import {Box, grommet, Grommet, Main} from "grommet";
+import {deepMerge} from "grommet/utils";
 
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import FightBar from "./components/FightBar/FightBar";
-import Landing from "./components/layout/Landing";
+import Landing from "./components/Landing/Landing";
 import DMScreen from "./components/DMScreen/DMScreen";
 import Battlemap from "./components/BattleMap/Battlemap";
 import PlayerScreen from "./components/PlayerScreen/PlayerScreen";
@@ -16,7 +17,6 @@ import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./actions/auth";
 import { loadFight } from "./actions/fight";
 import socketAPI from "./socket-api";
-
 //redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -37,31 +37,41 @@ const App = () => {
     store.dispatch(loadFight());
   }, []);
 
+  const grommetTheme = deepMerge(grommet, {
+    global: {
+      font: {
+        family: "Arial"
+      }
+    }
+  });
+
   return (
     <Provider store={store}>
       <Router>
-        <Grommet plain>
+        <Grommet theme={grommetTheme} full="true">
+          <Box fill="true" direction="column">
           <Navbar />
-          <FightBar />
-          <Route exact path="/">
-            <Landing />
-          </Route>
-
           <Alert />
           <Switch>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/DMScreen">
-              <DMScreen />
-            </Route>
-            <Route exact path="/Battlemap">
-              <Battlemap />
-            </Route>
-            <Route exact path="/PlayerScreen">
-              <PlayerScreen />
-            </Route>
+            <Main fill="true" flex="true">
+              <Route exact path="/">
+                <Landing />
+              </Route>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route exact path="/DMScreen">
+                <DMScreen />
+              </Route>
+              <Route exact path="/Battlemap">
+                <Battlemap />
+              </Route>
+              <Route exact path="/PlayerScreen">
+                <PlayerScreen />
+              </Route>
+            </Main>
           </Switch>
+          </Box>
         </Grommet>
       </Router>
     </Provider>
