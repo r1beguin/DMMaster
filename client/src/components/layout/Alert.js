@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {Box, Main} from "grommet";
+
+import './Alert.css'
 
 // alert destructured from props (passed by the connect)
-const Alert = ({ alerts }) => 
-  // typical jsx conditional component: condition && map component
-  // when mapping: needs unique key
-  // classname alows for color to change according to the type
-  alerts !== null &&
-  alerts.length > 0 &&
-  alerts.map(alert => (
-    <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-      {alert.msg}
-    </div>
-  ));
+const Alert = ({ alerts }) => {
+
+      // typical jsx conditional component: condition && map component
+      // when mapping: needs unique key
+      // classname alows for color to change according to the type
+    const alertsDisplay = alerts !== null && alerts.length > 0 &&
+        alerts.map(alert => (
+            <Box fill={true} className={`alert alert-${alert.alertType}`}>
+                {alert.msg}
+            </Box>
+        ))
+      return <Box className="alert-wrapper" justify="end" direction="column">{alertsDisplay}</Box>
+};
 
 
 // good practice to specify this 

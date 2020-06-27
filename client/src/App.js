@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import {Box, grommet, Grommet, Main} from "grommet";
+import {Box, grommet, Grommet, Main, Stack} from "grommet";
 import {deepMerge} from "grommet/utils";
 
 import "./App.css";
@@ -51,7 +51,6 @@ const App = () => {
         <Grommet theme={grommetTheme} full="true">
           <Box fill="true" direction="column">
           <Navbar />
-          <Alert />
           <Switch>
             <Main fill="true" flex="true">
               <Route exact path="/">
@@ -71,6 +70,7 @@ const App = () => {
               </Route>
             </Main>
           </Switch>
+            <Alert />
           </Box>
         </Grommet>
       </Router>
