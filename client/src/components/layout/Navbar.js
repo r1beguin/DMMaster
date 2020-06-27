@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/auth";
 
-import {Anchor, Box, Header, Text} from "grommet";
+import {Anchor, Box, Header, Image, Text} from "grommet";
 
 import store from "../../store";
 import connect from "react-redux/lib/connect/connect";
@@ -14,6 +14,7 @@ import {SHOW_LOGIN_MODAL} from "../../actions/types";
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
 // import PlayerScreen from './../PlayerScreen/PlayerScreen'
+import master from "../../images/master.svg";
 
 // TODO: make it react to active screen
 const Navbar = ({isAuthenticated, user, dispatch}) => {

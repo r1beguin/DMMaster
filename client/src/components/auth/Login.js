@@ -8,7 +8,9 @@ import { login } from "../../actions/auth";
 import PropTypes from "prop-types";
 import {HIDE_LOGIN_MODAL} from "../../actions/types";
 import {bindActionCreators} from "redux";
-import {Close} from "grommet-icons"; // shortcut: impt
+import {Close, User} from "grommet-icons"; // shortcut: impt
+
+import './Login.css'
 
 // setAlert destructured from props (passed by the connect)
 const Login = ({ login, isAuthenticated, showModal, dispatch }) => {
@@ -40,27 +42,30 @@ const Login = ({ login, isAuthenticated, showModal, dispatch }) => {
 
   return (
       showModal && <Layer onEsc={close} onClickOutside={close}>
-        <Box height="medium" width="medium" background="brand" round={size === 'small' ? false : 'small'} fill={size === 'small'} justify="between">
-          <Box border={{color: 'white', side: 'bottom'}} pad="small" direction="row" align="center" justify="between">
+        <Box className="login-modal" height="medium" width="medium" background="brand" round={size === 'small' ? false : 'small'} fill={size === 'small'} justify="start">
+          <Box border={{color: 'white', side: 'bottom'}} pad={size === 'small' ? 'large' : 'medium'} direction="row" align="center" justify="between">
             <Text color="white" weight="bold" align="center" size="xlarge">
               Sign In
             </Text>
             <Anchor onClick={close}><Close /></Anchor>
           </Box>
 
-          <Box width="small" gap="small" margin={{ vertical: "small" }}>
-            <TextInput
-                type="text"
-                background="white"
-                placeholder="name"
-                name="name"
-                value={name}
-                onChange={(e) => onChange(e)}
-                fill={true}
-            />
-          </Box>
-          <Box pad="medium">
-            <Button background="white" onClick={(e) => onSubmit(e)} label="Login" />
+          <Box justify="evenly" fill>
+            <Box width="small" gap="small" margin={{ vertical: "small" }} fill="horizontal" pad={size === 'small' ? 'large' : 'medium'}>
+              <TextInput
+                  type="text"
+                  background="white"
+                  placeholder="name"
+                  name="name"
+                  value={name}
+                  onChange={(e) => onChange(e)}
+                  fill={true}
+                  icon={<User/>}
+              />
+            </Box>
+            <Box pad={size === 'small' ? 'large' : 'medium'}>
+              <Button size="large" primary background="white" onClick={(e) => onSubmit(e)} label="Login" />
+            </Box>
           </Box>
         </Box>
       </Layer>

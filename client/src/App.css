@@ -18,6 +18,21 @@
   font-size: large;
 }
 
+html, body, #root, div[class*="StyledGrommet"] {
+  height: 100%;
+  width: 100%;
+}
+
+div[class*="StyledLayer-"] {
+  min-height: 100%;
+}
+
+div[class*="StyledLayer__StyledContainer"] {
+  height: 100%;
+  justify-content: center;
+}
+
+
 a, a:hover {
   color:inherit;
   text-decoration: inherit;

@@ -14,7 +14,7 @@ import LandingButton from "./LandingButton";
 
 const Landing = () => {
   return (
-      <Box direction="row-responsive" gap="medium" fill="true" pad="medium">
+      <Box direction="row-responsive" gap="large" fill="true" pad="large">
         <LandingButton to="/DMScreen" text="DM Screen" image={master} />
         <LandingButton to="/Battlemap" text="Battle Map" image={battlemap} />
         <LandingButton to="/PlayerScreen" text="Player Screen" image={character} />
