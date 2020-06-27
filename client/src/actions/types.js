@@ -9,6 +9,8 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const USER_LOADED = "USER_LOADED";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const AUTH_ERROR = "AUTH_ERROR";
+export const SHOW_LOGIN_MODAL = "SHOW_LOGIN_MODAL";
+export const HIDE_LOGIN_MODAL = "HIDE_LOGIN_MODAL";
 
 export const LOAD_FIGHT = "LOAD_FIGHT";
 export const SET_TURN = "SET_TURN";

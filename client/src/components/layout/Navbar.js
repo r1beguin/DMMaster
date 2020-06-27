@@ -2,25 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/auth";
 
-import {Box, Header, Image, Text} from "grommet";
+import {Anchor, Box, Header, Text} from "grommet";
 
 import store from "../../store";
 import connect from "react-redux/lib/connect/connect";
 import CreatureToken from "../common/CreatureToken";
 import {GetNested} from "../../utils/DMMasterUtils";
+import Login from "../auth/Login";
+import {SHOW_LOGIN_MODAL} from "../../actions/types";
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
 // import PlayerScreen from './../PlayerScreen/PlayerScreen'
 
 // TODO: make it react to active screen
-const Navbar = ({isAuthenticated, user}) => {
+const Navbar = ({isAuthenticated, user, dispatch}) => {
   const logout = () => {
     store.dispatch(logoutUser());
     console.log("logout");
   };
 
-  const userIcon = GetNested(user, 'creature', 'avatar')
+  const userIcon = GetNested(user, 'creature', 'avatar');
+
   return (
       <Header background="brand" elevation="medium" pad={{vertical: "small", horizontal: "medium"}}>
         <Link to="/" className="home">
@@ -29,7 +32,7 @@ const Navbar = ({isAuthenticated, user}) => {
           </Box>
         </Link>
           <Box height="xxsmall" justify="center">
-              {!isAuthenticated && <Link to="/login"><Text weight="bold">Login</Text></Link>}
+              {!isAuthenticated && <Anchor onClick={()=>{console.log("test"); dispatch({type: SHOW_LOGIN_MODAL})}}><Text weight="bold">Login</Text></Anchor>}
           {isAuthenticated && <Box onClick={logout}>
               {user && <Box direction="row" gap="small" align="center">
                   { userIcon && <CreatureToken image={userIcon} />}

@@ -161,7 +161,7 @@ const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
             }}
           />
           <Button
-            icon={<Add />}
+            icon={<Add/>}
             label="Add a note"
             color="grey"
             onClick={() => {
@@ -181,7 +181,7 @@ const Notes = ({ notes, getNotes, setNotes, setBuffer, setAlert }) => {
                 },
               ]);
             }}
-          ></Button>
+            />
         </Box>
       )}
     </Box>

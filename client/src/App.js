@@ -49,6 +49,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Grommet theme={grommetTheme} full="true">
+          <Login />
           <Box fill="true" direction="column">
           <Navbar />
           <Switch>
