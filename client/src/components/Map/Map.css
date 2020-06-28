@@ -1,0 +1,13 @@
+.react-transform-component {
+    flex-grow: 1;
+    width: initial !important;
+    height: initial !important;
+}
+
+.react-transform-element {
+    display: inline-block !important;
+}
+
+.map-token {
+    position: absolute;
+}

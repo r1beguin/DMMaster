@@ -6,11 +6,7 @@ import { Box } from "grommet";
 
 const Battlemap = ({ image }) => {
   return (
-    <Fragment>
-      <Box margin="xsmall" width="xlarge" height="large">
         <Map user="battlemap" />
-      </Box>
-    </Fragment>
   );
 };
 

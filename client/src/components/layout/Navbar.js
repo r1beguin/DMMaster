@@ -36,7 +36,7 @@ const Navbar = ({isAuthenticated, user, dispatch}) => {
               {!isAuthenticated && <Anchor onClick={()=>{console.log("test"); dispatch({type: SHOW_LOGIN_MODAL})}}><Text weight="bold">Login</Text></Anchor>}
           {isAuthenticated && <Box onClick={logout}>
               {user && <Box direction="row" gap="small" align="center">
-                  { userIcon && <CreatureToken image={userIcon} />}
+                  { userIcon && <CreatureToken image={userIcon} size="xxsmall"/>}
                   <Box>
                       <Text weight="bold">{user.name}</Text>
                   </Box>

@@ -6,6 +6,7 @@ import { Box } from "grommet";
 import Map from "../Map/Map";
 import Notes from "./components/Notes";
 import Music from "./components/Music";
+import MapSelector from "../Map/MapSelector";
 
 const DMScreen = () => {
   return (
@@ -17,6 +18,7 @@ const DMScreen = () => {
         </Box>
         <Box width="xlarge" height="large" align="center">
           <Map user="DM" />
+          <MapSelector />
         </Box>
       </Box>
     </Box>
