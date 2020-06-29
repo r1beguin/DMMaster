@@ -22,21 +22,19 @@ import './Map.css'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 const Map = ({
-  hp,
-  getCreature,
-  image,
-  loadImageList,
-  loadActiveImage,
-  involved,
-  turn,
-  updatePosition,
-  user
-}) => {
+               hp,
+               getCreature,
+               image,
+               loadImageList,
+               loadActiveImage,
+               involved,
+               turn,
+               updatePosition,
+               user
+             }) => {
   useEffect(() => {
     loadActiveImage();
-    loadImageList();
-    getCreature("Thokk"); // why usefull here ?
-  }, []);
+  })
 
   const handleStop = (e, position, id) => {
     const { x, y } = position;
@@ -57,13 +55,15 @@ const Map = ({
     }
   })
 
-  const ref = React.createRef()
-  const ref2 = React.createRef()
+  const imgRef = React.useRef(null)
+  const zppRef = React.useRef(null)
+
+  const [scale, setScale] = React.useState(1)
 
   const updateSize = (forceReset = false) => {
-    const img = ref.current
-    const wrapper = ref2.current.wrapperRef.current
-    const state = ref2.current.context.state
+    const img = imgRef.current
+    const wrapper = zppRef.current.wrapperRef.current
+    const state = zppRef.current.context.state
 
     const currentScale = state.scale
     const currentMinScale = state.options.minScale
@@ -75,6 +75,7 @@ const Map = ({
     const changeRatio = newMinScale / currentMinScale
 
     const newScale = forceReset ? newMinScale : (currentScale * changeRatio)
+    setScale(newScale)
 
     const widthDiff = wrapper.offsetWidth - img.clientWidth * newScale
     const heightDiff = wrapper.offsetHeight - img.clientHeight * newScale
@@ -82,21 +83,31 @@ const Map = ({
     const newX = widthDiff >= 0 || forceReset ? widthDiff/2 : Math.min(0, currentX * changeRatio)
     const newY = heightDiff >=0 || forceReset ? heightDiff/2 : Math.min(0, currentY * changeRatio)
 
-    ref2.current.context.state.options.minScale = newMinScale
+    zppRef.current.context.state.options.minScale = newMinScale
     if (forceReset) {
-      setTimeout(ref2.current.context.dispatch.setTransform.bind(null, newX, newY, newScale, 0), 10)
+      setTimeout(zppRef.current.context.dispatch.setTransform.bind(null, newX, newY, newScale, 0), 10)
     } else {
-      ref2.current.context.dispatch.setTransform(newX, newY, newScale, 0)
+      zppRef.current.context.dispatch.setTransform(newX, newY, newScale, 0)
     }
   }
 
   return (
-      <TransformWrapper options={{centerContent: false}} wheel={{step: 200}} pan={{disabled: false}}>
-        <TransformComponent ref={ref2}>
+      <TransformWrapper onZoomChange={(state)=>{setScale(state.scale)}} options={{centerContent: false}} wheel={{step: 200}} pan={{disabled: false}}>
+        <TransformComponent ref={zppRef}>
           <div>
-            {draggableTokens.map((token) => (
-                <Draggable disabled={true}
+            <img style={{objectFit: "none"}} onLoad={() => updateSize(true)} src={image} ref={imgRef} />
+          </div>
+          <div
+              style={{position: "absolute", width: "25px", height: "25px", top:0}}
+              onMouseDown={(e) => {e.stopPropagation()}}
+              onTouchStart={(e) => {e.stopPropagation()}}
+              onTouchMove={(e) => {e.stopPropagation()}}
+          >
+            {draggableTokens.map((token, i) => (
+                <Draggable
+                    scale={scale}
                     onStop={(e, position) => {
+                      console.log(scale)
                       token.position.x = position.x
                       token.position.y = position.y
                       handleStop(e, position, token.involved.creature._id)
@@ -105,18 +116,17 @@ const Map = ({
                     position={token.position}
                 >
                   <div>{/*This div is needed for Draggable*/}
-                    <CreatureToken className="map-token" image={token.involved.creature.avatar} size={25} />
+                    <div>
+                      <CreatureToken className="map-token" image={token.involved.creature.avatar} size={25} /></div>
                   </div>
                 </Draggable>
             ))}
-            <img style={{objectFit: "none"}} onLoad={() => updateSize(true)} src={image} ref={ref} />
           </div>
         </TransformComponent>
-        <ReactResizeDetector handleWidth handleHeight skipOnMount={false} onResize={(w,h) => {
+        <ReactResizeDetector handleWidth handleHeight onResize={(w,h) => {
           updateSize()
         }} />
       </TransformWrapper>
-
   );
 };
 
@@ -145,35 +155,30 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(
-  mapStateToProps, // connect store state to component props
-  {
-    loadImageList,
-    loadActiveImage,
-    setActiveImage,
-    uploadImage,
-    getCreature,
-    updatePosition,
-  } // connect actions for the component to modify store state
+    mapStateToProps, // connect store state to component props
+    {
+      loadImageList,
+      loadActiveImage,
+      setActiveImage,
+      uploadImage,
+      getCreature,
+      updatePosition,
+    } // connect actions for the component to modify store state
 )(Map);
-
-  /*<div justify="center">
-{image === "" ? (
-<Text>Aucune battlemap chargée</Text>
-) : (
-<Image src={image} fit="contain"/>
-)}
-{/*draggableTokens.map((token) => (
-<Draggable
-onStop={(e, position) => {
-token.position.x = position.x
-token.position.y = position.y
-handleStop(e, position, token.involved.creature._id)
-}}
-// TODO: possible sync issue for attributes of attrivutes ?
-position={token.position}
->
-<div>{/*This div is needed for Draggable*//*}
-<CreatureToken className="token" image={token.involved.creature.avatar} />
-</div>
-</Draggable>
-))*//*}*/
+/*
+<div style={{position: "absolute"}}>
+  {draggableTokens.map((token) => (
+      <Draggable disabled={true}
+                 onStop={(e, position) => {
+                   token.position.x = position.x
+                   token.position.y = position.y
+                   handleStop(e, position, token.involved.creature._id)
+                 }}
+          // TODO: possible sync issue for attributes of attrivutes ?
+                 position={token.position}
+      >
+        <div>{/*This div is needed for Draggable}
+          <CreatureToken className="map-token" image={token.involved.creature.avatar} size={25} />
+        </div>
+      </Draggable>
+  ))}</div>*/
