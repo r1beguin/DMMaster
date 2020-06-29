@@ -25,7 +25,7 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-socketAPI("http://localhost:5000", store);
+socketAPI(`http://${window.location.hostname}:5000`, store);
 
 const App = () => {
   // same effect as 'componentDidMount' but for a function

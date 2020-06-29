@@ -55,7 +55,7 @@ const Login = ({ login, isAuthenticated, showModal, dispatch }) => {
               <TextInput
                   type="text"
                   background="white"
-                  placeholder="name"
+                  placeholder="Name"
                   name="name"
                   value={name}
                   onChange={(e) => onChange(e)}
