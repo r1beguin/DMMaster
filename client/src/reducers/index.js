@@ -5,6 +5,7 @@ import hp from "./hp";
 import fight from "./fight";
 import image from "./image";
 import notes from "./notes";
+import settings from "./settings"
 
 export default combineReducers({
   alert,
@@ -13,4 +14,5 @@ export default combineReducers({
   fight,
   image,
   notes,
+  settings
 });

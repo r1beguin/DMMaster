@@ -51,4 +51,40 @@ div[class*='StyledLayer__StyledContainer'] {
   to { transform: rotate(360deg); }
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.no-scrollbar::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border: 0px none #ffffff;
+  border-radius: 30px;
+}
+.no-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.3);
+}
+.no-scrollbar::-webkit-scrollbar-thumb:active {
+  background: rgba(0,0,0,0.5);
+}
+.no-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border: 0px none #ffffff;
+}
+.no-scrollbar::-webkit-scrollbar-track:hover {
+  background: rgba(0,0,0,0.2);
+}
+.no-scrollbar::-webkit-scrollbar-track:active {
+  background: rgba(0,0,0,0.2);
+}
+.no-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 

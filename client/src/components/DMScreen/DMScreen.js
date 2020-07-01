@@ -7,6 +7,7 @@ import Map from "../Map/Map";
 import Notes from "./components/Notes";
 import Music from "./components/Music";
 import MapSelector from "../Map/MapSelector";
+import Battlemap from "../BattleMap/Battlemap";
 
 const DMScreen = () => {
   return (
@@ -17,7 +18,7 @@ const DMScreen = () => {
           <Music />
         </Box>
         <Box width="xlarge" height="large" align="center">
-          <Map user="DM" />
+          <Battlemap user="DM" />
           <MapSelector />
         </Box>
       </Box>

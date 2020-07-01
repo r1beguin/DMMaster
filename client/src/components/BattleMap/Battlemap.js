@@ -6,15 +6,13 @@ import { Box } from "grommet";
 import FightBar from "../FightBar/FightBar";
 import Draggable from "react-draggable";
 
-const Battlemap = ({ image }) => {
+const Battlemap = ({ dockedTo, verticalUndocked }) => {
 
-    const [dockedTo, setDocked] = React.useState(4)
-    const verticalUndocked = false
-    const directions = ["row-reverse", "column-reverse", "row", "column", "row"]
+    const directions = ["row-reverse", "column-reverse", "row", "column", "column"]
     const vertical = [true, false, true, false, verticalUndocked]
 
     const unDockedStyle = {
-        position: "relative"
+        position: "absolute", maxHeight: "80%", maxWidth: "80%"
     }
     const barStyle = {
         zIndex: 4,
@@ -34,16 +32,26 @@ const Battlemap = ({ image }) => {
             {<Draggable bounds="parent"
                        handle=".handle">
                 <Box style={style} elevation="small" direction="row" flex={{shrink: 0, grow: 1}} round={dockedTo < 4 ? "0" : "xsmall"}>
-                    <FightBar vertical={vertical[dockedTo]} snapped={dockedTo < 4}  onUndock={() => {setDocked(4)}}/>
+                    <FightBar vertical={vertical[dockedTo]} docked={dockedTo < 4} />
                 </Box>
             </Draggable>}
         </Box>
     );
 };
 
-const mapStateToProps = (state) => ({
-    image: state.image.data,
-});
+const mapStateToProps = state => {
+    if(state.settings) {
+        return ({
+            dockedTo: state.settings.fightbarDocking,
+            verticalUndocked: state.settings.fightbarVertical,
+        })
+    } else {
+        return ({
+            dockedTo: 1,
+            verticalUndocked: false
+        })
+    }
+}
 
 export default connect(
     mapStateToProps, // connect store state to component props

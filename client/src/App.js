@@ -20,6 +20,7 @@ import socketAPI from "./socket-api";
 //redux
 import { Provider } from "react-redux";
 import store from "./store";
+import Settings from "./components/Settings/Settings";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -61,6 +62,7 @@ const App = () => {
       <Router>
         <Grommet theme={grommetTheme}>
           <Login />
+          <Settings />
           <Box fill="true" direction="column" background="dark-1">
           <Navbar />
           <Switch>

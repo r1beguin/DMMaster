@@ -3,12 +3,13 @@ const auth = require('../utils/auth');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../db/models/User');
+const {Settings, DefaultSettings } = require('../db/models/Settings')
 
 
 // return the user infos to a loged in user
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).populate('creature');
+    const user = await User.findById(req.user.id).populate('settings').populate('creature')
     res.json(user);
   } catch (err) {
     console.error(err.message);

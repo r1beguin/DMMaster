@@ -22,23 +22,21 @@ import './Map.css'
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 const Map = ({
-                 hp,
-                 getCreature,
                  image,
-                 loadImageList,
                  loadActiveImage,
                  involved,
-                 turn,
-                 updatePosition,
-                 user
+                 updatePosition
              }) => {
     useEffect(() => {
         loadActiveImage();
     }, []);
 
+    console.log("that's a render")
+
     const [imgSize, setImgSize] = React.useState({width: "0px", height: "0px"})
     const [scale, setScale] = React.useState(1)
-    const [transform, setTransform] = React.useState("initial")
+
+    const tokensWrapper = React.useRef(null)
 
     const handleStop = (e, position, id) => {
         const { x, y } = position;
@@ -48,6 +46,12 @@ const Map = ({
             posy: y,
         });
     };
+
+    const setTransform = (transform) => {
+        if (tokensWrapper.current) {
+            tokensWrapper.current.style.transform = transform
+        }
+    }
 
     const draggableTokens = involved.map(i=> {
         return {
@@ -62,7 +66,8 @@ const Map = ({
     return <Box fill={true} style={{position: "relative", overflow: "hidden"}}>
         <MovableMap image={image} onTransform={setTransform} onScaleChange={setScale} onImgLoad={setImgSize}/>
         <div
-            style={{transformOrigin: "0% 0%", position: "absolute", ...imgSize, pointerEvents: "none", transform: transform}}
+            ref={tokensWrapper}
+            style={{transformOrigin: "0% 0%", position: "absolute", ...imgSize, pointerEvents: "none"}}
         >
             {draggableTokens.map((token) => (
                 <Draggable
@@ -130,6 +135,10 @@ class MovableMap extends React.PureComponent {
         this.state = {
             scale: 1
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return this.props.image !== nextProps.image;
     }
 
     componentDidMount() {

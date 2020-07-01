@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Box } from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 import InitiativeTracker from "../DMScreen/components/InitiativeTracker";
-import {FormNext, NewWindow} from "grommet-icons";
+import {Drag, FormNext, NewWindow} from "grommet-icons";
 import {FormDown} from "grommet-icons";
 
 const FightBar = ({ involved, turn, style, vertical, docked}) => {
@@ -16,9 +16,22 @@ const FightBar = ({ involved, turn, style, vertical, docked}) => {
 
   return (
       <Box direction={vertical ? "column" : "row"} basis="full" flex={{shrink: 0, grow: 0}} background="neutral-3">
-        {!docked && false && <Box background="blue" basis="xsmall" className="handle" flex={{shrink: 0, grow: 0}}/>}
+        {!docked &&
+        <Box
+            background="rgba(0,0,0,0.5)"
+            height={!vertical ? "" : "40px"}
+            width={vertical ? "" : "40px"}
+            justify="center"
+            pad="8px"
+            direction={vertical ? "row": "column"}
+            className="handle"
+            flex={{shrink: 0, grow: 0}}>
+            <Drag color="black" style={vertical ? {transform: "rotate(90deg)"} : {}}/>
+            <Drag color="black" style={vertical ? {transform: "rotate(90deg)"} : {}}/>
+        </Box>}
 
         <Box
+            className="no-scrollbar"
             overflow={{horizontal: vertical ? "visible" : "auto", vertical: vertical ? "auto" : "visible"}}
             direction={vertical ? "column" : "row"}
             margin="auto"

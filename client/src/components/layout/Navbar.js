@@ -9,50 +9,54 @@ import connect from "react-redux/lib/connect/connect";
 import CreatureToken from "../common/CreatureToken";
 import {GetNested} from "../../utils/DMMasterUtils";
 import Login from "../auth/Login";
-import {SHOW_LOGIN_MODAL} from "../../actions/types";
+import {SHOW_LOGIN_MODAL, SHOW_SETTINGS_MODAL} from "../../actions/types";
 
 // import DMScreen from './../DMScreen/DMScreen'
 // import Battlemap from './../BattleMap/Battlemap'
 // import PlayerScreen from './../PlayerScreen/PlayerScreen'
 import master from "../../images/master.svg";
+import {Configure, SettingsOption} from "grommet-icons";
 
 // TODO: make it react to active screen
 const Navbar = ({isAuthenticated, user, dispatch}) => {
-  const logout = () => {
-    store.dispatch(logoutUser());
-    console.log("logout");
-  };
+    const logout = () => {
+        store.dispatch(logoutUser());
+        console.log("logout");
+    };
 
-  const userIcon = GetNested(user, 'creature', 'avatar');
+    const userIcon = GetNested(user, 'creature', 'avatar');
 
-  return (
-      <Header background="brand" elevation="small" pad={{vertical: "small", horizontal: "medium"}} style={{zIndex: "5"}}>
-        <Link to="/" className="home">
-          <Box alignContent="center">
-              <Text size="xlarge" weight="bold">DMMaster</Text>
-          </Box>
-        </Link>
-          <Box height="xxsmall" justify="center">
-              {!isAuthenticated && <Anchor onClick={()=>{console.log("test"); dispatch({type: SHOW_LOGIN_MODAL})}}><Text weight="bold">Login</Text></Anchor>}
-          {isAuthenticated && <Box onClick={logout}>
-              {user && <Box direction="row" gap="small" align="center">
-                  { userIcon && <CreatureToken image={userIcon} size="xxsmall"/>}
-                  <Box>
-                      <Text weight="bold">{user.name}</Text>
-                  </Box>
-              </Box>}
-              {!user && "Logout"}
-          </Box>
-          }
-      </Box>
-      </Header>
-  );
+    return (
+        <Header background="brand" elevation="small" pad={{vertical: "small", horizontal: "medium"}} style={{zIndex: "5"}}>
+            <Link to="/" className="home">
+                <Box alignContent="center">
+                    <Text size="xlarge" weight="bold">DMMaster</Text>
+                </Box>
+            </Link>
+            <Box height="xxsmall" justify="center" margin={{left: "auto"}}>
+                <SettingsOption onClick={()=>{dispatch({type: SHOW_SETTINGS_MODAL})}} style={{cursor: "pointer"}}/>
+            </Box>
+            <Box height="xxsmall" justify="center">
+                {!isAuthenticated && <Anchor onClick={()=>{dispatch({type: SHOW_LOGIN_MODAL})}}><Text weight="bold">Login</Text></Anchor>}
+                {isAuthenticated && <Box onClick={logout}>
+                    {user && <Box direction="row" gap="small" align="center">
+                        { userIcon && <CreatureToken image={userIcon} size="xxsmall"/>}
+                        <Box>
+                            <Text weight="bold">{user.name}</Text>
+                        </Box>
+                    </Box>}
+                    {!user && "Logout"}
+                </Box>
+                }
+            </Box>
+        </Header>
+    );
 };
 
 export default connect(
     state => ({
-      isAuthenticated: state.auth.isAuthenticated,
-      user: state.auth.user
+        isAuthenticated: state.auth.isAuthenticated,
+        user: state.auth.user
     })
 )(Navbar);
 
