@@ -46,11 +46,11 @@ const App = () => {
         dark: {
           none: 'none',
           // You can override the values for box-shadow here.
-          xsmall: '0px 2px 2px rgba(0, 0, 0, 0.40)',
-          small: '0px 4px 4px rgba(0, 0, 0, 0.40)',
-          medium: '0px 6px 8px rgba(0, 0, 0, 0.40)',
-          large: '0px 8px 16px rgba(0, 0, 0, 0.40)',
-          xlarge: '0px 12px 24px rgba(0, 0, 0, 0.40)',
+          xsmall: '0 0px 2px 2px rgba(0, 0, 0, 0.40)',
+          small: '0 0px 4px 4px rgba(0, 0, 0, 0.40)',
+          medium: '0 0px 8px 6px rgba(0, 0, 0, 0.40)',
+          large: '0 0px 16px 8px rgba(0, 0, 0, 0.40)',
+          xlarge: '0 0px 24px 12px rgba(0, 0, 0, 0.40)',
         }
       }
     }
@@ -61,7 +61,7 @@ const App = () => {
       <Router>
         <Grommet theme={grommetTheme}>
           <Login />
-          <Box fill="true" direction="column" background="#333">
+          <Box fill="true" direction="column" background="dark-1">
           <Navbar />
           <Switch>
             <Main fill="true" flex="true">

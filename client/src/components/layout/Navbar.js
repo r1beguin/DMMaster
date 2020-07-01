@@ -26,7 +26,7 @@ const Navbar = ({isAuthenticated, user, dispatch}) => {
   const userIcon = GetNested(user, 'creature', 'avatar');
 
   return (
-      <Header background="brand" elevation="medium" pad={{vertical: "small", horizontal: "medium"}}>
+      <Header background="brand" elevation="small" pad={{vertical: "small", horizontal: "medium"}} style={{zIndex: "5"}}>
         <Link to="/" className="home">
           <Box alignContent="center">
               <Text size="xlarge" weight="bold">DMMaster</Text>

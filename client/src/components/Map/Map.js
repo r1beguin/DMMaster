@@ -67,6 +67,7 @@ const Map = ({
             {draggableTokens.map((token) => (
                 <Draggable
                     scale={scale}
+                    bounds={"parent"}
                     onStop={(e, position) => {
                         token.position.x = position.x
                         token.position.y = position.y
@@ -131,11 +132,6 @@ class MovableMap extends React.PureComponent {
         }
     }
 
-/*    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("state", nextState, "props", nextProps)
-        return true
-    }*/
-
     componentDidMount() {
         // Listen for map panning to move tokens accordingly
         new MutationObserver(function(mutations) {
@@ -161,23 +157,29 @@ class MovableMap extends React.PureComponent {
             const currentMinScale = state.options.minScale
             const currentX = state.positionX
             const currentY = state.positionY
+            const wrapperWidth = wrapper.offsetWidth
+            const wrapperHeight = wrapper.offsetHeight
 
             // Calculate new min scale to fin map in screen
-            const newMinScale = Math.min(wrapper.offsetWidth / img.clientWidth, wrapper.offsetHeight / img.clientHeight)
+            const newMinScale = Math.min( wrapperWidth / img.clientWidth, wrapperHeight / img.clientHeight)
 
             // Calculate ratio of size change to keep a level of zoom relative to the one the user had before
-            const changeRatio = newMinScale / currentMinScale
+            let changeRatio = newMinScale / currentMinScale
 
             // Calc new scale
-            const newScale = onLoad ? newMinScale : (currentScale * changeRatio)
+            let newScale = onLoad ? newMinScale : (currentScale * changeRatio)
+            if (newScale > state.options.maxScale) {
+                newScale = state.options.maxScale
+                changeRatio = newScale / currentScale
+            }
             this.props.onScaleChange(newScale)
 
-            // Position the map properly manually since for some reason react-zoom-pan-pinch won't do it unles you click on it
-            const widthDiff = wrapper.offsetWidth - img.clientWidth * newScale
-            const heightDiff = wrapper.offsetHeight - img.clientHeight * newScale
+            // Position the map properly manually since for some reason react-zoom-pan-pinch won't do it unless you click on it
+            const widthDiff = wrapperWidth - img.clientWidth * newScale
+            const heightDiff = wrapperHeight - img.clientHeight * newScale
 
-            const newX = widthDiff >= 0 || onLoad ? widthDiff/2 : Math.min(0, currentX * changeRatio)
-            const newY = heightDiff >=0 || onLoad ? heightDiff/2 : Math.min(0, currentY * changeRatio)
+            const newX = widthDiff >= 0 || onLoad ? widthDiff/2 : Math.max(Math.min(0, currentX * changeRatio), widthDiff)
+            const newY = heightDiff >=0 || onLoad ? heightDiff/2 : Math.max(Math.min(0, currentY * changeRatio), heightDiff)
 
             // Set values
             this.zppRef.current.context.state.options.minScale = newMinScale
@@ -191,7 +193,7 @@ class MovableMap extends React.PureComponent {
         }
 
         return (
-            <TransformWrapper onZoomChange={(state)=>{this.props.onScaleChange(state.scale)}} options={{centerContent: false}} wheel={{step: 200}} pan={{disabled: false}}>
+            <TransformWrapper onZoomChange={(state)=>{this.props.onScaleChange(state.scale)}} options={{}} wheel={{step: 200}} pan={{disabled: false}}>
                 <TransformComponent ref={this.zppRef}>
                     <div>
                         <img style={{objectFit: "none"}} onLoad={() => updateSize(true)} src={this.props.image} ref={this.imgRef} />
@@ -201,5 +203,6 @@ class MovableMap extends React.PureComponent {
                     updateSize()
                 }} />
             </TransformWrapper>
-        );    }
+        );
+    }
 }
