@@ -80,7 +80,7 @@ Login.propTypes = {
 // extract the props we are interested in from the store
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  showModal: state.auth.showModal
+  showModal: state.ui.showLoginModal
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,18 +1,21 @@
 import React, {Fragment, useEffect} from "react";
 import { connect } from "react-redux";
 
-import { Box } from "grommet";
+import {Box, Button, ResponsiveContext} from "grommet";
 import PropTypes from "prop-types"; // shortcut: impt
 import InitiativeTracker from "../DMScreen/components/InitiativeTracker";
 import {Drag, FormNext, NewWindow} from "grommet-icons";
 import {FormDown} from "grommet-icons";
+import Draggable from "react-draggable";
+import {nextTurn} from "../../actions/fight";
+import {ChapterNext} from "grommet-icons/icons";
 
-const FightBar = ({ involved, turn, style, vertical, docked}) => {
+const FightBar = ({ involved, turn, vertical, docked, nextTurn}) => {
   useEffect(() => {
     // loadImageList();
   }, []);
 
-  console.log(style)
+    const size = React.useContext(ResponsiveContext);
 
   return (
       <Box direction={vertical ? "column" : "row"} basis="full" flex={{shrink: 0, grow: 0}} background="neutral-3">
@@ -25,10 +28,22 @@ const FightBar = ({ involved, turn, style, vertical, docked}) => {
             pad="8px"
             direction={vertical ? "row": "column"}
             className="handle"
+            style={{cursor: "grab"}}
             flex={{shrink: 0, grow: 0}}>
-            <Drag color="black" style={vertical ? {transform: "rotate(90deg)"} : {}}/>
-            <Drag color="black" style={vertical ? {transform: "rotate(90deg)"} : {}}/>
+            <Drag opacity="0.5" color="black" style={vertical ? {transform: "rotate(90deg)"} : {}}/>
+            <Drag opacity="0.5" color="black" style={vertical ? {transform: "rotate(90deg)"} : {}}/>
         </Box>}
+
+          <Box
+              background="rgba(0,0,0,0.5)"
+              height={!vertical ? "" : "40px"}
+              width={vertical ? "" : "40px"}
+              justify="center"
+              align="center"
+              direction={vertical ? "row": "column"}
+              flex={{shrink: 0, grow: 0}} onClick={nextTurn}>
+              <ChapterNext opacity="0.5" color="black"/>
+          </Box>
 
         <Box
             className="no-scrollbar"
@@ -39,7 +54,6 @@ const FightBar = ({ involved, turn, style, vertical, docked}) => {
           <Box
               direction={vertical ? "column" : "row"}
               pad={{vertical: vertical ? "medium" : "small", horizontal: vertical ?  "medium" : "large"}}
-              gap="small"
               basis="auto"
               background=""
               flex={{shrink: 0, grow: 0}}
@@ -48,13 +62,18 @@ const FightBar = ({ involved, turn, style, vertical, docked}) => {
               const creature = inv.creature;
               // TODO: fix "key" warning
               return (
-                  <Box gap="small" basis="auto" direction={vertical ? "column" : "row"} flex={{shrink: 0, grow: 0}}>
+                  <Box key={"maptoken"+inv.creature._id}
+                       basis="auto"
+                       gap={size === "small" && !vertical ? "xsmall" : "small"}
+                       direction={vertical ? "column" : "row"}
+                       flex={{shrink: 0, grow: 0}}>
                     <InitiativeTracker
+                        margin={vertical ? {top: "small"} : {left: "small"}}
                         active={idx === turn}
                         name={creature.name}
                         src={creature.avatar}
                     />
-                    {idx < involved.length - 1 && <Box justify="center" alignContent="center" direction={vertical ? "row" : "column"}>
+                    {idx < involved.length - 1 && <Box justify="center" direction={vertical ? "row" : "column"}>
                       {!vertical && <FormNext/> || vertical && <FormDown/>}
                     </Box>}
                   </Box>
@@ -79,5 +98,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, // connect store state to component pro  ps
-    {} // connect actions for the component to modify store state
+    {nextTurn} // connect actions for the component to modify store state
 )(FightBar);

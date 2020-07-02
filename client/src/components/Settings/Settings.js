@@ -52,7 +52,7 @@ const Settings = ({ showModal, dispatch }) => {
 
 // extract the props we are interested in from the store
 const mapStateToProps = (state) => ({
-  showModal: state.settings.showModal
+  showModal: state.ui.showSettingsModal
 });
 
 const mapDispatchToProps = dispatch => {

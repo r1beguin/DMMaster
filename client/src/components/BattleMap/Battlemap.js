@@ -5,11 +5,15 @@ import Map from "../Map/Map";
 import { Box } from "grommet";
 import FightBar from "../FightBar/FightBar";
 import Draggable from "react-draggable";
+import ReactResizeDetector from "react-resize-detector";
+import {TransformWrapper} from "react-zoom-pan-pinch";
 
 const Battlemap = ({ dockedTo, verticalUndocked }) => {
 
     const directions = ["row-reverse", "column-reverse", "row", "column", "column"]
     const vertical = [true, false, true, false, verticalUndocked]
+
+    const [position, setPosition] = React.useState({x:0, y:0})
 
     const unDockedStyle = {
         position: "absolute", maxHeight: "80%", maxWidth: "80%"
@@ -26,15 +30,29 @@ const Battlemap = ({ dockedTo, verticalUndocked }) => {
         style = {...unDockedStyle, ...barStyle}
     }
 
+    const onDragEnd = (_, state) => {
+        position.x = state.x
+        position.y = state.y
+    }
+
     return (
         <Box fill={true} direction={directions[dockedTo]} style={{position: "relative", overflow: "hidden"}}>
             <Map />
-            {<Draggable bounds="parent"
-                       handle=".handle">
+            {<Draggable
+                bounds="parent"
+                handle=".handle"
+                position={position} onStop={onDragEnd}>
                 <Box style={style} elevation="small" direction="row" flex={{shrink: 0, grow: 1}} round={dockedTo < 4 ? "0" : "xsmall"}>
                     <FightBar vertical={vertical[dockedTo]} docked={dockedTo < 4} />
                 </Box>
             </Draggable>}
+            <ReactResizeDetector handleWidth handleHeight onResize={(w,h) => {
+                console.log("change pos")
+                setPosition ({
+                    x: Math.min(position.x, w - 100),
+                    y: Math.min(position.y, h - 100)
+                })
+            }} />
         </Box>
     );
 };

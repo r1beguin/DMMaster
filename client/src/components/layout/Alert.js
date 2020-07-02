@@ -14,7 +14,7 @@ const Alert = ({ alerts }) => {
     const alertsDisplay = alerts !== null && alerts.length > 0 &&
         alerts.map(alert => (
             <Box fill={true} className={`alert alert-${alert.alertType}`}>
-                {alert.msg}
+                {alert.msg.toString()}
             </Box>
         ))
       return <Box className="alert-wrapper" justify="end" direction="column">{alertsDisplay}</Box>

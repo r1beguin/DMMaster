@@ -5,7 +5,7 @@ import {
 
 // alerts are made of {type, payload: {msg, id}}
 const initialState = {
-  fightbarDocking: 1,
+  fightbarDocking: 4,
   fightbarVertical: false,
   showModal: false
 };

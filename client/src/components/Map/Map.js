@@ -31,14 +31,15 @@ const Map = ({
         loadActiveImage();
     }, []);
 
-    console.log("that's a render")
-
     const [imgSize, setImgSize] = React.useState({width: "0px", height: "0px"})
     const [scale, setScale] = React.useState(1)
+    const [mapDisabled, setMapDisabled] = React.useState(false)
 
     const tokensWrapper = React.useRef(null)
 
-    const handleStop = (e, position, id) => {
+    const handleStop = (position, id) => {
+        setMapDisabled(false)
+
         const { x, y } = position;
         updatePosition({
             id: id,
@@ -53,35 +54,26 @@ const Map = ({
         }
     }
 
-    const draggableTokens = involved.map(i=> {
-        return {
-            position: {
-                x: i.creature.posx,
-                y: i.creature.posy
-            },
-            involved: i
-        }
-    })
-
     return <Box fill={true} style={{position: "relative", overflow: "hidden"}}>
-        <MovableMap image={image} onTransform={setTransform} onScaleChange={setScale} onImgLoad={setImgSize}/>
+        <MovableMap image={image} onTransform={setTransform} disabled={mapDisabled} onScaleChange={setScale} onImgLoad={setImgSize}/>
         <div
             ref={tokensWrapper}
             style={{transformOrigin: "0% 0%", position: "absolute", ...imgSize, pointerEvents: "none"}}
         >
-            {draggableTokens.map((token) => (
+            {involved.map((token) => (
                 <Draggable
                     scale={scale}
                     bounds={"parent"}
-                    onStop={(e, position) => {
-                        token.position.x = position.x
-                        token.position.y = position.y
-                        handleStop(e, position, token.involved.creature._id)
+                    onStart={() => {setMapDisabled(true)}}
+                    onDrag={(_, position)=>{token.creature.posx = position.x
+                        token.creature.posy = position.y}}
+                    onStop={(_, position) => {
+                        handleStop(position, token.creature._id)
                     }}
-                    position={token.position}
+                    position={{x: token.creature.posx, y: token.creature.posy}}
                 >
                     <div style={{pointerEvents: "all", display: "inline-block", position: "absolute"}}>
-                        <CreatureToken image={token.involved.creature.avatar} size={25} />
+                        <CreatureToken image={token.creature.avatar} size={25} role={token.creature.role}/>
                     </div>
                 </Draggable>
             ))}
@@ -126,7 +118,7 @@ export default connect(
 )(Map);
 
 
-class MovableMap extends React.PureComponent {
+class MovableMap extends React.Component {
 
     constructor(props) {
         super(props);
@@ -138,7 +130,7 @@ class MovableMap extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return this.props.image !== nextProps.image;
+        return this.props.image !== nextProps.image || this.props.disabled !== nextProps.disabled;
     }
 
     componentDidMount() {
@@ -202,7 +194,7 @@ class MovableMap extends React.PureComponent {
         }
 
         return (
-            <TransformWrapper onZoomChange={(state)=>{this.props.onScaleChange(state.scale)}} options={{}} wheel={{step: 200}} pan={{disabled: false}}>
+            <TransformWrapper onZoomChange={(state)=>{this.props.onScaleChange(state.scale)}} options={{disabled: this.props.disabled}} wheel={{step: 200}}>
                 <TransformComponent ref={this.zppRef}>
                     <div>
                         <img style={{objectFit: "none"}} onLoad={() => updateSize(true)} src={this.props.image} ref={this.imgRef} />

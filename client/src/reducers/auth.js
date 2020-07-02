@@ -13,8 +13,7 @@ const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
-  user: null,
-  showModal: false
+  user: null
 };
 
 // function that choses what does the dispatched action
@@ -49,16 +48,6 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         loading: false
       };
-    case SHOW_LOGIN_MODAL:
-      return {
-        ...state,
-        showModal: true
-      }
-    case HIDE_LOGIN_MODAL:
-      return {
-        ...state,
-        showModal: false
-      }
     default:
       return state;
   }
