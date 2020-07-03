@@ -28,6 +28,7 @@ app.use("/api/creature", require("./api/creature"));
 app.use("/api/fight", require("./api/fight"));
 app.use("/api/image", require("./api/image"));
 app.use("/api/notes", require("./api/notes"));
+app.use("/api/settings", require("./api/settings"));
 
 const PORT = 5000;
 

@@ -6,7 +6,7 @@ const SettingsSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        undockedFightbarVertical: {
+        fightbarVertical: {
             type: Boolean,
             default: false
         }

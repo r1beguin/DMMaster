@@ -88,4 +88,24 @@ div[class*='StyledLayer__StyledContainer'] {
   background: transparent;
 }
 
+.button-group button {
+  border-radius: 0;
+  border-right-style: none;
+  box-sizing: border-box;
+}
+
+.button-group button:first-of-type {
+  border-radius: 18px 0 0 18px;
+}
+
+.button-group button:last-of-type {
+  border-radius: 0 18px 18px 0;
+  border-right-style: solid;
+}
+
+.button-group button:hover {
+  box-shadow: none;
+  background: rgba(255,255,255,0.1)
+}
+
 

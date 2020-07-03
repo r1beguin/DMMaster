@@ -25,6 +25,9 @@ const Battlemap = ({ dockedTo, verticalUndocked }) => {
 
     let style
     if (dockedTo < 4 ) {
+        if (position.x !== 0 && position.y !== 0 ) {
+            setPosition({x: 0, y: 0})
+        }
         style = {...barStyle}
     } else {
         style = {...unDockedStyle, ...barStyle}
@@ -58,10 +61,10 @@ const Battlemap = ({ dockedTo, verticalUndocked }) => {
 };
 
 const mapStateToProps = state => {
-    if(state.settings) {
+    if(state.auth.user && state.auth.user.settings) {
         return ({
-            dockedTo: state.settings.fightbarDocking,
-            verticalUndocked: state.settings.fightbarVertical,
+            dockedTo: state.auth.user.settings.fightbarDocking,
+            verticalUndocked: state.auth.user.settings.fightbarVertical,
         })
     } else {
         return ({

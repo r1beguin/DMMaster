@@ -32,7 +32,7 @@ const InitiativeTracker = ({ name, active, src, margin }) => {
                     width="xxsmall"
                     height="xxsmall"
                     overflow="hidden"
-                    basis="xxsmall"
+                    basis="auto"
                     flex={{shrink:0, grow: 0}}
                 >
                     <Image fit="cover" alt="portrait" src={src} />

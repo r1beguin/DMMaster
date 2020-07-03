@@ -4,8 +4,7 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   USER_LOGOUT,
-  SHOW_LOGIN_MODAL,
-  HIDE_LOGIN_MODAL
+  UPDATE_SETTINGS
 } from "../actions/types";
 
 // alerts are made of {type, payload: {msg, id}}
@@ -48,6 +47,12 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         loading: false
       };
+    case UPDATE_SETTINGS:
+      state.user.settings = {...state.user.settings, ...payload}
+      console.log({...state}, {...payload})
+      return {
+        ...state
+      }
     default:
       return state;
   }
