@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "dropzone": "^5.5.1",
     "grommet": "^2.11.1",
     "grommet-icons": "^4.4.0",
