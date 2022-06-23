@@ -22,7 +22,7 @@
     "grommet": "^2.11.1",
     "grommet-icons": "^4.4.0",
     "image-size": "^0.8.3",
-    "jsdom": "^16.1.0",
+    "jsdom": "^16.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5",
     "polished": "^3.4.4",
